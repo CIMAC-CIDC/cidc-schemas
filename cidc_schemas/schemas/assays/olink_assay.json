@@ -3,7 +3,10 @@
   "$id": "olink_assay",
   "title": "Olink Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.olink.html",
   "description": "High-throughput multiplexed assays for protein biomarker discovery.",
+  
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
   "definitions": {
@@ -139,7 +142,8 @@
           }
         },
         "combined": {
-          "$ref": "assays/olink_assay.json#definitions/combined_npx"
+          "$ref": "assays/olink_assay.json#definitions/combined_npx",
+          "description": "Batch-level combined NPX file."
         }
       }
     }
@@ -147,7 +151,8 @@
 
   "properties": {
     "study": {
-      "$ref": "assays/olink_assay.json#definitions/combined_npx"
+      "$ref": "assays/olink_assay.json#definitions/combined_npx",
+      "description": "Study-level combined NPX file."
     },
     "batches": {
       "type": "array",

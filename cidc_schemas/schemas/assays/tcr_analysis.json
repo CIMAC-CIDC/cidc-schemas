@@ -2,11 +2,11 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_analysis",
   "title": "TCR Output Files",
-  "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+  "description": "Output files generated from the TCRseq assay: TRA and TRB clones<br>Used only if TCR clone information is received from a non-Adpative sequenced TCR assay",
 
   "definitions": {
     "batch": {
-      "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+      "description": "Output files generated from a non-Adaptive TCR-seq assay: TRA and TRB clones",
       "type": "object",
       "additionalProperties": false,
       "required": ["batch_id"],
@@ -26,7 +26,7 @@
       }
     },
     "entry": {
-        "description": "Output files generated from the TCRseq assay: TRA and TRB clones",
+        "description": "Output files generated from a non-Adaptive TCR-seq assay: TRA and TRB clones",
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -34,8 +34,14 @@
                 "$comment": "Id of a sample within this clinical trial, that this record is based upon.",
                 "$ref": "sample.json#properties/cimac_id"
             },
-            "tra_clone": {"$ref": "artifacts/artifact_csv.json"},
-            "trb_clone": {"$ref": "artifacts/artifact_csv.json"},
+            "tra_clone": {
+              "description": "Used only if TCR clone information is received from a non-Adpative sequenced TCR assay",
+              "$ref": "artifacts/artifact_csv.json"
+            },
+            "trb_clone": {
+              "description": "Used only if TCR clone information is received from a non-Adpative sequenced TCR assay",
+              "$ref": "artifacts/artifact_csv.json"
+            },
             "comments": {
               "type": "string",
               "description": "Comments on the TCR analysis run."

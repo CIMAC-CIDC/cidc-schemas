@@ -1,0 +1,59 @@
+{
+  "title": "ELISA assay template",
+  "description": "Enzyme-Linked ImmunoSorbant Assay (ELISA) submission.",
+  "properties": {
+    "worksheets": {
+      "ELISA": {
+
+        "prism_preamble_object_schema" : "assays/elisa_assay.json",
+        "prism_preamble_object_pointer" : "/assays/elisa/-",
+        "prism_data_object_pointer" : "/antigens/-",
+        
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "run id": {
+            "merge_pointer": "0/assay_run_id",
+            "type_ref": "assays/elisa_assay.json#properties/assay_run_id"
+          },
+          "serology file": {
+            "merge_pointer": "0/assay_xlsx",
+            "is_artifact" : 1,
+            "gcs_uri_format": "{protocol identifier}/elisa/{run id}/assay.xlsx",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": true,
+            "description": "XLSX ELISA results file name on a user's computer."
+          }
+        },
+        "data_columns": {
+          "Antigens": {
+            "antigen": {
+              "merge_pointer": "0/antigen",
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/antigen"
+            },
+            "type": {
+              "merge_pointer": "0/antigen_type",
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/antigen_type"
+            },
+            "final concentration": {
+              "merge_pointer": "0/final_concentration",
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration",
+              "allow_empty": true
+            },
+            "final concentration units": {
+              "merge_pointer": "0/final_concentration_units",
+              "type_ref": "assays/elisa_assay.json#definitions/antigen/properties/final_concentration_units",
+              "allow_empty": true
+           }
+          }
+        }
+      }
+    }
+  }
+}

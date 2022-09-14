@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>
+            RNAseq level 1 analysis template
+            
+        </h1>
+        <p>
+            <b>Description:</b>  RNA sequencing Level 1 analysis submission.
+        </p>
+    </div>
+
+    <div class="container">
+        
+            
+
+    <div class="accordion" id="RNAseq_level_1_Analysis_accordion">
+        <div class="card">
+            <div class="card-header" id="RNAseq_level_1_Analysis">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_card">
+                        Worksheet - RNAseq level 1 Analysis
+                    </button>
+                </h2>
+            </div>
+            <div id="RNAseq_level_1_Analysis_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis" data-parent="#RNAseq_level_1_Analysis_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="RNAseq_level_1_Analysis_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="RNAseq_level_1_Analysis_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_preamble_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="RNAseq_level_1_Analysis_preamble_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis_preamble" data-parent="#RNAseq_level_1_Analysis_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="folder">
+                folder
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                        <div class="accordion" id="RNAseq_level_1_Analysis_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="RNAseq_level_1_Analysis_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#RNAseq_level_1_Analysis_body_card" aria-expanded="false" aria-controls="RNAseq_level_1_Analysis_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="RNAseq_level_1_Analysis_body_card" class="collapse" aria-labelledby="RNAseq_level_1_Analysis_body" data-parent="#RNAseq_level_1_Analysis_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">RNAseq level 1 Runs</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="comments">
+                comments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Comments on the RNAseq analysis run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="cimac_id_accordion">
+            <div class="card">
+                <div class="card-header" id="cimac_id">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#cimac_id_card" aria-expanded="false" aria-controls="cimac_id_card">
+                            cimac id
+                        </button>
+                        
+                            <sup><mark>required</mark></sup>
+                        
+                        <div style="float: right;">
+                            &lt; 
+                                
+        string
+    
+
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="cimac_id_card" class="collapse" aria-labelledby="cimac_id">
+                    <div class="card-body">
+                        
+                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                        
+                        <br>
+                        All files are
+                        <sup><mark>required</mark></sup>
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/{id}_error.yaml
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a YAML file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.yaml.html">
+                            yaml
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/star/{id}/{id}.sorted.bam
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a BAM file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bam.html">
+                            bam
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/star/{id}/{id}.sorted.bam.bai
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a Bam index file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bam_bai.html">
+                            bam bai
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/star/{id}/{id}.sorted.bam.stat.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/star/{id}/{id}.transcriptome.bam
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a BAM file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.bam.html">
+                            bam
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/star/{id}/{id}.Chimeric.out.junction
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JUNCTION file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.junction.html">
+                            junction
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/rseqc/read_distrib/{id}/{id}.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a binary file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.binary.html">
+                            binary
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/rseqc/tin_score/{id}/{id}.summary.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/rseqc/tin_score/{id}/{id}.tin_score.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/{id}.quant.sf
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/{id}.transcriptome.bam.log
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/ambig_info.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/expected_bias.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a GZ file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.gz.html">
+                            gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/fld.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a GZ file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.gz.html">
+                            gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/meta_info.json
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JSON file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.json.html">
+                            json
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/observed_bias.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a GZ file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.gz.html">
+                            gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/aux_info/observed_bias_3p.gz
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a GZ file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.gz.html">
+                            gz
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/cmd_info.json
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JSON file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.json.html">
+                            json
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/salmon/{id}/logs/salmon_quant.log
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a log file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.log.html">
+                            log
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/microbiome/{id}/{id}_addSample_report.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/trust4/{id}/{id}_report.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/fusion/{id}/{id}.fusion_predictions.abridged_addSample.tsv
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a tab Separated file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.tsv.html">
+                            tsv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/msisensor/single/{id}/{id}_msisensor.txt
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a text file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.text.html">
+                            text
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}analysis/neoantigen/{id}/{id}.genotype.json
+                    
+                </td>
+                <td width=55%>
+                    
+                        Information about a JSON file.
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.json.html">
+                            json
+                        </a>
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+
+    <div class="accordion" id="Excluded_Samples_accordion">
+        <div class="card">
+            <div class="card-header" id="Excluded_Samples">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Excluded_Samples_card" aria-expanded="false" aria-controls="Excluded_Samples_card">
+                        Worksheet - Excluded Samples
+                    </button>
+                </h2>
+            </div>
+            <div id="Excluded_Samples_card" class="collapse" aria-labelledby="Excluded_Samples" data-parent="#Excluded_Samples_accordion">
+                <div class="card-body">
+                    
+                    
+                        <div class="accordion" id="Excluded_Samples_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Excluded_Samples_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Excluded_Samples_body_card" aria-expanded="false" aria-controls="Excluded_Samples_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Excluded_Samples_body_card" class="collapse" aria-labelledby="Excluded_Samples_body" data-parent="#Excluded_Samples_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">Samples Excluded From Analysis</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac id">
+                cimac id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="reason">
+                reason
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comment describing why this sample is missing from the pipeline output.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

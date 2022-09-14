@@ -1,0 +1,2698 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>
+            Biospecimen manifest for normal blood DNA
+            
+        </h1>
+        <p>
+            <b>Description:</b>  Biospecimen manifest for transferring DNA extracted from normal blood samples.
+        </p>
+    </div>
+
+    <div class="container">
+        
+            
+
+    <div class="accordion" id="Shipment_accordion">
+        <div class="card">
+            <div class="card-header" id="Shipment">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Shipment_card" aria-expanded="false" aria-controls="Shipment_card">
+                        Worksheet - Shipment
+                    </button>
+                </h2>
+            </div>
+            <div id="Shipment_card" class="collapse" aria-labelledby="Shipment" data-parent="#Shipment_accordion">
+                <div class="card-body">
+                    
+                        <div class="accordion" id="Shipment_preamble_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Shipment_preamble">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Shipment_preamble_card" aria-expanded="false" aria-controls="Shipment_preamble_card">
+                                            Preamble Rows
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Shipment_preamble_card" class="collapse" aria-labelledby="Shipment_preamble" data-parent="#Shipment_preamble_accordion">
+                                    <div class="card-body">
+                                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="manifest id">
+                manifest id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Filename of the manifest used to ship this sample. Example: E4412_PBMC.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol identifier">
+                protocol identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="assay type">
+                assay type
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Assay and sample type used.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Olink"</li>
+                    
+                        <li>"WES"</li>
+                    
+                        <li>"RNAseq"</li>
+                    
+                        <li>"IHC"</li>
+                    
+                        <li>"CyTOF"</li>
+                    
+                        <li>"H\u0026E"</li>
+                    
+                        <li>"ELISA"</li>
+                    
+                        <li>"mIF"</li>
+                    
+                        <li>"mIHC"</li>
+                    
+                        <li>"TCRseq"</li>
+                    
+                        <li>"ATACseq"</li>
+                    
+                        <li>"ctDNA"</li>
+                    
+                        <li>"Microbiome"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="assay priority">
+                assay priority
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Priority of the assay as it appears on the intake form.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"1"</li>
+                    
+                        <li>"2"</li>
+                    
+                        <li>"3"</li>
+                    
+                        <li>"4"</li>
+                    
+                        <li>"5"</li>
+                    
+                        <li>"6"</li>
+                    
+                        <li>"7"</li>
+                    
+                        <li>"8"</li>
+                    
+                        <li>"9"</li>
+                    
+                        <li>"10"</li>
+                    
+                        <li>"11"</li>
+                    
+                        <li>"12"</li>
+                    
+                        <li>"13"</li>
+                    
+                        <li>"14"</li>
+                    
+                        <li>"15"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="receiving party">
+                receiving party
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Site where sample was shipped to be assayed.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"MDA_Wistuba"</li>
+                    
+                        <li>"MDA_Bernatchez"</li>
+                    
+                        <li>"MDA_Al-Atrash"</li>
+                    
+                        <li>"MSSM_Gnjatic"</li>
+                    
+                        <li>"MSSM_Rahman"</li>
+                    
+                        <li>"MSSM_Kim-Schulze"</li>
+                    
+                        <li>"MSSM_Bongers"</li>
+                    
+                        <li>"MSSM_MTC"</li>
+                    
+                        <li>"DFCI_Wu"</li>
+                    
+                        <li>"DFCI_Hodi"</li>
+                    
+                        <li>"DFCI_Severgnini"</li>
+                    
+                        <li>"DFCI_Livak"</li>
+                    
+                        <li>"Broad_Cibulskis"</li>
+                    
+                        <li>"Stanf_Maecker"</li>
+                    
+                        <li>"Stanf_Bendall"</li>
+                    
+                        <li>"NCH"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"FNLCR_MoCha"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="courier">
+                courier
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Courier utilized for shipment.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"FEDEX"</li>
+                    
+                        <li>"USPS"</li>
+                    
+                        <li>"UPS"</li>
+                    
+                        <li>"Inter-Site Delivery"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="tracking number">
+                tracking number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Air bill number assigned to shipment. Example: 4567788343.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="account number">
+                account number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Courier account number to pay for shipping if available. Example: 45465732.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="shipping condition">
+                shipping condition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of shipment made.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Frozen_Dry_Ice"</li>
+                    
+                        <li>"Frozen_Shipper"</li>
+                    
+                        <li>"Ice_Pack"</li>
+                    
+                        <li>"Ambient"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="date shipped">
+                date shipped
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of shipment.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+     :  date
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="date received">
+                date received
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date of receipt.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+     :  date
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="quality of shipment">
+                quality of shipment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indication that specimens were received in good condition.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Specimen shipment received in good condition"</li>
+                    
+                        <li>"Specimen shipment received in poor condition"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="ship from">
+                ship from
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Contact information for shipment.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="ship to">
+                ship to
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Physical shipping address of the destination.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+
+    <div class="accordion" id="Samples_accordion">
+        <div class="card">
+            <div class="card-header" id="Samples">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Samples_card" aria-expanded="false" aria-controls="Samples_card">
+                        Worksheet - Samples
+                    </button>
+                </h2>
+            </div>
+            <div id="Samples_card" class="collapse" aria-labelledby="Samples" data-parent="#Samples_accordion">
+                <div class="card-body">
+                    
+                    
+                        <div class="accordion" id="Samples_body_accordion">
+                            <div class="card">
+                                <div class="card-header" id="Samples_body">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Samples_body_card" aria-expanded="false" aria-controls="Samples_body_card">
+                                            Data Columns
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="Samples_body_card" class="collapse" aria-labelledby="Samples_body" data-parent="#Samples_body_accordion">
+                                    <div class="card-body">
+                                        
+                                            <h5 class="text-muted">IDs</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="entry (#)">
+                entry (#)
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a numbered identifier for patient (sample) entry in a shipment manifest.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        integer
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="collection event name">
+                collection event name
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of timepoint at which the sample was taken.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cohort name">
+                cohort name
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Categorical description of cohorts, arms, and treatment groups.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="participant ID">
+                participant ID
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial Participant Identifier. Crypto-hashed after upload.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="parent sample ID">
+                parent sample ID
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample identifier assigned by the biorepository site. Crypto-hashed after upload.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample ID">
+                processed sample ID
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Aliquot identifier assigned by the biorepository site. Crypto-hashed after upload.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="CIMAC_ID_accordion">
+            <div class="card">
+                <div class="card-header" id="CIMAC_ID">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#CIMAC_ID_card" aria-expanded="false" aria-controls="CIMAC_ID_card">
+                            CIMAC ID
+                        </button>
+                        
+                            <sup><mark>required</mark></sup>
+                        
+                        <div style="float: right;">
+                            &lt; 
+                                
+        string
+    
+
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="CIMAC_ID_card" class="collapse" aria-labelledby="CIMAC_ID">
+                    <div class="card-body">
+                        
+                            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+                        
+                        <br>
+                        All files are
+                        <sup><mark>required</mark></sup>
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td>
+                    
+                         cimac_participant_id
+                    
+                </td>
+                <td width=55%>
+                    
+                        Participant identifier assigned by the CIMAC-CIDC Network. Formated as: CTTTPPP for trial code TTT and participant PPP (first 7 characters of CIMAC ID).
+                    
+                </td>
+                <td>
+                    
+                        &lt; 
+                            
+        string
+    
+
+    
+                        &gt;
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">Specimen Info Filled by Biorepository</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="type of sample">
+                type of sample
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Type of sample sent.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Tumor Tissue"</li>
+                    
+                        <li>"Normal Tissue"</li>
+                    
+                        <li>"Skin Tissue"</li>
+                    
+                        <li>"Blood"</li>
+                    
+                        <li>"Bone Marrow"</li>
+                    
+                        <li>"Cerebrospinal Fluid"</li>
+                    
+                        <li>"Lymph Node"</li>
+                    
+                        <li>"Stool"</li>
+                    
+                        <li>"Cell Product"</li>
+                    
+                        <li>"White Blood Cell Apheresis"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample collection procedure">
+                sample collection procedure
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates the specimen source of the sample shipped. Example: Na Heparin blood draw aliquots (2 of three), FFPE block #52
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Blood Draw"</li>
+                    
+                        <li>"Excision"</li>
+                    
+                        <li>"Core Biopsy"</li>
+                    
+                        <li>"Punch Biopsy"</li>
+                    
+                        <li>"Endoscopic Biopsy"</li>
+                    
+                        <li>"Bone Marrow Core Biopsy"</li>
+                    
+                        <li>"Bone Marrow Aspirate"</li>
+                    
+                        <li>"Lumbar Puncture"</li>
+                    
+                        <li>"Aspirate"</li>
+                    
+                        <li>"Fine-Needle Aspiration"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample type">
+                processed sample type
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of processing that was performed on the collected specimen by the Biobank for storage.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Whole Blood"</li>
+                    
+                        <li>"Plasma"</li>
+                    
+                        <li>"PBMC"</li>
+                    
+                        <li>"Buffy Coat"</li>
+                    
+                        <li>"Bone Marrow Mononuclear Cell"</li>
+                    
+                        <li>"Supernatant"</li>
+                    
+                        <li>"Cell Pellet"</li>
+                    
+                        <li>"H\u0026E-Stained Fixed Tissue Slide Specimen"</li>
+                    
+                        <li>"Fixed Slide"</li>
+                    
+                        <li>"Tissue Scroll"</li>
+                    
+                        <li>"FFPE Punch"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample derivative">
+                processed sample derivative
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The type of derivative or analyte extracted from the specimen to be shipped for testing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Tumor DNA"</li>
+                    
+                        <li>"Tumor RNA"</li>
+                    
+                        <li>"Germline DNA"</li>
+                    
+                        <li>"Circulating Tumor-Derived DNA"</li>
+                    
+                        <li>"Stool DNA"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="box number">
+                box number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identifier if sample shipment container includes multiple boxes for each assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample location">
+                sample location
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sample location within the shipping container. Example: A1.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="type of primary container">
+                type of primary container
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The format in which the sample was sent.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Sodium heparin"</li>
+                    
+                        <li>"Blood specimen container with EDTA"</li>
+                    
+                        <li>"Potassium EDTA"</li>
+                    
+                        <li>"Streck Blood Collection Tube"</li>
+                    
+                        <li>"Stool collection container with DNA stabilizer"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample volume">
+                processed sample volume
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume of the processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample volume units">
+                processed sample volume units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume units of each processed sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Microliters"</li>
+                    
+                        <li>"Milliliters"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="processed sample quantity">
+                processed sample quantity
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Quantity of the processed sample (e.g. number of slides cut for DNA extraction).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample derivative volume">
+                sample derivative volume
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume of the analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample derivative volume units">
+                sample derivative volume units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Volume units of each analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Microliters"</li>
+                    
+                        <li>"Milliliters"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample derivative concentration">
+                sample derivative concentration
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration of analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample derivative concentration units">
+                sample derivative concentration units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            The concentration units for the analyte or derivative shipped.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Nanogram per Microliter"</li>
+                    
+                        <li>"Milligram per Milliliter"</li>
+                    
+                        <li>"Micrograms per Microliter"</li>
+                    
+                        <li>"Cells per Vial"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">DNA quality</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="din value">
+                din value
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="a260/a280 value">
+                a260/a280 value
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="a260/a230 value">
+                a260/a230 value
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                                        
+                                            <h5 class="text-muted">Filled by CIMAC Lab</h4>
+                                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="material used">
+                material used
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site indicates how much material was used for assay purposes.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="material used units">
+                material used units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Units for the amount of material used; should be the same value as Specimen Analyte units.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Microliters"</li>
+                    
+                        <li>"Milliliters"</li>
+                    
+                        <li>"Nanogram per Microliter"</li>
+                    
+                        <li>"Milligram per Milliliter"</li>
+                    
+                        <li>"Micrograms per Microliter"</li>
+                    
+                        <li>"Cells per Vial"</li>
+                    
+                        <li>"Slides"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="material remaining">
+                material remaining
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Receiving site indicates how much material remains after assay use.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="material remaining units">
+                material remaining units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Units for the amount of material remaining.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Microliters"</li>
+                    
+                        <li>"Milliliters"</li>
+                    
+                        <li>"Nanogram per Microliter"</li>
+                    
+                        <li>"Milligram per Milliliter"</li>
+                    
+                        <li>"Micrograms per Microliter"</li>
+                    
+                        <li>"Cells per Vial"</li>
+                    
+                        <li>"Slides"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="material storage condition">
+                material storage condition
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Storage condition of the material once it was received.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"RT"</li>
+                    
+                        <li>"4oC"</li>
+                    
+                        <li>"(-20)oC"</li>
+                    
+                        <li>"(-80)oC"</li>
+                    
+                        <li>"LN"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="quality of sample">
+                quality of sample
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Final status of sample after QC and pathology review.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Pass"</li>
+                    
+                        <li>"Fail"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample replacement">
+                sample replacement
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indication if sample replacement is/was requested.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Replacement Not Requested"</li>
+                    
+                        <li>"Replacement Requested"</li>
+                    
+                        <li>"Replacement Tested"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="residual sample use">
+                residual sample use
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indication if sample was sent to another location or returned back to biorepository.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Sample Returned"</li>
+                    
+                        <li>"Sample Sent to Another Lab"</li>
+                    
+                        <li>"Sample received from CIMAC"</li>
+                    
+                        <li>"Not Reported"</li>
+                    
+                        <li>"Other"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="comments">
+                comments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Comments on sample testing.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

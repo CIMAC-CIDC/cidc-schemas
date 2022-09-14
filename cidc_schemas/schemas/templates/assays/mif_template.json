@@ -1,0 +1,359 @@
+{    "title": "mIF assay template",
+    "description": "Multiplex ImmunoFlouresence (mIF) submission.",
+    "prism_template_root_object_schema": "assays/mif_assay.json",
+    "prism_template_root_object_pointer": "/assays/mif/0",
+    "properties":
+    {
+        "worksheets":
+        {
+            "mIF":
+            {
+                "preamble_rows":
+                {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator":
+                    {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/mif_assay.json#properties/assay_creator"
+                    },
+                    "slide scanner model":
+                    {
+                        "merge_pointer": "0/slide_scanner_model",
+                        "type_ref": "assays/mif_assay.json#properties/slide_scanner_model"
+                    },
+                    "image analysis software":
+                    {
+                        "merge_pointer": "0/image_analysis_software",
+                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software",
+                        "allow_empty": true
+                    },
+                    "image analysis software version":
+                    {
+                        "merge_pointer": "0/image_analysis_software_version",
+                        "type_ref": "assays/mif_assay.json#properties/image_analysis_software_version",
+                        "allow_empty": true
+                    },
+                    "cell segmentation model":
+                    {
+                        "merge_pointer": "0/cell_segmentation_model",
+                        "type_ref": "assays/mif_assay.json#properties/cell_segmentation_model",
+                        "allow_empty": true
+                    },
+                    "positive cell detection model":
+                    {
+                        "merge_pointer": "0/positive_cell_detection",
+                        "type_ref": "assays/mif_assay.json#properties/positive_cell_detection",
+                        "allow_empty": true
+                    },
+                    "staining":
+                    {
+                        "merge_pointer": "0/staining",
+                        "type_ref": "assays/mif_assay.json#properties/staining",
+                        "allow_empty": true
+                    },
+                    "staining date":
+                    {
+                        "merge_pointer": "0/staining_date",
+                        "type_ref": "assays/components/imaging_data.json#properties/staining_date",
+                        "allow_empty": true
+                    },
+                    "imaging date":
+                    {
+                        "merge_pointer": "0/imaging_date",
+                        "type_ref": "assays/components/imaging_data.json#properties/imaging_date",
+                        "allow_empty": true
+                    },
+                    "imaging status":
+                    {
+                        "merge_pointer": "0/imaging_status",
+                        "type_ref": "assays/components/imaging_data.json#properties/imaging_status",
+                        "allow_empty": true
+                    },
+                    "panel":
+                    {
+                        "merge_pointer": "0/panel",
+                        "type_ref": "assays/mif_assay.json#properties/panel"
+                    },
+                    "report": {
+                        "merge_pointer": "0/qc_report",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/mif/qc_report.zip",
+                        "is_artifact": 1,
+                        "allow_empty": true
+                    }
+                },
+                "prism_data_object_pointer": "/records/0/files/regions_of_interest/-",
+                "data_columns":
+                {
+                    "ROIs":
+                    {
+                        "CIMAC ID":
+                        {
+                            "merge_pointer": "3/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "ROI id":
+                        {
+                            "merge_pointer": "0/roi_id",
+                            "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id"
+                        },
+                        "IM3 file":
+                        {
+                            "merge_pointer": "0/im3",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/multispectral.im3",
+                            "is_artifact": 1,
+                            "allow_empty": true
+                        },
+                        "Composite image":
+                        {
+                            "merge_pointer": "0/composite_image",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/composite_image.tif",
+                            "is_artifact": 1,
+                            "allow_empty": true
+                        },
+                        "Component data":
+                        {
+                            "merge_pointer": "0/component_data",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/component_data.tif",
+                            "is_artifact": 1,
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Exports":
+            {
+                "preamble_rows":
+                {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/records/0/files/regions_of_interest/0/exports/-",
+                "data_columns":
+                {
+                    "Exports":
+                    {
+                        "CIMAC ID":
+                        {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "5/cimac_id"
+                        },
+                        "ROI id":
+                        {
+                            "type_ref": "assays/components/imaging/mif_roi.json#properties/roi_id",
+                            "merge_pointer": "2/roi_id"
+                        },
+                        "Export ID":
+                        {
+                            "description": "The export as given by the folder name. Generally the marker(s) used in each analysis.",
+                            "merge_pointer": "0/export_id",
+                            "type_ref": "assays/components/imaging/mif_export.json#properties/export_id"
+                        },
+                        "Score data files":
+                        {
+                            "description": "Comma separated list of score_data.txt files from inform export, will be usually just one.",
+                            "merge_pointer": "0/score_data",
+                            "type_ref": "assays/components/multiple_local_files.json#properties/file_path_list",
+                            "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/score_data_{num}.txt",
+                            "is_artifact": "multi",
+                            "allow_empty": true
+                        },
+                        "inForm export prefix":
+                        {
+                            "do_not_merge": true,
+                            "description": "Path on a user's computer to an InForm export directory with ROI's export prefix. From that upload tool will look for binary_seg_maps.tif, cell_seg_data.txt, cell_seg_data_summary.txt, phenotype_map.tif, composite_image.tif, and component_data.tif",
+                            "type": "string",
+                            "process_as": [
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'binary_seg_maps.tif'",
+                                "merge_pointer": "0/binary_seg_maps",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/binary_seg_maps.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'cell_seg_data.txt'",
+                                "description": "Comma separated list of cell_seg_data.txt files from inform export",
+                                "merge_pointer": "0/cell_seg_data",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/cell_seg_data.txt",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'cell_seg_data_summary.txt'",
+                                "merge_pointer": "0/cell_seg_data_summary",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/cell_seg_data_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'phenotype_map.tif'",
+                                "merge_pointer": "0/phenotype_map",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/phenotype_map.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'tissue_seg_data.txt'",
+                                "merge_pointer": "0/tissue_seg_data",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/tissue_seg_data.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'tissue_seg_data_summary.txt'",
+                                "merge_pointer": "0/tissue_seg_data_summary",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/tissue_seg_data_summary.txt",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'image_with_all_seg.tif'",
+                                "merge_pointer": "0/image_with_all_seg",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/image_with_all_seg.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'image_with_cell_seg_map.tif'",
+                                "merge_pointer": "0/image_with_cell_seg_map",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/image_with_cell_seg_map.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'image_with_phenotype_map.tif'",
+                                "merge_pointer": "0/image_with_phenotype_map",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/image_with_phenotype_map.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            },
+                            {
+                                "parse_through": "lambda prefix: str(prefix) + 'image_with_tissue_seg.tif'",
+                                "merge_pointer": "0/image_with_tissue_seg",
+                                "gcs_uri_format": "{protocol identifier}/mif/{cimac id}/roi_{roi id}/{export id}/image_with_tissue_seg.tif",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "is_artifact": 1,
+                                "allow_empty": true
+                            }]
+                        }
+                    }
+                }
+            },
+            "Antibodies":
+            {
+                "prism_data_object_pointer": "/antibodies/-",
+                "data_columns":
+                {
+                    "antibodies":
+                    {
+                        "Antibody":
+                        {
+                            "merge_pointer": "0/antibody",
+                            "type_ref": "assays/components/antibody.json#properties/antibody"
+                        },
+                        "Export name":
+                        {
+                            "merge_pointer": "0/export_name",
+                            "type_ref": "assays/components/mif_antibody.json#properties/export_name"
+                        },
+                        "Clone":
+                        {
+                            "merge_pointer": "0/clone",
+                            "type_ref": "assays/components/antibody.json#properties/clone"
+                        },
+                        "Antibody Company":
+                        {
+                            "merge_pointer": "0/company",
+                            "type_ref": "assays/components/antibody.json#properties/company"
+                        },
+                        "Cat#":
+                        {
+                            "merge_pointer": "0/cat_num",
+                            "type_ref": "assays/components/antibody.json#properties/cat_num"
+                        },
+                        "Lot#":
+                        {
+                            "merge_pointer": "0/lot_num",
+                            "type_ref": "assays/components/antibody.json#properties/lot_num"
+                        },
+                        "Staining Order":
+                        {
+                            "merge_pointer": "0/staining_order",
+                            "type_ref": "assays/components/mif_antibody.json#properties/staining_order"
+                        },
+                        "Fluor Wavelength":
+                        {
+                            "merge_pointer": "0/fluor_wavelength",
+                            "type_ref": "assays/components/mif_antibody.json#properties/fluor_wavelength"
+                        },
+                        "Primary ab Dilution":
+                        {
+                            "merge_pointer": "0/primary_ab_dilution",
+                            "type_ref": "assays/components/mif_antibody.json#properties/primary_ab_dilution"
+                        },
+                        "Dilutent":
+                        {
+                            "merge_pointer": "0/dilutent",
+                            "type_ref": "assays/components/mif_antibody.json#properties/dilutent"
+                        },
+                        "Fluor dilution":
+                        {
+                            "merge_pointer": "0/fluor_dilution",
+                            "type_ref": "assays/components/mif_antibody.json#properties/fluor_dilution"
+                        },
+                        "Antigen Retrieval Time":
+                        {
+                            "merge_pointer": "0/antigen_retrieval_time",
+                            "type_ref": "assays/components/mif_antibody.json#properties/antigen_retrieval_time"
+                        },
+                        "Primary Incubation Time":
+                        {
+                            "merge_pointer": "0/primary_incubation_time",
+                            "type_ref": "assays/components/mif_antibody.json#properties/primary_incubation_time"
+                        },
+                        "Amplification Time":
+                        {
+                            "merge_pointer": "0/amplification_time",
+                            "type_ref": "assays/components/mif_antibody.json#properties/amplification_time"
+                        }
+                    }
+                }
+            },
+            "Excluded Samples": {
+                "prism_data_object_pointer": "/excluded_samples/-",
+                "data_columns": {
+                  "Samples Excluded From Analysis": {
+                    "cimac id": {
+                      "type_ref": "sample.json#properties/cimac_id",
+                      "merge_pointer": "0/cimac_id"
+                    },
+                    "reason": {
+                      "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
+                      "merge_pointer": "0/reason_excluded"
+                    }
+                  }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 {
     "title": "WES analysis template",
-    "description": "Metadata information for WES Analysis output.",
+    "description": "Whole Exome Sequencing (WES) Tumor-Normal Paired analysis submission.",
     "prism_template_root_object_schema": "assays/wes_analysis.json",
     "prism_template_root_object_pointer": "/analysis/wes_analysis",
     "properties": {

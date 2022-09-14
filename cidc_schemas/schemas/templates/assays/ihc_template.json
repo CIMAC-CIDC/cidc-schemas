@@ -1,0 +1,133 @@
+{
+    "title": "IHC assay template",
+    "description": "ImmunoHistoChemistry (IHC) submission.",
+    "properties": {
+        "worksheets": {
+            "IHC": {
+                "prism_preamble_object_schema": "assays/ihc_assay.json",
+                "prism_preamble_object_pointer": "/assays/ihc/0",
+                "prism_data_object_pointer": "/records/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "slide scanner model": {
+                        "merge_pointer": "0/slide_scanner_model",
+                        "type_ref": "assays/ihc_assay.json#properties/slide_scanner_model"
+                    },
+                    "staining platform": {
+                        "merge_pointer": "0/staining_platform",
+                        "type_ref": "assays/ihc_assay.json#properties/staining_platform"
+                    },
+                    "autostainer model": {
+                        "merge_pointer": "0/autostainer_model",
+                        "type_ref": "assays/ihc_assay.json#properties/autostainer_model"
+                    },
+                    "antibody name": {
+                        "merge_pointer": "0/antibody/antibody",
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/antibody"
+                    },
+                    "company": {
+                        "merge_pointer": "0/antibody/company",
+                        "type_ref": "assays/components/antibody.json#properties/company"
+                    },
+                    "clone": {
+                        "merge_pointer": "0/antibody/clone",
+                        "type_ref": "assays/components/antibody.json#properties/clone"
+                    },
+                    "catalogue number": {
+                        "merge_pointer": "0/antibody/cat_num",
+                        "type_ref": "assays/components/antibody.json#properties/cat_num"
+                    },
+                    "lot number": {
+                        "merge_pointer": "0/antibody/lot_num",
+                        "type_ref": "assays/components/antibody.json#properties/lot_num"
+                    },
+                    "dilution": {
+                        "merge_pointer": "0/antibody/dilution",
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/dilution"
+                    },
+                    "incubation time": {
+                        "merge_pointer": "0/antibody/incubation_time",
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/incubation_time"
+                    },
+                    "incubation temperature": {
+                        "merge_pointer": "0/antibody/incubation_temp",
+                        "type_ref": "assays/ihc_assay.json#definitions/ihc_antibody/properties/incubation_temp"
+                    }
+                },
+                "data_columns": {
+                    "Sample": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "IHC image": {
+                            "merge_pointer": "0/files/ihc_image",
+                            "is_artifact": 1,
+                            "gcs_uri_format": {
+                                "format": "lambda val, ctx: str(ctx['protocol identifier']) + '/ihc/' + str(ctx['cimac id']) + '/ihc_image.' + (str(val).rsplit('.')[-1]).lower()",
+                                "check_errors": "lambda val: f'Bad file type {val!r}. It should be in one of .tiff .tif .qptiff .svs formats' if (str(val).rsplit('.', 1)[-1]).lower() not in ['svs', 'tiff', 'tif', 'qptiff'] else None",
+                                "template_comment": "In one of .tiff .tif .qptiff .svs formats."
+                            },
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        }
+                    },
+                    "Marker call": {
+                        "marker positive": {
+                            "merge_pointer": "0/marker_positive",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/marker_positive"
+                        }
+                    },
+                    "Chromogenic IHC (please specify one score/metric)": {
+                        "tumor proportion score": {
+                            "merge_pointer": "0/tumor_proportion_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/tumor_proportion_score",
+                            "allow_empty": true
+                        },
+                        "combined positive score": {
+                            "merge_pointer": "0/combined_positive_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/combined_positive_score",
+                            "allow_empty": true
+                        },
+                        "inflammatory cells": {
+                            "merge_pointer": "0/inflammatory_cells",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/inflammatory_cells",
+                            "allow_empty": true
+                        },
+                        "positive inflammatory cell area": {
+                            "merge_pointer": "0/positive_inflammatory_cell_area",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/positive_inflammatory_cell_area",
+                            "allow_empty": true
+                        },
+                        "intensity": {
+                            "merge_pointer": "0/intensity",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/intensity",
+                            "allow_empty": true
+                        },
+                        "% expression": {
+                            "merge_pointer": "0/percentage_expression",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/percentage_expression",
+                            "allow_empty": true
+                        },
+                        "h score": {
+                            "merge_pointer": "0/h_score",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/h_score",
+                            "allow_empty": true
+                        },
+                        "comment": {
+                            "merge_pointer": "0/comment",
+                            "type_ref": "assays/ihc_assay.json#definitions/record/properties/comment",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

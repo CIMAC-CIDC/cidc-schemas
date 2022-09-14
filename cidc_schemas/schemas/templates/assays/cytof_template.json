@@ -1,0 +1,248 @@
+{
+    "title": "CYTOF assay template",
+    "description": "Cytometry by Time-Of-Flight (CyTOF) aka mass-cytometry assay submission.",
+    "prism_template_root_object_schema": "assays/cytof_assay.json",
+    "prism_template_root_object_pointer": "/assays/cytof/0",
+    "properties": {
+        "worksheets": {
+
+            "Acquisition and Preprocessing": {
+                "preamble_rows": {
+                    "assay run id": {
+                        "merge_pointer": "/assay_run_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/assay_run_id"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "instrument": {
+                        "merge_pointer": "0/instrument",
+                        "type_ref": "assays/cytof_assay.json#properties/instrument",
+                        "allow_empty": true
+                    },
+                    "injector": {
+                        "merge_pointer": "0/injector",
+                        "type_ref": "assays/cytof_assay.json#properties/injector",
+                        "allow_empty": true
+                    },
+                    "date of acquisition": {
+                        "merge_pointer": "0/date_of_acquisition",
+                        "type_ref": "assays/cytof_assay.json#properties/date_of_acquisition"
+                    },
+                    "acquisition buffer": {
+                        "merge_pointer": "0/acquisition_buffer",
+                        "type_ref": "assays/cytof_assay.json#properties/acquisition_buffer"
+                    },
+                    "bead removal": {
+                        "merge_pointer": "0/bead_removal",
+                        "type_ref": "assays/cytof_assay.json#properties/bead_removal"
+                    },
+                    "normalization method": {
+                        "merge_pointer": "0/normalization_method",
+                        "type_ref": "assays/cytof_assay.json#properties/normalization_method",
+                        "allow_empty": true
+                    },
+                    "debarcoding protocol": {
+                        "merge_pointer": "0/debarcoding_protocol",
+                        "type_ref": "assays/cytof_assay.json#properties/debarcoding_protocol",
+                        "allow_empty": true
+                    },
+                    "harware version": {
+                        "merge_pointer": "0/harware_version",
+                        "type_ref": "assays/cytof_assay.json#properties/harware_version",
+                        "allow_empty": true
+                    },
+                    "concatenated spike in fcs filename": {
+                        "merge_pointer": "0/spike_in_fcs",
+                        "is_artifact" : 1,
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/spike_in.fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "description": "Path to a file on a User's computer. \nThis file contains the normalized & debarcoded spike-in for a batch.",
+                        "allow_empty": true
+                    },
+                    "concatenated raw fcs filename(s)": {
+                        "merge_pointer": "0/source_fcs",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/source_{num}.fcs",
+                        "is_artifact": "multi",
+                        "allow_empty": true
+                    }
+                },
+                "prism_data_object_pointer": "/records/-",
+                "data_columns": {
+                    "Run info": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        }
+                    },
+                    "Preprocessing": {
+                        "processed fcs filename": {
+                            "merge_pointer": "0/input_files/processed_fcs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/cytof/{cimac id}/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path"
+                        },
+                        "concatenation version": {
+                            "merge_pointer": "0/input_files/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/input_files/properties/concatenation_version",
+                            "allow_empty": true
+                        },
+                        "normalization version": {
+                            "merge_pointer": "0/input_files/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/input_files/properties/normalization_version",
+                            "allow_empty": true
+                        },
+                        "preprocessing_notes": {
+                            "merge_pointer": "0/preprocessing_notes",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/entry/properties/preprocessing_notes",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Antibody Information": {
+                "prism_data_object_pointer": "/cytof_antibodies/-",
+                "data_columns": {
+                    "Samples": {
+                        "target": {
+                            "merge_pointer": "0/antibody",
+                            "type_ref": "assays/components/antibody.json#properties/antibody"
+                        },
+                        "clone": {
+                            "merge_pointer": "0/clone",
+                            "type_ref": "assays/components/antibody.json#properties/clone"
+                        },
+                        "antibody company": {
+                            "merge_pointer": "0/company",
+                            "type_ref": "assays/components/antibody.json#properties/company"
+                        },
+                        "catalog number": {
+                            "merge_pointer": "0/cat_num",
+                            "type_ref": "assays/components/antibody.json#properties/cat_num"
+                        },
+                        "lot number": {
+                            "merge_pointer": "0/lot_num",
+                            "type_ref": "assays/components/antibody.json#properties/lot_num"
+                        },
+                        "isotope": {
+                            "merge_pointer": "0/isotope",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/isotope"
+                        },
+                        "dilution": {
+                            "merge_pointer": "0/dilution",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/dilution"
+                        },
+                        "stain_type": {
+                            "merge_pointer": "0/stain_type",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/stain_type"
+                        },
+                        "usage": {
+                            "merge_pointer": "0/usage",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/antibody/properties/usage"
+                        }
+                    }
+                }
+            },
+            "Controls and Spike-Ins": {
+                "preamble_rows": {
+                    "protocol identifier":
+                    {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/controls/-",
+                "data_columns": {
+                    "Controls info": {
+                        "control name": {
+                            "merge_pointer": "0/control_name",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/control_name",
+                            "allow_empty": true
+                        },
+                        "cimac participant id": {
+                            "merge_pointer": "0/cimac_participant_id",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/controls/properties/cimac_participant_id",
+                            "allow_empty": true
+                        },
+                        "processed fcs filename": {
+                            "merge_pointer": "0/input_files/processed_fcs",
+                            "is_artifact": 1,
+                            "gcs_uri_format": "{protocol identifier}/cytof/controls/{control name}/processed.fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "allow_empty": true
+                        },
+                        "spike-in fcs filename": {
+                            "merge_pointer": "0/input_files/spike_in_fcs",
+                            "type_ref": "assays/components/local_file.json#properties/file_path",
+                            "gcs_uri_format": "{protocol identifier}/cytof/controls/{control name}/spike_in.fcs",
+                            "is_artifact": 1,
+                            "description": "Path to the spike-in file on a User's computer.",
+                            "allow_empty": true
+                        },
+                        "concatenation version": {
+                            "merge_pointer": "0/input_files/concatenation_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/input_files/properties/concatenation_version",
+                            "allow_empty": true
+                        },
+                        "normalization version": {
+                            "merge_pointer": "0/input_files/normalization_version",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/input_files/properties/normalization_version",
+                            "allow_empty": true
+                        }
+                    }
+                }
+                    
+            },
+            "Barcoding": {
+                "prism_data_object_pointer": "/barcodes/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/cytof_assay_core.json#properties/batch_id"
+                    },
+                    "Debarcoding key file": {
+                        "merge_pointer": "0/barcoding_key_csv",
+                        "is_artifact" : 1,
+                        "gcs_uri_format": "{protocol identifier}/cytof/{batch id}/debarcoding_key.csv",
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "description": "Path to a file on a User's computer. \nThis contains the master debarcoding key in a CSV file.",
+                        "allow_empty": true
+                    }
+                },
+                "data_columns": {
+                    "Barcodes": {
+                        "id (cimac id/participant id/control name)": {
+                            "merge_pointer": "0/barcode_id",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/barcodes/properties/barcode_id",
+                            "allow_empty": true
+                        },
+                        "barcode number": {
+                            "merge_pointer": "0/barcode_num",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/barcodes/properties/barcode_num",
+                            "allow_empty": true
+                        },
+                        "debarcoding key": {
+                            "merge_pointer": "0/debarcoding_key",
+                            "type_ref": "assays/cytof_assay_core.json#definitions/barcodes/properties/debarcoding_key",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

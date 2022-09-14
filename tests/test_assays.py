@@ -437,59 +437,6 @@ def test_mif():
         validator.validate(obj)
 
 
-def test_micsss():
-
-    # create the micsss object
-    image = {"slide_scanner_model": "Vectra 2.0"}
-
-    imaging_data = {}
-    obj = {**ASSAY_CORE, **image}  # merge dictionaries
-
-    # create the artifact object
-    image = ARTIFACT_OBJ.copy()
-    image["data_format"] = "IMAGE"
-    image["height"] = 300
-    image["width"] = 250
-    image["channels"] = 3
-    text = ARTIFACT_OBJ.copy()
-    text["data_format"] = "TEXT"
-    csv = ARTIFACT_OBJ.copy()
-    csv["data_format"] = "CSV"
-    record = {
-        "project_qupath_folder": "dummy",
-        "micsss_exported_data_folder": "dummy_value",
-        "files": {
-            "micsss_output_summary": csv,
-            "Mapping Artifacts": [
-                {
-                    "binary_seg_maps": image,
-                    "cell_seg_data": text,
-                    "cell_seg_data_summary": text,
-                    "phenotype_map": image,
-                    "score_data": [text],
-                    "composite_image": image,
-                    "component_data": image,
-                }
-            ],
-            "Composite Image Artifacts": [
-                {"composite_image": image, "component_data": image}
-            ],
-        },
-    }
-
-    # add a demo record.
-    obj["records"] = [record]
-
-    # create validator assert schemas are valid.
-    validator = _fetch_validator("micsss")
-    validator.validate(obj)
-
-    # assert negative behaviors
-    del obj["records"][0]["project_qupath_folder"]
-    with pytest.raises(jsonschema.ValidationError):
-        validator.validate(obj)
-
-
 def test_olink():
 
     # build up the batch object with one record

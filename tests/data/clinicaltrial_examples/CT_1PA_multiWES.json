@@ -22,14 +22,7 @@
                     "sample_volume_units": "Other",
                     "material_used": 1,
                     "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ]
+                    "quality_of_sample": "Other"
                 },
                 {
                     "cimac_id":  "CTTTP21S2.00",
@@ -41,14 +34,7 @@
                     "sample_volume_units": "Other",
                     "material_used": 1,
                     "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ] 
+                    "quality_of_sample": "Other"
                 },
                 {
                     "cimac_id":  "CTTTP21S3.00",
@@ -60,14 +46,7 @@
                     "sample_volume_units": "Other",
                     "material_used": 1,
                     "material_remaining": 0,
-                    "quality_of_sample": "Other",
-                    "aliquots": [
-                        {
-                            "slide_number": "1",
-                            "aliquot_replacement": "N/A",
-                            "aliquot_status": "Other"
-                        }
-                    ] 
+                    "quality_of_sample": "Other"
                 }
             ]
         }

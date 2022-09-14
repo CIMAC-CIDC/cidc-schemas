@@ -8,39 +8,39 @@
   "properties": {
 
     "phenotype_map": {
-      "$comment": "Image produced from the combination of multiple imaging experiment data images.",
+      "description": "Image produced from the combination of multiple imaging experiment data images.",
       "$ref": "artifacts/artifact_image.json"
     },
     
     "binary_seg_maps": {
-      "$comment": "Results of a computer vision task, in which specific regions of a region are mapped with binary values.",
+      "description": "Results of a computer vision task, in which specific regions of a region are mapped with binary values.",
       "$ref": "artifacts/artifact_image.json"
     },
     "cell_seg_data": {
-      "$comment": "Data produced from the analysis of cellular image.",
+      "description": "Data produced from the analysis of cellular image.",
       "$ref": "artifacts/artifact_text.json"
     },
     "cell_seg_data_summary": {
-      "$comment": "Summary of the results of a cell segmentation data experiment.",
+      "description": "Summary of the results of a cell segmentation data experiment.",
       "$ref": "artifacts/artifact_text.json"
     },
     "seg_maps": {
-      "$comment": "Results of a computer vision task, in which specific regions of a region are mapped.",
+      "description": "Results of a computer vision task, in which specific regions of a region are mapped.",
       "$ref": "artifacts/artifact_image.json"
     },
     "tissue_seg_data": {
-      "$comment": "Data produced from the analysis of tissue image.",
+      "description": "Data produced from the analysis of tissue image.",
       "$ref": "artifacts/artifact_text.json"
     },
     "tissue_seg_data_summary": {
-      "$comment": "Summary of the results of a tissue segmentation data experiment.",
+      "description": "Summary of the results of a tissue segmentation data experiment.",
       "$ref": "artifacts/artifact_text.json"
     },
     
     "score_data": {
       "type": "array",
       "items": {
-        "$comment": "Generation of values based on experiment data.",
+        "description": "Generation of values based on experiment data.",
         "$ref": "artifacts/artifact_text.json"
       }
     }

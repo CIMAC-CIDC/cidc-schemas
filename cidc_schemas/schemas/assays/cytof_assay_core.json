@@ -54,9 +54,26 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "source_fcs": {"$ref": "artifacts/artifact_fcs.json"},
-                "processed_fcs": {"$ref": "artifacts/artifact_fcs.json"},
-                "spike_in_fcs": {"$ref": "artifacts/artifact_fcs.json"}
+                "source_fcs": {
+                    "description": "Raw FCS file for this sample in particular, any spike-in would not be removed.",
+                    "$ref": "artifacts/artifact_fcs.json"
+                },
+                "processed_fcs": {
+                    "description": "Final FCS files after all processing. Spike-in's should be removed.",
+                    "$ref": "artifacts/artifact_fcs.json"
+                },
+                "spike_in_fcs": {
+                    "description": "Processed FCS file for the spike-in.",
+                    "$ref": "artifacts/artifact_fcs.json"
+                },
+                "concatenation_version": {
+                    "description": "Concatenation of FCS files into a single FCS version number.",
+                    "type": "string"
+                },
+                "normalization_version": {
+                    "description": "Version of normalization for CyTOF assay batch.",
+                    "type": "string"
+                }
             }
         },
 
@@ -86,14 +103,6 @@
                 "cimac_id": {
                     "$comment": "Id of a sample within this clinical trial, that this assay record is based upon.",
                     "$ref": "sample.json#properties/cimac_id"
-                },
-                "concatenation_version": {
-                    "description": "Concatenation of FCS files into a single FCS version number.",
-                    "type": "string"
-                },
-                "normalization_version": {
-                    "description": "Version of normalization for CyTOF assay batch.",
-                    "type": "string"
                 },
                 "staining_date": {
                     "description": "Date of staining for CyTOF assay slides.",
@@ -150,6 +159,7 @@
                     "type": "string"
                 },
                 "barcoding_key_csv": {
+                    "description": "The master debarcoding key in a CSV file.",
                     "$ref": "assays/cytof_assay.json#properties/barcoding_key_csv"
                 }
             }

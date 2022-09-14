@@ -49,7 +49,7 @@ def _register_derivation(upload_type: str):
 
 def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
     """Derive files from a trial_metadata blob given an `upload_type`"""
-    if context.upload_type in prism.MANIFESTS_WITH_PARTICIPANT_INFO:
+    if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
         return _shipping_manifest_derivation(context)
 
     if context.upload_type in _upload_type_derivations:
@@ -100,7 +100,6 @@ def _shipping_manifest_derivation(context: DeriveFilesContext) -> DeriveFilesRes
     )
 
     participants.drop("samples", axis=1, inplace=True, errors="ignore")
-    samples.drop("aliquots", axis=1, inplace=True, errors="ignore")
 
     participants_csv = participants.to_csv(index=False)
     samples_csv = samples.to_csv(index=False)
@@ -214,7 +213,7 @@ def _olink_derivation(context: DeriveFilesContext) -> DeriveFilesResult:
         return None
 
     return_files: Dict[str, pd.DataFrame] = {}
-    if "study" in olink:
+    if "object_url" in olink.get("study", {}).get("npx_file", {}):
         study_npx = olink["study"]["npx_file"]
         return_files["study_wide"] = download_and_parse_npx(study_npx["object_url"])
     else:

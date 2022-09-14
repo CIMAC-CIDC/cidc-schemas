@@ -77,7 +77,6 @@ def test_clinicaltrial_simple():
     sample = {
         "cimac_id": "CTTT12300.00",
         "parent_sample_id": "blank",
-        "aliquots": [aliquot],
         "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Blood",
@@ -110,24 +109,10 @@ def test_clinicaltrial_simple():
 
 
 def test_clinicaltrial_olink():
-
-    # create 2 aliquots
-    aliquot1 = {
-        "slide_number": "13",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-    aliquot2 = {
-        "slide_number": "14",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-
     # create the sample.
     sample1 = {
         "cimac_id": "CTTTP1234.00",
         "parent_sample_id": "blank",
-        "aliquots": [aliquot1],
         "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",
@@ -140,7 +125,6 @@ def test_clinicaltrial_olink():
     sample2 = {
         "cimac_id": "CTTTPABCD.00",
         "parent_sample_id": "blank",
-        "aliquots": [aliquot2],
         "collection_event_name": "Baseline",
         "sample_location": "---",
         "type_of_sample": "Other",

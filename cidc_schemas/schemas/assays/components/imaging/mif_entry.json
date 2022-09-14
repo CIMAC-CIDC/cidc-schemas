@@ -7,7 +7,7 @@
   "additionalProperties": false,
   "properties": {
     "cimac_id": {
-        "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+        "description": "Id of an sample within this clinical trial, that this assay record is based upon.",
         "$ref": "sample.json#properties/cimac_id"
     },
     "files": {

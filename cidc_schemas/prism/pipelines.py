@@ -7,7 +7,6 @@ from tempfile import NamedTemporaryFile
 from typing import Dict, List, NamedTuple, Tuple, Union
 from datetime import datetime
 from collections import defaultdict
-import xlsxwriter
 
 from cidc_schemas.template import Template
 

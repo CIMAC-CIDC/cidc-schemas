@@ -245,7 +245,11 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
             ref_key = "$ref" if "$ref" in node else "type_ref"
 
             if ref_key == "$ref":
-                extra_keys = set(node.keys()).difference({"$ref", "$comment"})
+                # # Explicitly allow description on a $ref for public documentation,
+                # # reserving $comment for developer documentation.
+                extra_keys = set(node.keys()).difference(
+                    {"$ref", "$comment", "description"}
+                )
                 if extra_keys:
                     # As for json-schema.org:
                     # "... You will always use $ref as the only key in an object:
@@ -253,7 +257,7 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
                     # So we raise on that, to notify schema creator that s/he should not
                     # expect those additional keys to be verified by schema validator.
                     raise Exception(
-                        f"Schema node with '$ref' should not contain anything else (besides '$comment' for docs). \
+                        f"Schema node with '$ref' should not contain anything else besides 'description' for public docs (or '$comment' for dev docs). \
                         \nOn: {node} \nOffending keys {extra_keys}"
                     )
 
@@ -265,8 +269,14 @@ def _map_refs(node: dict, on_refs: Callable[[str], dict]) -> dict:
                 # so merge new_node and node.
                 new_node.update(node)
 
-            # Plus concatenated new and old '$comment' fields
-            # which should be just ignored anyways.
+            # Keep old 'description' field from next to $ref;
+            # this is for user-facing documentation.
+            if "description" in node and node["description"]:
+                new_node["description"] = node["description"]
+
+            # Plus concatenate new and old '$comment' fields;
+            # this is for dev-side documentation side and
+            # shouldn't be shown to users.
             if "$comment" in new_node or "$comment" in node:
                 new_node["$comment"] = new_node.get("$comment", "") + node.get(
                     "$comment", ""

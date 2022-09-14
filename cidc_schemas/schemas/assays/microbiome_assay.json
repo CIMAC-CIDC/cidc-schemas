@@ -3,6 +3,10 @@
   "$id": "microbiome",
   "title": "Microbiome Assay",
   "type": "object",
+	
+  "$comment": "description used in docs/index.html and docs/assays.microbiome.html",
+  "description": "Microbiome Assay.",
+  
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
   

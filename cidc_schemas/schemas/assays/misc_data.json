@@ -1,9 +1,12 @@
 {
     "$schema": "metaschema/strict_meta_schema.json#",
     "$id": "miscellaneous_data",
-    "title": "Miscellaneous Data",
+    "title": "Miscellaneous data",
     "type": "object",
-    "description": "Miscellaneous Data",
+
+	"$comment": "description used in docs/index.html and docs/assays.misc.html",
+    "description": "Miscellaneous data not supported directly by any other assay.",
+    
     "additionalProperties": false,
     "mergeStrategy": "objectMerge",
     "definitions": {
@@ -24,7 +27,7 @@
                     "type": "string",
                     "description": "The local file location for determining where the file is coming from"
                 },
-                "description": {
+                "file_description": {
                     "type": "string",
                     "description": "An optional long string describing the file, its purpose, and/or its content."
                 }

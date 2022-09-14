@@ -1,0 +1,134 @@
+{
+  "title": "Olink assay template",
+  "description": "Olink proteomics submission.",
+  "prism_template_root_object_schema": "assays/olink_assay.json#definitions/batch",
+  "prism_template_root_object_pointer": "/assays/olink/batches/0",
+  "properties": {
+    "worksheets": {
+      "olink": {
+        "prism_data_object_pointer": "/records/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "4/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "batch identifier": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/olink_assay.json#definitions/batch/properties/batch_id"
+          },
+          "panel": {
+            "merge_pointer": "0/panel",
+            "type_ref": "assays/olink_assay.json#definitions/batch/properties/panel"
+          },
+          "assay panel lot": {
+            "merge_pointer": "0/assay_panel_lot",
+            "type_ref": "assays/olink_assay.json#definitions/batch/properties/assay_panel_lot"
+          },
+          "study-level combined file": {
+            "description": "Relative path to a combined NPX file containing all samples for this trial.",
+            "merge_pointer": "2/study/npx_file",
+            "is_artifact": 1,
+            "gcs_uri_format": "{protocol identifier}/olink/study_npx.xlsx",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": true,
+            "allow_empty": true
+          },
+          "study-level combined npx manager version": {
+            "merge_pointer": "2/study/npx_manager_version",
+            "type_ref": "assays/olink_assay.json#definitions/combined_npx/properties/npx_manager_version",
+            "allow_empty": true
+          },
+          "batch-level combined file": {
+            "description": "Relative path to a combined NPX file containing all samples for this upload only.",
+            "merge_pointer": "0/combined/npx_file",
+            "is_artifact": 1,
+            "gcs_uri_format": "{protocol identifier}/olink/batch_{batch identifier}/combined_npx.xlsx",
+            "type_ref": "assays/components/local_file.json#properties/file_path",
+            "extra_metadata": true,
+            "allow_empty": true
+          },
+          "batch-level combined npx manager version": {
+            "merge_pointer": "0/combined/npx_manager_version",
+            "type_ref": "assays/olink_assay.json#definitions/combined_npx/properties/npx_manager_version",
+            "allow_empty": true
+          }
+        },
+        "data_columns": {
+          "Olink details": {
+            "chip barcode": {
+              "merge_pointer": "0/chip_barcode",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/chip_barcode"
+            },
+            "npx file": {
+              "merge_pointer": "0/files/assay_npx",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/olink/batch_{batch identifier}/chip_{chip barcode}/assay_npx.xlsx",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "extra_metadata": true,
+              "description": "NPX file name on a user's computer."
+            },
+            "raw ct file": {
+              "merge_pointer": "0/files/assay_raw_ct",
+              "is_artifact": 1,
+              "gcs_uri_format": "{protocol identifier}/olink/batch_{batch identifier}/chip_{chip barcode}/assay_raw_ct.csv",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "description": "Raw CT file name on a user's computer."
+            },
+            "run date": {
+              "merge_pointer": "0/run_date",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/run_date"
+            },
+            "run time": {
+              "merge_pointer": "0/run_time",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/run_time"
+            },
+            "instrument": {
+              "merge_pointer": "0/instrument",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/instrument"
+            },
+            "fludigm application version": {
+              "merge_pointer": "0/fludigm_application_version",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/fludigm_application_version"
+            },
+            "fludigm application build": {
+              "merge_pointer": "0/fludigm_application_build",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/fludigm_application_build"
+            },
+            "probe type": {
+              "merge_pointer": "0/probe_type",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/probe_type"
+            },
+            "passive reference": {
+              "merge_pointer": "0/passive_reference",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/passive_reference"
+            },
+            "quality threshold": {
+              "merge_pointer": "0/quality_threshold",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/quality_threshold"
+            },
+            "baseline correction": {
+              "merge_pointer": "0/baseline_correction",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/baseline_correction"
+            },
+            "number of samples": {
+              "merge_pointer": "0/number_of_samples",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/number_of_samples"
+            },
+            "number of samples failed": {
+              "merge_pointer": "0/number_of_samples_failed",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/number_of_samples_failed"
+            },
+            "npx manager version": {
+              "merge_pointer": "0/npx_manager_version",
+              "type_ref": "assays/olink_assay.json#definitions/record/properties/npx_manager_version"
+            }
+          }
+        }
+      }
+    }
+  }
+}

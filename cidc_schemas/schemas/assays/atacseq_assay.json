@@ -1,7 +1,10 @@
 {
 	"$schema": "metaschema/strict_meta_schema.json#",
 	"$id": "atacseq_assay",
-	"title": "Assay for Transposase-Accessible Chromatin by Sequencing",
+	"title": "ATACseq Assay",
+
+	"$comment": "description used in docs/index.html and docs/assays.atacseq.html",
+	"description": "Assay for Transposase-Accessible Chromatin by Sequencing",
 
 	"definitions": {
 		"entry": {

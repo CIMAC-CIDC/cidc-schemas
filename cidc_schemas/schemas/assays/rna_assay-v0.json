@@ -8,8 +8,10 @@
   "mergeStrategy": "objectMerge",
   
   "required": [
+    "assay_creator",
     "enrichment_method",
-    "records"
+    "records",
+    "sequencer_platform"
   ],
 
   "allOf": [

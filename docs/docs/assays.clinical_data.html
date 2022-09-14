@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>
+            Clinical data Assay
+            
+        </h1>
+        <p>
+            <b>Description:</b>  Clinical data recorded for a clinical trial
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="accordion" id="assay_accordion">
+            
+                <div class="card">
+                    <div class="card-header" id="assay_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_metadata_card" aria-expanded="false" aria-controls="assay_metadata_card">
+                                Assay Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_metadata_card" class="collapse" aria-labelledby="assay_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Broad"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="assay_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_data_card" aria-expanded="false" aria-controls="assay_data_card">
+                                Assay Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_data_card" class="collapse" aria-labelledby="assay_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="records_accordion">
+            <div class="card">
+                <div class="card-header" id="records">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="records_card" class="collapse" aria-labelledby="records">
+                    <div class="card-body">
+                        
+                            A single file from clinical data upload.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="clinical_file">
+                clinical_file
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A non-harmonized clinical data file.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                any of
+            &gt;
+            <ul>
+            
+                <li>
+                    <a href="files.clinical_xlsx.html">
+                        clinical xlsx
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="files.clinical_csv.html">
+                        clinical csv
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="files.clinical_docx.html">
+                        clinical docx
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="comment">
+                comment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text comment regarding this file.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+
+            
+                <div class="card">
+                    <div class="card-header" id="assay_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_uploads_card" aria-expanded="false" aria-controls="assay_uploads_card">
+                                Assay Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%>
+                    <a href='assays.clinical_data.clinical_data_template.html'>
+                        Clincal data template
+                    </a>
+                </td>
+                <td>
+                    Submission of clinical data for each participant, indexed by CIMAC participant ID.<br>Use 'MISSING' if no CIMAC ID has been assigned.
+                </td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+        </div>
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

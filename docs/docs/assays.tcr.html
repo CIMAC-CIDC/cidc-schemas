@@ -1,0 +1,1952 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CIDC Schemas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main role="main">
+      
+
+    
+    <div class="container">
+        <p>
+            <a href="index.html">CIDC Documentation</a>
+        </p>
+        <h1>
+            TCRseq Assay
+            
+        </h1>
+        <p>
+            <b>Description:</b>  Additional properties to describe a TCR assay for expression analysis.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="accordion" id="assay_accordion">
+            
+                <div class="card">
+                    <div class="card-header" id="assay_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_metadata_card" aria-expanded="false" aria-controls="assay_metadata_card">
+                                Assay Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_metadata_card" class="collapse" aria-labelledby="assay_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            TCRseq batch identification number.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="assay_creator">
+                assay_creator
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Broad"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sample_sheet">
+                sample_sheet
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A Comma-Separated Value (CSV) text file describing the samples in this batch.
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sequencer_platform">
+                sequencer_platform
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Illumina - HiSeq 2500"</li>
+                    
+                        <li>"Illumina - HiSeq 3000"</li>
+                    
+                        <li>"Illumina - NextSeq 550"</li>
+                    
+                        <li>"Illumina - HiSeq 4000"</li>
+                    
+                        <li>"Illumina - NovaSeq 6000"</li>
+                    
+                        <li>"MiSeq"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="sequencing_run_date">
+                sequencing_run_date
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Date when the TCR sequencing was run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+     :  date
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="assay_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_data_card" aria-expanded="false" aria-controls="assay_data_card">
+                                Assay Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_data_card" class="collapse" aria-labelledby="assay_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+        
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="records_accordion">
+            <div class="card">
+                <div class="card-header" id="records">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="records_card" class="collapse" aria-labelledby="records">
+                    <div class="card-body">
+                        
+                            A single data record from TCRseq assay.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="tsv_file">
+                tsv_file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Adaptive sequencing output file
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">
+                tsv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="files_accordion">
+            <div class="card">
+                <div class="card-header" id="files">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#files_card" aria-expanded="false" aria-controls="files_card">
+                        files
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    object
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="files_card" class="collapse" aria-labelledby="files">
+                    <div class="card-body">
+                        
+                            used only if fastq files were received for a TCRseq assay (non-Adaptive sequencing)
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+        
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="replicates_accordion">
+            <div class="card">
+                <div class="card-header" id="replicates">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#replicates_card" aria-expanded="false" aria-controls="replicates_card">
+                        replicates
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="replicates_card" class="collapse" aria-labelledby="replicates">
+                    <div class="card-body">
+                        
+                            TCRseq replicate of interest.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="replicate_id">
+                replicate_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Replicate identifier.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="i1">
+                i1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the index of Read 1.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="i2">
+                i2
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the index of Read 2.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r2">
+                r2
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the second fragment.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="r1">
+                r1
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Fastq file for the first fragment.
+        
+    </td>
+    <td>
+        
+            <a href="files.fastq_gz.html">
+                fastq gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="rna_quantity_ng">
+                rna_quantity_ng
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            RNA quantity (in ng).
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="controls_accordion">
+            <div class="card">
+                <div class="card-header" id="controls">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#controls_card" aria-expanded="false" aria-controls="controls_card">
+                        controls
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="controls_card" class="collapse" aria-labelledby="controls">
+                    <div class="card-body">
+                        
+                            Data records from TCRseq assay for a control for this batch.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="id">
+                id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A unique ID for this control.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="tsv_file">
+                tsv_file
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a tab Separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">
+                tsv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_metadata">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_metadata_card" aria-expanded="false" aria-controls="analysis_metadata_card">
+                                Analysis Metadata
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_metadata_card" class="collapse" aria-labelledby="analysis_metadata" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="protocol_identifier">
+                protocol_identifier
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+                
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="batches_accordion">
+            <div class="card">
+                <div class="card-header" id="batches">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
+                        batches
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="batches_card" class="collapse" aria-labelledby="batches">
+                    <div class="card-body">
+                        
+                            Output files generated from a non-Adaptive TCR-seq assay: TRA and TRB clones
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            TCRseq batch identification number.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="report_trial">
+                report_trial
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a GZ file.
+        
+    </td>
+    <td>
+        
+            <a href="files.gz.html">
+                gz
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="summary_info">
+                summary_info
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Information about a comma separated file.
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analysis_data">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analysis_data_card" aria-expanded="false" aria-controls="analysis_data_card">
+                                Analysis Data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analysis_data_card" class="collapse" aria-labelledby="analysis_data" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="batches_accordion">
+            <div class="card">
+                <div class="card-header" id="batches">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#batches_card" aria-expanded="false" aria-controls="batches_card">
+                        batches
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="batches_card" class="collapse" aria-labelledby="batches">
+                    <div class="card-body">
+                        
+                            Output files generated from a non-Adaptive TCR-seq assay: TRA and TRB clones
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="excluded_samples_accordion">
+            <div class="card">
+                <div class="card-header" id="excluded_samples">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#excluded_samples_card" aria-expanded="false" aria-controls="excluded_samples_card">
+                        excluded_samples
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="excluded_samples_card" class="collapse" aria-labelledby="excluded_samples">
+                    <div class="card-body">
+                        
+                            A list of samples excluded from analysis, along with the reasons why.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="reason_excluded">
+                reason_excluded
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A comment describing why this sample is missing from the pipeline output.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+            
+        
+            
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="records_accordion">
+            <div class="card">
+                <div class="card-header" id="records">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#records_card" aria-expanded="false" aria-controls="records_card">
+                        records
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="records_card" class="collapse" aria-labelledby="records">
+                    <div class="card-body">
+                        
+                            Output files generated from a non-Adaptive TCR-seq assay: TRA and TRB clones
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cimac_id">
+                cimac_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+                as regex <br> <code>^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$</code>
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="comments">
+                comments
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Comments on the TCR analysis run.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="tra_clone">
+                tra_clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Used only if TCR clone information is received from a non-Adpative sequenced TCR assay
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="trb_clone">
+                trb_clone
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Used only if TCR clone information is received from a non-Adpative sequenced TCR assay
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+
+            
+                <div class="card">
+                    <div class="card-header" id="assay_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#assay_uploads_card" aria-expanded="false" aria-controls="assay_uploads_card">
+                                Assay Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="assay_uploads_card" class="collapse" aria-labelledby="assay_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%>
+                    <a href='assays.tcr.tcr_adaptive_template.html'>
+                        TCRseq [Adaptive] assay template
+                    </a>
+                </td>
+                <td>
+                    TCR expression data submission via Adaptive's TSV files.
+                </td>
+            </tr>
+        
+            <tr>
+                <td width=25%>
+                    <a href='assays.tcr.tcr_fastq_template.html'>
+                        TCRseq [FASTQ] assay template
+                    </a>
+                </td>
+                <td>
+                    TCR expression data submission via FASTQ files.
+                </td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div class="card">
+                    <div class="card-header" id="analaysis_uploads">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#analaysis_uploads_card" aria-expanded="false" aria-controls="analaysis_uploads_card">
+                            Analysis Uploads
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="analaysis_uploads_card" class="collapse" aria-labelledby="analaysis_uploads" data-parent="#assay_accordion">
+                        <div class="card-body">
+                            <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        
+            <tr>
+                <td width=25%>
+                    <a href='assays.tcr.tcr_analysis_template.html'>
+                        TCR analysis template
+                    </a>
+                </td>
+                <td>
+                    TCR sequencing analysis submission.
+                </td>
+            </tr>
+        
+    </table>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+    

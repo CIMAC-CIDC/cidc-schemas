@@ -2,51 +2,14 @@
   "protocol_identifier": "10021",
   "allowed_collection_event_names": ["Baseline"],
   "allowed_cohort_names": ["Arm_Z"],
-  "collection_event_list": [
-    {
-      "event_name": "Baseline",
-      "specimen_types": [
-        {
-          "specimen_type": "Whole Blood",
-          "derivatives": [
-            { "specimen_type": "Plasma", "intended_assays": ["CyTOF"] },
-            { "specimen_type": "PBMC", "intended_assays": ["Olink"] }
-          ]
-        }
-      ]
-    },
-    {
-      "event_name": "Week7",
-      "specimen_types": [
-        {
-          "specimen_type": "Whole Blood",
-          "derivatives": [
-            {
-              "specimen_type": "Plasma",
-              "intended_assays": ["CyTOF"],
-              "derivatives": [
-                {
-                  "specimen_type": "DNA",
-                  "intended_assays": ["WES"]
-                }
-              ]
-            },
-            { "specimen_type": "PBMC", "intended_assays": ["Olink"] }
-          ]
-        }
-      ]
-    }
-  ],
   "participants": [
     {
       "cimac_participant_id": "CTTTPP1",
-      "cidc_participant_id": "CIDC-10021-pPpPp1",
       "participant_id": "trial.PA.1",
       "cohort_name": "Arm_Z",
       "samples": [
         {
           "cimac_id": "CTTTPP1S1.00",
-          "cidc_id": "CIDC-10021-pPpPp1-sS0",
           "parent_sample_id": "SA.1.1",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -55,18 +18,10 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         },
         {
           "cimac_id": "CTTTPP1S1.01",
-          "cidc_id": "CIDC-10021-pPpPp1-sS1",
           "parent_sample_id": "SA.1.1",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -75,18 +30,10 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         },
         {
           "cimac_id": "CTTTPP1S2.00",
-          "cidc_id": "CIDC-10021-pPpPp1-sS2",
           "parent_sample_id": "SA.1.2",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -95,26 +42,17 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         }
       ]
     },
     {
       "cimac_participant_id": "CTTTPP2",
-      "cidc_participant_id": "CIDC-10021-pPpPp2",
       "participant_id": "trial.PA.2",
       "cohort_name": "Arm_Z",
       "samples": [
         {
           "cimac_id": "CTTTPP2S1.00",
-          "cidc_id": "CIDC-10021-pPpPp2-sS0",
           "parent_sample_id": "SA.2.1",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -123,18 +61,10 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         },
         {
           "cimac_id": "CTTTPP2S1.01",
-          "cidc_id": "CIDC-10021-pPpPp2-sS1",
           "parent_sample_id": "SA.2.1",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -143,18 +73,10 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         },
         {
           "cimac_id": "CTTTPP2S2.00",
-          "cidc_id": "CIDC-10021-pPpPp2-sS2",
           "parent_sample_id": "SA.2.2",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -163,18 +85,10 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         },
         {
           "cimac_id": "CTTTPP2S2.01",
-          "cidc_id": "CIDC-10021-pPpPp2-sS3",
           "parent_sample_id": "SA.2.2",
           "collection_event_name": "Baseline",
           "sample_location": "---",
@@ -183,14 +97,7 @@
           "sample_volume_units": "Other",
           "material_used": 1,
           "material_remaining": 0,
-          "quality_of_sample": "Other",
-          "aliquots": [
-            {
-              "slide_number": "1",
-              "aliquot_replacement": "N/A",
-              "aliquot_status": "Other"
-            }
-          ]
+          "quality_of_sample": "Other"
         }
       ]
     }

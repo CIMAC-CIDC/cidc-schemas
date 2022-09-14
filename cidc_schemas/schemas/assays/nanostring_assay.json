@@ -3,7 +3,10 @@
   "$id": "nanostring_assay",
   "title": "Nanostring Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.nanostring.html",
   "description": "A microarray assay for expression levels, suitable for smaller samples than RNA-seq",
+  
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
   "definitions": {

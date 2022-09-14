@@ -12,7 +12,9 @@
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
-              }
+              },
+              "concatenation_version": "GHIL",
+              "normalization_version": "ABC"
             },
             "output_files": {
               "fcs_file": {
@@ -66,9 +68,7 @@
               }
             },
             "debarcoding_key": "FLUIDIGM 1234",
-            "preprocessing_notes": "a note like any other note",
-            "concatenation_version": "GHIL",
-            "normalization_version": "ABC"
+            "preprocessing_notes": "a note like any other note"
           },
           {
             "cimac_id": "CTSTP01S2.01",
@@ -79,7 +79,9 @@
                 "artifact_category": "Assay Artifact from CIMAC",
                 "upload_placeholder": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                 "uploaded_timestamp": "2019-11-19T20:48:41.310000+00:00"
-              }
+              },
+              "concatenation_version": "GHIL",
+              "normalization_version": "ABC"
             },
             "output_files": {
               "fcs_file": {
@@ -133,9 +135,7 @@
               }
             },
             "debarcoding_key": "FLUIDIGM 1234",
-            "preprocessing_notes": "a note like any other note",
-            "concatenation_version": "GHIL",
-            "normalization_version": "ABC"
+            "preprocessing_notes": "a note like any other note"
           }
         ],
         "instrument": "PresNixon123",

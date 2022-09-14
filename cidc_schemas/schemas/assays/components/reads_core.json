@@ -9,7 +9,7 @@
       "type": "array",
       "mergeStrategy": "append",
       "items": {
-        "$comment": "Fastq file for the first fragment.",
+        "description": "Fastq file for the first fragment.",
         "$ref": "artifacts/artifact_fastq_gz.json"
       },
       "minItems": 1
@@ -18,7 +18,7 @@
       "type": "array",
       "mergeStrategy": "append",
       "items": {
-        "$comment": "Fastq file for the first fragment.",
+        "description": "Fastq file for the second fragment.",
         "$ref": "artifacts/artifact_fastq_gz.json"
       },
       "minItems": 1
@@ -27,7 +27,7 @@
       "type": "array",
       "mergeStrategy": "append",
       "items": {
-        "$comment": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
+        "description": "A BAM file, aligned or not, which contains both pairs of sequencing libraries",
         "$ref": "artifacts/artifact_bam.json" 
       },
       "minItems": 1

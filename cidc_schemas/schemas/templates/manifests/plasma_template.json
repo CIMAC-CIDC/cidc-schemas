@@ -1,6 +1,6 @@
 {
-    "title": "Shipping manifest for Plasma samples",
-    "description": "Shipping / receiving manifest for transferring Plasma samples.\n",
+    "title": "Biospecimen manifest for plasma samples",
+    "description": "Biospecimen manifest for transferring blood plasma samples.",
     "properties": {
         "worksheets": {
 

@@ -5,6 +5,7 @@
   "allOf": [
     { "$ref": "assays/components/composite_image.json" }
   ],
+  "type": "object",
   "additionalProperties": false,
   "properties": {
     "roi_id": {

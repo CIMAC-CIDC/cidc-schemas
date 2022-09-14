@@ -3,7 +3,10 @@
   "$id": "hande_assay",
   "title": "H&E Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.hande.html",
   "description": "H & E assay",
+
   "additionalProperties": false,
   "mergeStrategy": "objectMerge",
 

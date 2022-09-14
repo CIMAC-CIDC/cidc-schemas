@@ -2,7 +2,10 @@
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "clinical_trial",
   "title": "Clinical Trial",
+
+	"$comment": "description used in docs/index.html and docs/clinical_trial.html",
   "description": "Encapsulates information regarding a clinical trial.",
+  
   "additionalProperties": false,
   "type": "object",
   "properties": {
@@ -62,7 +65,10 @@
       "description": "A description of the reasons why this study could provide insight into molecular biomarkers of immunotherapy.",
       "type": "string"
     },
-    "schema": { "$ref": "artifacts/artifact_image.json" },
+    "schema": {
+      "$ref": "artifacts/artifact_image.json",
+      "description": "An image of trial schema, if available"
+    },
     "biomarker_plan": {
       "description": "A description of the objectives and hypotheses for the proposed biomarkers.",
       "type": "string"
@@ -75,11 +81,6 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "A list of assays the CIDC expects to receive for this trial."
-    },
-    "collection_event_list": {
-      "description": "A list associating collection events with allowed sample types.",
-      "type": "array",
-      "items": { "$ref": "collection_event.json" }
     },
     "allowed_collection_event_names": {
       "description": "Allowed values for sample.json#properties/collection_event_name for this trial.",
@@ -102,7 +103,8 @@
       "items": {
         "$ref": "shipping_core.json"
       },
-      "mergeStrategy": "append"
+      "mergeStrategy": "append",
+      "description": "Core shipping details for a manifest"
     },
     "participants": {
       "type": "array",

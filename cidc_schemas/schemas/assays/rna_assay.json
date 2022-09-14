@@ -1,9 +1,12 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "rna_assay",
-  "title": "RNA Gene Expression Assay",
+  "title": "RNAseq Gene Expression Assay",
   "type": "object",
+	
+  "$comment": "description used in docs/index.html and docs/assays.atacseq.html",
   "description": "An RNA assay for expression analysis.",
+  
   "inheritableBase": true,
   "mergeStrategy": "objectMerge",
   

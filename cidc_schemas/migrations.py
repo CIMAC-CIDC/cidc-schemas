@@ -42,6 +42,80 @@ class migration:
         raise NotImplementedError
 
 
+class v0_25_54_to_v0_26_0(migration):
+    """
+    DM tweaks
+    - cytof assay core: move concatenation_version and normalization_version from entry to input_files
+        - so controls can ALSO have like samples
+    - move misc_data: description to file_description on file
+    - remove collection_event_list on clinical_trial
+    - remove cidc_participant_id and clinical on participant
+    - remove cidc_id and aliquots on samples
+    - removed unused MICSSS assay
+
+    To accommodate DM tweaks in simplification related to docs update
+    """
+
+    @classmethod
+    def upgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        # these are removal, so cannot downgrade later
+        metadata.pop("collection_event_list", None)
+
+        for partic in metadata.get("participants", []):
+            partic.pop("cidc_participant_id", None)
+            partic.pop("clinical", None)
+
+            for sample in partic["samples"]:
+                sample.pop("cidc_id", None)
+                sample.pop("aliquots", None)
+
+        if "micsss" in metadata.get("assays", {}):
+            metadata["assays"].pop("micsss")
+
+        # modifications can be reversed
+        if "cytof" in metadata.get("assays", {}):
+            for batch in metadata["assays"]["cytof"]:
+                for record in batch["records"]:
+                    if "concatenation_version" in record:
+                        record["input_files"]["concatenation_version"] = record.pop(
+                            "concatenation_version"
+                        )
+                    if "normalization_version" in record:
+                        record["input_files"]["normalization_version"] = record.pop(
+                            "normalization_version"
+                        )
+
+        if "misc_data" in metadata.get("assays", {}):
+            for batch in metadata["assays"]["misc_data"]:
+                for file in batch["files"]:
+                    if "description" in file:
+                        file["file_description"] = file.pop("description")
+
+        return MigrationResult(metadata, {})
+
+    @classmethod
+    def downgrade(cls, metadata: dict, *args, **kwargs) -> MigrationResult:
+        if "cytof" in metadata.get("assays", {}):
+            for batch in metadata["assays"]["cytof"]:
+                for record in batch["records"]:
+                    if "concatenation_version" in record["input_files"]:
+                        record["concatenation_version"] = record["input_files"].pop(
+                            "concatenation_version"
+                        )
+                    if "normalization_version" in record["input_files"]:
+                        record["normalization_version"] = record["input_files"].pop(
+                            "normalization_version"
+                        )
+
+        if "misc_data" in metadata.get("assays", {}):
+            for batch in metadata["assays"]["misc_data"]:
+                for file in batch["files"]:
+                    if "file_description" in file:
+                        file["description"] = file.pop("file_description")
+
+        return MigrationResult(metadata, {})
+
+
 class v0_25_41_to_v0_25_42(migration):
     """
     Move existing WES analysis files to wes_analysis_old and

@@ -21,14 +21,14 @@ from cidc_schemas.json_validation import (
     format_validation_error,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
-from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
+from .constants import SCHEMA_DIR, TEST_SCHEMA_DIR
 
 
 def test_validator_iter_errors_in_doc_ref():
     """Show that calling iter_errors directly leads to an assertion error"""
     validator = _Validator(
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$schema": "http://json-schema.org/draft-2020-12/schema#",
             "additionalProperties": False,
             "type": "object",
             "properties": {"a": {"type": "string", "in_doc_ref_pattern": "/a"}},
@@ -88,7 +88,6 @@ def test_trial_core():
     al_validator = jsonschema.Draft7Validator(al_schema)
     al_validator.check_schema(al_schema)
 
-    # create some aliquots.
     shipment = {
         "account_number": "account_number",
         "assay_priority": "1",
@@ -104,25 +103,11 @@ def test_trial_core():
         "tracking_number": "tracking_number",
         "receiving_party": "MDA_Wistuba",
     }
-    aliquot1 = {
-        "slide_number": "99",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-    al_validator.validate(aliquot1)
-
-    aliquot2 = {
-        "slide_number": "98",
-        "aliquot_replacement": "N/A",
-        "aliquot_status": "Other",
-    }
-    al_validator.validate(aliquot2)
 
     # create some samples.
     sample1 = {
         "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssida",
-        "aliquots": [aliquot1],
         "collection_event_name": "Baseline",
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
@@ -137,7 +122,6 @@ def test_trial_core():
     sample2 = {
         "cimac_id": "CTTTPPP12.00",
         "parent_sample_id": "ssidb",
-        "aliquots": [aliquot2],
         "collection_event_name": "Baseline",
         "type_of_primary_container": "Sodium heparin",
         "sample_location": "---",
@@ -366,7 +350,7 @@ def test_special_keywords():
 
     # load the schema
     schema_root = SCHEMA_DIR
-    schema_path = os.path.join(SCHEMA_DIR, "templates/metadata/cytof_template.json")
+    schema_path = os.path.join(SCHEMA_DIR, "templates/assays/cytof_template.json")
     # we don't validate it because it's a template, not a schema
     schema = _load_dont_validate_schema(schema_path, schema_root)
 

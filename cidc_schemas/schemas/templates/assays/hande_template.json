@@ -1,0 +1,74 @@
+{
+  "title": "H & E assay template",
+  "description": "Hemotoxylin and Eosin staining (H&E) submission.",
+  "properties": {
+      "worksheets": {
+          "H&E": {
+              "prism_preamble_object_schema": "assays/hande_assay.json",
+              "prism_preamble_object_pointer": "/assays/hande/0",
+              "prism_data_object_pointer": "/records/-",
+              "preamble_rows": {
+                "protocol identifier": {
+                      "merge_pointer": "3/protocol_identifier",
+                      "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                  },
+                  "assay creator": {
+                      "merge_pointer": "0/assay_creator",
+                      "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                  }
+              },
+              "data_columns": {
+                  "Samples": {
+                      "cimac id": {
+                          "merge_pointer": "0/cimac_id",
+                          "type_ref": "sample.json#properties/cimac_id"
+                      },
+                      "file type": {
+                          "do_not_merge": true,
+                          "type": "string",
+                          "enum": ["svs", "jpg"]
+                      },
+                      "image file": {
+                          "merge_pointer": "0/files/image_file",
+                          "is_artifact": 1,
+                          "gcs_uri_format": "{protocol identifier}/hande/{cimac id}/image_file.{file type}",
+                          "type_ref": "assays/components/local_file.json#properties/file_path"
+                      },
+
+                      "tumor tissue (% total area)": {
+                        "merge_pointer": "0/tumor_tissue_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/tumor_tissue_percentage",
+                        "allow_empty": true
+                      },
+                      "viable tumor (% area)": {
+                        "merge_pointer": "0/viable_tumor_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_tumor_percentage",
+                        "allow_empty": true
+                      },
+                      "viable stroma (% area)": {
+                        "merge_pointer": "0/viable_stroma_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/viable_stroma_percentage",
+                        "allow_empty": true
+                      },
+                      "necrosis (% area)": {
+                        "merge_pointer": "0/necrosis_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/necrosis_percentage",
+                        "allow_empty": true
+                      },
+                      "fibrosis (% area)": {
+                        "merge_pointer": "0/fibrosis_percentage",
+                        "type_ref": "assays/hande_assay.json#definitions/record/properties/fibrosis_percentage",
+                        "allow_empty": true
+                      },
+
+                      "comment": {
+                            "merge_pointer": "0/comment",
+                            "type_ref": "assays/hande_assay.json#definitions/record/properties/comment",
+                            "allow_empty": true
+                        }
+                  }
+              }
+          }
+      }
+  }
+}

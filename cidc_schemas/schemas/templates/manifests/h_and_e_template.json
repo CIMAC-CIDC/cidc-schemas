@@ -1,6 +1,6 @@
 {
-    "title": "Shipping manifest for Hematoxylin and Eosin stain",
-    "description": "Shipping / receiving manifest for transferring H&E slides.",
+    "title": "Biospecimen manifest for H&E",
+    "description": "Biospecimen manifest for transferring Hematoxylin and Eosin stained slides.",
     "properties": {
         "worksheets": {
 

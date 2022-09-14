@@ -1,0 +1,356 @@
+{
+    "title": "WES analysis template",
+    "description": "Metadata information for WES Analysis output.",
+    "prism_template_root_object_schema": "assays/wes_analysis.json",
+    "prism_template_root_object_pointer": "/analysis/wes_analysis",
+    "properties": {
+        "worksheets": {
+            "WES Analysis": {
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "2/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "folder": {
+                        "do_not_merge": true,
+                        "type": "string",
+                        "allow_empty": true
+                    }
+                },
+                "prism_data_object_pointer": "/pair_runs/-",
+                "data_columns": {
+                    "WES Runs": {
+                        "run id": {
+                            "merge_pointer": "/run_id",
+                            "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/run_id",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/{run}_error.yaml'",
+                                    "merge_pointer": "/error",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/error.yaml",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.vcf.gz'",
+                                    "merge_pointer": "/somatic/vcf_gz_tnscope_output",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_output.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.filter.vcf.gz'",
+                                    "merge_pointer": "/somatic/vcf_gz_tnscope_filter",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_gz_tnscope_filter.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.filter.maf'",
+                                    "merge_pointer": "/somatic/maf_tnscope_filter",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/maf_tnscope_filter.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.vcf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_vcf",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_output_twist.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.maf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_maf",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_output_twist.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.vcf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_vcf",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_output_twist_filtered.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/somatic/{run}/{run}_tnscope.output.twist.filtered.maf'",
+                                    "merge_pointer": "/somatic/tnscope_output_twist_filtered_maf",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tnscope_output_twist_filtered.maf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/germline/{run}/{run}_vcfcompare.txt'",
+                                    "merge_pointer": "/germline/vcf_compare",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_compare.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/somatic_variants/05_tumor_germline_overlap.tsv'",
+                                    "merge_pointer": "/report/tumor_germline_overlap",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor_germline_overlap.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/neoantigens/01_HLA_Results.tsv'",
+                                    "merge_pointer": "/neoantigen/HLA_results",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/HLA_results.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/neoantigen/{run}/combined/{run}.filtered.tsv'",
+                                    "merge_pointer": "/neoantigen/combined_filtered",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/combined_filtered.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/purity/{run}/{run}.optimalpurityvalue.txt'",
+                                    "merge_pointer": "/purity/optimal_purity_value",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/optimal_purity_value.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/clonality/{run}/{run}_pyclone.tsv'",
+                                    "merge_pointer": "/clonality/clonality_pyclone",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_pyclone.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/clonality/{run}/{run}_table.tsv'",
+                                    "merge_pointer": "/clonality/clonality_table",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/clonality_table.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/copynumber/{run}/{run}_cnvcalls.txt'",
+                                    "merge_pointer": "/copynumber/copynumber_cnv_calls",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/copynumber/{run}/{run}_cnvcalls.txt.tn.tsv'",
+                                    "merge_pointer": "/copynumber/copynumber_cnv_calls_tsv",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/copynumber_cnvcalls.txt.tn.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/msisensor2/{run}/{run}_msisensor.txt'",
+                                    "merge_pointer": "/msisensor/msisensor",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/msisensor.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}.haplotyper.rna.vcf.gz'",
+                                    "merge_pointer": "/rna/haplotyper",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/haplotyper.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/rna/{run}/{run}_tnscope.filter.neoantigen.vep.rna.vcf'",
+                                    "merge_pointer": "/rna/vcf_tnscope_filter_neoantigen",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/vcf_tnscope_filter_neoantigen.vcf",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report.tar.gz'",
+                                    "merge_pointer": "/report/report",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/report.tar.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/WES_Meta/02_WES_Run_Version.tsv'",
+                                    "merge_pointer": "/report/wes_run_version",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_run_version.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/config.yaml'",
+                                    "merge_pointer": "/report/config",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/config.yaml",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/metasheet.csv'",
+                                    "merge_pointer": "/report/metasheet",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/metasheet.csv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda run: f'{folder or \"\"}analysis/report/json/{run}.wes.json'",
+                                    "merge_pointer": "/report/wes_sample_json",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/wes_sample.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                }
+                            ]
+                        },
+                        "normal cimac id": {
+                            "merge_pointer": "/normal/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                    "merge_pointer": "/normal/alignment/align_sorted_dedup",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/sorted.dedup.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.dedup.bam.bai'",
+                                    "merge_pointer": "/normal/alignment/align_sorted_dedup_index",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/sorted.dedup.bam.bai",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/optitype/{id}/{id}_result.tsv'",
+                                    "merge_pointer": "/normal/optitype/optitype_result",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/optitype_result.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/xhla/{id}/report-{id}-hla.json'",
+                                    "merge_pointer": "/normal/optitype/xhla_report_hla",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/xhla_report_hla.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_coverage_metrics.txt'",
+                                    "merge_pointer": "/normal/metrics/coverage_metrics",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_target_metrics.txt'",
+                                    "merge_pointer": "/normal/metrics/target_metrics",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/target_metrics.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
+                                    "merge_pointer": "/normal/metrics/coverage_metrics_summary",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/coverage_metrics_summary.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz'",
+                                    "merge_pointer": "/normal/germline/haplotyper_targets",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/normal/{normal cimac id}/haplotyper_targets.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                }
+                            ]
+                        },
+                        "tumor cimac id": {
+                            "merge_pointer": "/tumor/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.dedup.bam'",
+                                    "merge_pointer": "/tumor/alignment/align_sorted_dedup",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/align/{id}/{id}.sorted.dedup.bam.bai'",
+                                    "merge_pointer": "/tumor/alignment/align_sorted_dedup_index",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/sorted.dedup.bam.bai",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/optitype/{id}/{id}_result.tsv'",
+                                    "merge_pointer": "/tumor/optitype/optitype_result",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/optitype_result.tsv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/xhla/{id}/report-{id}-hla.json'",
+                                    "merge_pointer": "/tumor/optitype/xhla_report_hla",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/xhla_report_hla.json",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_coverage_metrics.txt'",
+                                    "merge_pointer": "/tumor/metrics/coverage_metrics",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_target_metrics.txt'",
+                                    "merge_pointer": "/tumor/metrics/target_metrics",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/target_metrics.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/metrics/{id}/{id}_coverage_metrics.sample_summary.txt'",
+                                    "merge_pointer": "/tumor/metrics/coverage_metrics_summary",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/coverage_metrics_summary.txt",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                },
+                                {
+                                    "parse_through": "lambda id: f'{folder or \"\"}analysis/germline/{id}/{id}_haplotyper.targets.vcf.gz'",
+                                    "merge_pointer": "/tumor/germline/haplotyper_targets",
+                                    "gcs_uri_format": "{protocol identifier}/wes/{run id}/analysis/tumor/{tumor cimac id}/haplotyper_targets.vcf.gz",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1
+                                }
+                            ]
+                        },
+                        "comments": {
+                            "type_ref": "assays/wes_analysis.json#definitions/pair_analysis/properties/comments",
+                            "merge_pointer": "0/comments",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Excluded Samples": {
+                "prism_data_object_pointer": "/excluded_samples/-",
+                "data_columns": {
+                    "Samples Excluded From Analysis": {
+                        "cimac id": {
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "merge_pointer": "0/cimac_id"
+                        },
+                        "reason": {
+                            "type_ref": "assays/components/excluded_samples.json#items/properties/reason_excluded",
+                            "merge_pointer": "0/reason_excluded"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

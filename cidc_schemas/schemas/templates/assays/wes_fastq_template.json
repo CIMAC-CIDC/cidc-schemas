@@ -1,0 +1,80 @@
+{
+  "title": "WES [FASTQ] assay template",
+  "description": "Whole Exome Sequencing (WES) data submission via FASTQ files.",
+  "properties": {
+    "worksheets": {
+      "WES": {
+        "prism_preamble_object_schema" : "assays/wes_assay.json",
+        "prism_preamble_object_pointer" : "/assays/wes/-",
+        "prism_data_object_pointer" : "/records/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "sequencing protocol": {
+            "merge_pointer": "0/sequencing_protocol",
+            "type_ref": "assays/wes_assay.json#properties/sequencing_protocol",
+            "allow_empty": true
+          },
+          "library kit": {
+            "merge_pointer": "0/library_kit",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/library_kit"
+          },
+          "sequencer platform": {
+            "merge_pointer": "0/sequencer_platform",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/sequencer_platform"
+          },
+          "paired end reads": {
+            "merge_pointer": "0/paired_end_reads",
+            "type_ref": "assays/components/ngs_assay_core.json#properties/paired_end_reads"
+          },
+          "read length": {
+            "merge_pointer": "0/read_length",
+            "type_ref": "assays/wes_assay.json#properties/read_length"
+          },
+          "bait set": {
+            "merge_pointer": "0/bait_set",
+            "type_ref": "assays/wes_assay.json#properties/bait_set"
+          }
+        },
+        "data_columns": {
+          "Samples": {
+            "cimac id": {
+              "merge_pointer": "0/cimac_id", 
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "lane": {
+              "do_not_merge": true,
+              "type": "string"
+            },
+            "forward fastq": {
+              "merge_pointer": "0/files/r1/0",
+              "gcs_uri_format": "{protocol identifier}/wes/{cimac id}/r1_L{lane}.fastq.gz",
+              "is_artifact": 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "reverse fastq": {
+              "merge_pointer": "0/files/r2/0",
+              "gcs_uri_format": "{protocol identifier}/wes/{cimac id}/r2_L{lane}.fastq.gz",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "sequencing date": {
+              "merge_pointer": "0/sequencing_date",
+              "type_ref": "assays/wes_assay.json#definitions/entry/properties/sequencing_date"
+            },
+            "quality flag": {
+              "merge_pointer": "0/quality_flag",
+              "type_ref": "assays/wes_assay.json#definitions/entry/properties/quality_flag"
+            }
+          }
+        }
+      }
+    }
+  }
+}

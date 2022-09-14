@@ -2,50 +2,50 @@
 {# Generate the section to put at the top of an entity's page #}
     <div class="container">
         <p>
-            <a href="index.html">CIDC Data Model</a>
+            <a href="index.html">CIDC Documentation</a>
         </p>
-        <h1>{{ schema["title"] }}</h1>
+        <h1>
+            {{ schema["title"] }}
+            {% if "old" in name %}<b> OLD </b> {% endif %}
+        </h1>
         <p>
-            <b>Description:</b>  {{ schema["description"] }}
+            <b>Description:</b>  {{ schema["description"].replace("/n", "<br>") }}
         </p>
-        {% if "links" in schema %}
-        <p>
-            Each {{ schema["title"] }} is <b>linked</b> to:
-            <ul>
-                {% for link in schema["links"] %}
-                    <li>{{ link["link"]["cardinality"]}}
-                        <a href='{{scope}}.{{ link["link"]["linked_to"] }}.html'>
-                            {{ link["link"]["linked_to"] }}
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </p>
-        {% endif %}
     </div>
+{%- endmacro %}
+
+{% macro uploads_table(scope, name, templates) -%}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Entity</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        {% for entity_name, entity_schema in templates.items() %}
+            <tr>
+                <td width=25%>
+                    <a href='{{ scope }}.{{ name }}.{{ entity_name }}.html'>
+                        {{ entity_schema["title"] }}{% if "old" in name %} (OLD){% endif %}
+                    </a>
+                </td>
+                <td>
+                    {{ entity_schema["description"].replace("/n", "<br>") }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 {%- endmacro %}
 
 {% macro properties_table(schema, required) -%}
     {% set properties = [] %}
-    {% set allOfOrAnyOf = schema.get('allOf') or schema.get('anyOf') %}
     {% set hasProperties = 'properties' in schema %}
-
-    {% if allOfOrAnyOf %}
-        {% for prop in allOfOrAnyOf %}
-            {% if 'url' in prop %}
-                {% set _ = properties.append(("$ref", prop)) %}
-            {% endif %}
-            {% if 'properties' in prop %}
-                {% set _ = properties.extend(prop['properties'].items()) %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
 
     {% if hasProperties %}
         {% set _ = properties.extend(schema['properties'].items()) %}
     {% endif %}
 
-    {% if not hasProperties and not allOfOrAnyOf %}
+    {% if not hasProperties %}
         {% set properties = schema.items() %}
     {% endif %}
 
@@ -58,16 +58,147 @@
         </tr>
         </thead>
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name in required or prop_name == "$ref" %}
-                {{ property_table_row(prop_name, prop_schema, True) }}
+            {# priortize those not nested_process_as_table and not nested_properties_table #}
+            {# then required before not required #}
+            {% if prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
+                {% if prop_name in required %}
+                    {{ property_table_row(prop_name, prop_schema, True) }}
+                {% endif %}
             {% endif %}
         {% endfor %}
         {% for prop_name, prop_schema in properties %}
-            {% if prop_name not in required and prop_name != "$ref" %}
-                {{ property_table_row(prop_name, prop_schema, False) }}
+            {% if prop_schema is mapping and "process_as" not in prop_schema and ("type" in prop_schema or "const" in prop_schema or "url" in prop_schema or "type_ref" in prop_schema or "anyOf" in prop_schema) %}
+                {% if prop_name not in required %}
+                    {{ property_table_row(prop_name, prop_schema, False) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% for prop_name, prop_schema in properties %}
+            {% if prop_schema is mapping and "type" not in prop_schema and "const" not in prop_schema and "url" not in prop_schema and "type_ref" not in prop_schema and "anyOf" not in prop_schema %}
+                {{ nested_properties_table(prop_name, prop_schema, required) }}
+            {% elif prop_schema is mapping and "process_as" in prop_schema %}
+                {{ nested_process_as_table(prop_name, prop_schema, required) }}
             {% endif %}
         {% endfor %}
     </table>
+{%- endmacro %}
+
+{% macro process_as_table(prop_schema) -%}
+{# converted to dict {filename: definition} in generate_docs #}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        {% for prop_schema in prop_schema["process_as"] %}
+            <tr>
+                <td>
+                    {% if "relative_file_path" in prop_schema and prop_schema["description"] %}
+                        {{ prop_schema["relative_file_path"] }}
+                    {% elif prop_schema["merge_pointer"][0].isdigit() %}
+                        {{ prop_schema["merge_pointer"][1:].replace("/", " ") }}
+                    {% else %}
+                        {{ prop_schema["merge_pointer"].replace("/", " ") }}
+                    {% endif %}
+                </td>
+                <td width=55%>
+                    {% if "description" in prop_schema and prop_schema["description"] %}
+                        {{ prop_schema["description"].replace("/n", "<br>") }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if "url" in prop_schema %}
+                        <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                            {{ prop_schema['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                        </a>
+                    {% elif "type" in prop_schema %}
+                        &lt; 
+                            {{ prop_type_format(prop_schema) }}
+                        &gt;
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{%- endmacro %}
+
+{%  macro nested_process_as_table(prop_name, prop_schema, required) -%}
+<tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="{{ prop_name.replace(' ', '_') }}_accordion">
+            <div class="card">
+                <div class="card-header" id="{{ prop_name.replace(' ', '_') }}">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name.replace(' ', '_') }}_card" aria-expanded="false" aria-controls="{{ prop_name.replace(' ', '_') }}_card">
+                            {{ prop_name }}
+                        </button>
+                        {% if prop_name in required %}
+                            <sup><mark>required</mark></sup>
+                        {% endif %}
+                        <div style="float: right;">
+                            &lt; 
+                                {{ prop_type_format(prop_schema) }}
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="{{ prop_name.replace(' ', '_') }}_card" class="collapse" aria-labelledby="{{ prop_name.replace(' ', '_') }}">
+                    <div class="card-body">
+                        {% if "description" in prop_schema %}
+                            {{ prop_schema["description"].replace("/n", "<br>") }}
+                        {% endif %}
+                        <br>
+                        All files are
+                        <sup><mark>required</mark></sup>
+                        <br>
+                        {{ process_as_table(prop_schema) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+{%- endmacro %}
+
+{% macro nested_properties_table(prop_name, prop_schema, required) -%}
+<tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="{{ prop_name }}_accordion">
+            <div class="card">
+                <div class="card-header" id="{{ prop_name }}">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ prop_name }}_card" aria-expanded="false" aria-controls="{{ prop_name }}_card">
+                        {{ prop_name }}
+                    </button>
+                    {% if prop_name in required %}
+                        <sup><mark>required</mark></sup>
+                    {% endif %}
+                        <div style="float: right;">
+                            &lt; 
+                                {% if "items" in prop_schema %}
+                                    array
+                                {% else %}
+                                    object
+                                {% endif %}
+                            &gt;
+                        </div>
+                </div>
+                <div id="{{ prop_name }}_card" class="collapse" aria-labelledby="{{ prop_name }}">
+                    <div class="card-body">
+                        {% if "description" in prop_schema %}
+                            {{ prop_schema["description"].replace("/n", "<br>") }}
+                        {% endif %}
+                        <br>
+                        {{ properties_table(prop_schema, required) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
 {%- endmacro %}
 
 {% macro property_table_row(prop_name, prop_schema, required) -%}
@@ -83,14 +214,8 @@
         {% endif %}
     </td>
     <td width=55%>
-        {% if "$ref" == prop_name %}
-            Inherits all properties from schema:
-        {% elif "allOf" in prop_schema %}
-            Inherits all properties from schemas:
-        {% elif "anyOf" in prop_schema %}
-            Inherits properties from any of these schemas:
-        {% else %}
-            {{ prop_schema["description"] }}
+        {% if "description" in prop_schema and prop_schema["description"] %}
+            {{ prop_schema["description"].replace("/n", "<br>") }}
         {% endif %}
     </td>
     <td>
@@ -98,60 +223,68 @@
             &lt; 
                 {{ prop_type_format(prop_schema) }}
             &gt;
-            <ul>
-                {% for item in prop_schema["enum"] %}
-                    <li>{{ item | tojson }}</li>
-                {% endfor %}
-            </ul>
+            {% if "enum" in prop_schema %}
+                <ul>
+                    {% for item in prop_schema["enum"] %}
+                        <li>{{ item | tojson }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% if "items" in prop_schema %} {# type: array #}
+                <br>
                 {% if "url" in prop_schema["items"] %}
-                    <a href="{{ prop_schema['items']['url'] }}">{{ prop_schema['items']['url'].replace('.html', '') }}</a>
+                    <a href="{{ prop_schema['items']['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                        {{ prop_schema['items']['url'].replace('artifacts.artifact_', '').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                    </a>
                 {% else %}
                     {{ prop_type_format(prop_schema["items"]) }}
                 {% endif %}
             {% endif %}
-            {% if "additionalProperties" in prop_schema %}
-                {% if "propertyNames" in prop_schema and "$id" in prop_schema["propertyNames"] %}
-                    {{prop_schema["propertyNames"]["$id"]}} -&gt;
-                {% endif %}
-                {% if prop_schema["additionalProperties"].keys %}
-                    {% if "url" in prop_schema["additionalProperties"] %}
-                        <a href="{{ prop_schema['additionalProperties']['url'] }}">{{ prop_schema['additionalProperties']['url'].replace('.html', '') }}</a>
-                    {% else %}
-                        {{ prop_type_format(prop_schema["additionalProperties"]) }}
-                    {% endif %}
-                {% endif %}
+            {% if "pattern" in prop_schema %}
+                as regex <br> <code>{{prop_schema["pattern"]}}</code>
             {% endif %}
         {% elif "const" in prop_schema %}
             &lt; const: <strong>{{ prop_schema["const"] }}</strong> &gt;            
         {% elif "url" in prop_schema %}
-            <a href="{{ prop_schema['url'] }}">{{ prop_schema['url'].replace('.html', '') }}</a>
+            <a href="{{ prop_schema['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                {{ prop_schema['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+            </a>
         {% elif "type_ref" in prop_schema %} {# means we're in _template.json #}
-            <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }} }}">{{ prop_schema['type_ref'].replace('.json', '') }}</a>
-        {% elif "allOf" in prop_schema %}
+            <a href="{{ prop_schema['type_ref'].replace('.json', '.html').replace('/', '.') }}">
+                {{ prop_schema['type_ref'].replace('.json', '') }}
+            </a>
+        {% elif "anyOf" in prop_schema %}
+            &lt; 
+                any of
+            &gt;
             <ul>
-            {% for ref in prop_schema['allOf'] %}
-                <li><a href="{{ref['url']}}">{{ref['url'].replace('.html', '')}}</a></li>
+            {% for ref in prop_schema['anyOf'] %}
+                <li>
+                    <a href="{{ ref['url'].replace('artifacts.artifact_', 'files.').replace('clinical_data', 'assays.clinical_data').replace('assays.components.', '').replace('ngs_analyses', 'analyses') }}">
+                        {{ ref['url'].replace('artifacts.artifact_', '').replace('ngs_analyses', 'analyses').replace('.html', '').replace('assays.', '').replace('components.', '').replace("_"," ") }}
+                    </a>
+                </li>
             {% endfor %}
             </ul>
-        {% elif "comment" in prop_schema %}
-            ({{ prop_schema["comment"] }})
-        {% elif "$comment" in prop_schema %}
-            ({{ prop_schema["$comment"] }})
         {% else %}
-            (UNKNOWN PROPERTY TYPE)
+            (UNKNOWN DATA TYPE)
+            {{ prop_schema }}
         {% endif %}
     </td>
 </tr>
 {%- endmacro %}
 
 {% macro prop_type_format(prop_schema) -%}
-    {{ prop_schema["type"]}} 
-    {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
-    {% if "pattern" in prop_schema %} : <code>{{prop_schema["pattern"]}}</code> {% endif %}
-    {% if "object" == prop_schema["type"] and "propertyNames" in prop_schema and "pattern" in prop_schema["propertyNames"] %}
-        : <code>{{prop_schema["propertyNames"]["pattern"]}}</code>
+    {% if prop_schema["type"] is iterable and (prop_schema["type"] is not string and prop_schema["type"] is not mapping) %}
+        {% for type in prop_schema["type"] %}
+            {{ type }}
+            {% if type != prop_schema["type"][-1] %}, {% endif %}
+        {% endfor %}
+    {% else %}
+        {{ prop_schema["type"] }}
     {% endif %}
+
+    {% if "format" in prop_schema %} :  {{prop_schema["format"]}}{% endif %}
 {%- endmacro %}
 
 

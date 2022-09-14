@@ -1,0 +1,97 @@
+{
+  "title": "ATACseq [FASTQ] assay template",
+  "description": "Assay for Transposase-Accessible Chromatin by Sequencing (ATACseq) data submission via FASTQ files.",
+  "properties": {
+    "worksheets": {
+      "ATACseq": {
+        "prism_preamble_object_schema" : "assays/atacseq_assay.json",
+        "prism_preamble_object_pointer" : "/assays/atacseq/-",
+        "prism_data_object_pointer" : "/records/-",
+        "preamble_rows": {
+          "protocol identifier": {
+            "merge_pointer": "3/protocol_identifier",
+            "type_ref": "clinical_trial.json#properties/protocol_identifier"
+          },
+          "batch id": {
+            "merge_pointer": "0/batch_id",
+            "type_ref": "assays/atacseq_assay.json#properties/batch_id"
+        },
+          "assay creator": {
+            "merge_pointer": "0/assay_creator",
+            "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+          },
+          "sequencing protocol": {
+            "merge_pointer": "0/sequencing_protocol",
+            "type_ref": "assays/atacseq_assay.json#properties/sequencing_protocol",
+            "allow_empty": true
+          },
+          "library kit": {
+            "merge_pointer": "0/library_kit",
+            "type_ref": "assays/atacseq_assay.json#properties/library_kit",
+            "allow_empty": true
+          },
+          "sequencer platform": {
+            "merge_pointer": "0/sequencer_platform",
+            "type_ref": "assays/atacseq_assay.json#properties/sequencer_platform"
+          },
+          "paired end reads": {
+            "merge_pointer": "0/paired_end_reads",
+            "type_ref": "assays/atacseq_assay.json#properties/paired_end_reads"
+          },
+          "read length": {
+            "merge_pointer": "0/read_length",
+            "type_ref": "assays/atacseq_assay.json#properties/read_length"
+          },
+          "bait set": {
+            "merge_pointer": "0/bait_set",
+            "type_ref": "assays/atacseq_assay.json#properties/bait_set",
+            "allow_empty": true
+          }
+        },
+        "data_columns": {
+          "Samples": {
+            "cimac id": {
+              "merge_pointer": "0/cimac_id", 
+              "type_ref": "sample.json#properties/cimac_id"
+            },
+            "lane": {
+              "do_not_merge": true,
+              "type": "string"
+            },
+            "replicate number": {
+              "merge_pointer": "0/replicate_number",
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/replicate_number"
+            },
+            "forward fastq": {
+              "merge_pointer": "0/files/r1/0",
+              "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/{replicate number}/r1_L{lane}.fastq.gz",
+              "is_artifact": 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "reverse fastq": {
+              "merge_pointer": "0/files/r2/0",
+              "gcs_uri_format": "{protocol identifier}/atacseq/{cimac id}/{replicate number}/r2_L{lane}.fastq.gz",
+              "is_artifact" : 1,
+              "type_ref": "assays/components/local_file.json#properties/file_path"
+            },
+            "sequencing date": {
+              "merge_pointer": "0/sequencing_date",
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/sequencing_date",
+              "allow_empty": true
+          },
+            "%Q30": {
+              "merge_pointer": "0/percent_q30",
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/percent_q30",
+              "allow_empty": true
+            },
+            "quality flag": {
+              "merge_pointer": "0/quality_flag",
+              "type_ref": "assays/atacseq_assay.json#definitions/entry/properties/quality_flag",
+              "allow_empty": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

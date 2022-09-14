@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "wes_tumor_only_analysis",
-  "title": "WES tumor-only analysis combined files",
+  "title": "WES tumor-only analysis",
   "type": "object",
   "description": "Combined analysis files for the whole WES assay.",
 

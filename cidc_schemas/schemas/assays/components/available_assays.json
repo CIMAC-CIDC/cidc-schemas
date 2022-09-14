@@ -1,7 +1,7 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "available_assays",
-  "title": "Assays which are available in the network",
+  "title": "Assays available in the network",
   "description": "Reference for every available assay in network.",
   "mergeStrategy": "objectMerge",
   "additionalProperties": false,
@@ -89,14 +89,6 @@
       "description": "Multiplex immunofluorescence.",
       "items": {
         "$ref": "assays/mif_assay.json"
-      },
-      "mergeStrategy": "append"
-    },
-    "micsss": {
-      "type": "array",
-      "description": "Multiplexed immunohistochemical consecutive staining on single slide.",
-      "items": {
-        "$ref": "assays/micsss_assay.json"
       },
       "mergeStrategy": "append"
     },

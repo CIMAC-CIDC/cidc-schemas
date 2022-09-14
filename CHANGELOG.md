@@ -9,10 +9,26 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.0` - 14 Sep 2022
+
+- `changed` change schemas documentation format for the portal
+  - nested accordions with property tables
+  - small changes to eg titles, description, filepaths
+  - added back old WES templates in documentation only
+    - taken from commit [207330acb52f862e2b5a20c22affb3f6f1caac73](https://github.com/CIMAC-CIDC/cidc-schemas/tree/207330acb52f862e2b5a20c22affb3f6f1caac73)
+- `changed` DM tweaks
+  - cytof assay core: concatenation_version and normalization_version from entry to input_files
+    - so controls can ALSO have like samples
+  - misc_data: description to file_description on file
+  - `removed` collection_event_list on clinical_trial
+  - `removed` cidc_participant_id and clinical on participant
+  - `removed` cidc_id and aliquots on samples
+  - `removed` unused MICSSS assay
+
 ## Version `0.25.54` - 17 Aug 2022
 
 - `added` new lab "MSSM_MTC" to recieving party in shipping core
-- `removed` OTU table requirement, enrichment fields from microbiome assay 
+- `removed` OTU table requirement, enrichment fields from microbiome assay
 
 ## Version `0.25.53` - 15 Aug 2022
 
@@ -98,7 +114,6 @@ This Changelog tracks changes to this project. The notes below include a summary
 ## Version `0.25.34` - 28 Apr 2022
 
 - `changed` pytest, black, click, jinja2 version bumps
-
 
 ## Version `0.25.33` - 21 Apr 2022
 

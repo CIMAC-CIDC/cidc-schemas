@@ -1,8 +1,10 @@
 {
   "$schema": "metaschema/strict_meta_schema.json#",
   "$id": "tcr_assay",
-  "title": "TCR Assay",
+  "title": "TCRseq Assay",
   "type": "object",
+
+	"$comment": "description used in docs/index.html and docs/assays.tcr.html",
   "description": "Additional properties to describe a TCR assay for expression analysis.",
 
   "definitions": {
@@ -12,6 +14,7 @@
       "additionalProperties": false,
       "properties": {
         "id": {
+          "description": "A unique ID for this control.",
           "type": "string"
         },
         "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
@@ -37,8 +40,14 @@
       "additionalProperties": false,
       "properties": {
         "cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
-        "files": {"$ref": "assays/tcr_assay.json#definitions/files"},
-        "tsv_file": {"$ref": "artifacts/artifact_tsv.json"}
+        "files": {
+          "$ref": "assays/tcr_assay.json#definitions/files",
+          "description": "used only if fastq files were received for a TCRseq assay (non-Adaptive sequencing)"
+        },
+        "tsv_file": {
+          "$ref": "artifacts/artifact_tsv.json",
+          "description": "Adaptive sequencing output file"
+        }
       },
       "mergeStrategy": "objectMerge",
       "required": [
@@ -72,6 +81,7 @@
 
     "replicate": {
       "description": "TCRseq replicate of interest.",
+      "type": "object",
       "additionalProperties": false,
       "allOf": [
         { "$ref": "assays/components/reads_with_index.json"}
@@ -85,10 +95,18 @@
           "description": "RNA quantity (in ng).",
           "type": "number"
         },
-        "r1": {"$ref": "assays/components/reads_with_index.json#properties/r1"},
-        "r2": {"$ref": "assays/components/reads_with_index.json#properties/r2"},
-        "i1": {"$ref": "assays/components/reads_with_index.json#properties/i1"},
-        "i2": {"$ref": "assays/components/reads_with_index.json#properties/i2"}
+        "r1": {
+          "$ref": "assays/components/reads_with_index.json#properties/r1"
+        },
+        "r2": {
+          "$ref": "assays/components/reads_with_index.json#properties/r2"
+        },
+        "i1": {
+          "$ref": "assays/components/reads_with_index.json#properties/i1"
+        },
+        "i2": {
+          "$ref": "assays/components/reads_with_index.json#properties/i2"
+        }
       },
       "required": [
         "replicate_id"
@@ -119,6 +137,7 @@
       }
     },
     "sample_sheet": {
+        "description": "A Comma-Separated Value (CSV) text file describing the samples in this batch.",
         "$ref": "artifacts/artifact_csv.json"
     },
     "sequencing_run_date": {

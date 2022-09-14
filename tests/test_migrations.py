@@ -403,6 +403,7 @@ def test_v0_25_54_to_v0_26_0():
                     ],
                 }
             ],
+            "micsss": {},
             "misc_data": [
                 {
                     "files": [

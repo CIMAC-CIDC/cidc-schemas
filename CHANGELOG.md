@@ -9,7 +9,7 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.26.0` - xx Sep 2022
+## Version `0.26.0` - 14 Sep 2022
 
 - `changed` change schemas documentation format for the portal
   - nested accordions with property tables
@@ -23,6 +23,7 @@ This Changelog tracks changes to this project. The notes below include a summary
   - `removed` collection_event_list on clinical_trial
   - `removed` cidc_participant_id and clinical on participant
   - `removed` cidc_id and aliquots on samples
+  - `removed` unused MICSSS assay
 
 ## Version `0.25.54` - 17 Aug 2022
 

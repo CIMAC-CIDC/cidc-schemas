@@ -51,6 +51,7 @@ class v0_25_54_to_v0_26_0(migration):
     - remove collection_event_list on clinical_trial
     - remove cidc_participant_id and clinical on participant
     - remove cidc_id and aliquots on samples
+    - removed unused MICSSS assay
 
     To accommodate DM tweaks in simplification related to docs update
     """
@@ -67,6 +68,9 @@ class v0_25_54_to_v0_26_0(migration):
             for sample in partic["samples"]:
                 sample.pop("cidc_id", None)
                 sample.pop("aliquots", None)
+
+        if "micsss" in metadata.get("assays", {}):
+            metadata["assays"].pop("micsss")
 
         # modifications can be reversed
         if "cytof" in metadata.get("assays", {}):

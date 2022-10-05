@@ -1,0 +1,79 @@
+{
+    "title": "MIBI assay template",
+    "description": "Multiplexed Ion Beam Imaging (MIBI) submission.",
+    "properties": {
+        "worksheets": {
+            "MIBI": {
+                "prism_preamble_object_schema": "assays/mibi_assay.json",
+                "prism_preamble_object_pointer": "/assays/mibi/0",
+                "prism_data_object_pointer": "/records/-",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "3/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "assay creator": {
+                        "merge_pointer": "0/assay_creator",
+                        "type_ref": "assays/components/assay_core.json#properties/assay_creator"
+                    },
+                    "folder": {
+                        "do_not_merge": true,
+                        "type": "string",
+                        "allow_empty": true
+                    }
+                },
+                "data_columns": {
+                    "Samples": {
+                        "cimac id": {
+                            "merge_pointer": "0/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id"
+                        },
+                        "dataset": {
+                            "do_not_merge": true,
+                            "type": "string",
+                            "process_as": [
+                                {
+                                    "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/3D_image_stack.ome.tiff'",
+                                    "merge_pointer": "/multichannel_image",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/multichannel_image.ome.tiff",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/Mapping/cluster_labels_image.tif'",
+                                    "merge_pointer": "/cluster_labels",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/cluster_labels.tif",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/mcd/channelnames_report.csv'",
+                                    "merge_pointer": "/channel_names",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/channel_names.csv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                },
+                                {
+                                    "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/SingleCellData/cells.csv'",
+                                    "merge_pointer": "/single_cell_table",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/single_cell_table.csv",
+                                    "type_ref": "assays/components/local_file.json#properties/file_path",
+                                    "is_artifact": 1,
+                                    "allow_empty": true
+                                }
+                            ]
+                        },
+                        "comment": {
+                            "merge_pointer": "0/comment",
+                            "type_ref": "assays/mibi_assay.json#definitions/record/properties/comment",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

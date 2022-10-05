@@ -108,6 +108,14 @@
       },
       "mergeStrategy": "append"
     },
+    "mibi": {
+      "type": "array",
+      "description": "MIBI",
+      "items": {
+        "$ref": "assays/mibi_assay.json"
+      },
+      "mergeStrategy": "append"
+    },
     "nanostring": {
       "type": "array",
       "description": "Nanostring",

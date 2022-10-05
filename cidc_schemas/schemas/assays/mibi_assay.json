@@ -1,0 +1,66 @@
+{
+    "$schema": "metaschema/strict_meta_schema.json#",
+    "$id": "mibi_assay",
+    "title": "MIBI Assay",
+    "type": "object",
+    "$comment": "description used in docs/index.html and docs/assays.mibi.html",
+    "description": "Multiplexed Ion Beam Imaging (MIBI) assay",
+    "additionalProperties": false,
+    "mergeStrategy": "objectMerge",
+    "definitions": {
+        "record": {
+            "type": "object",
+            "description": "A single data record from a MIBI assay.",
+            "additionalProperties": false,
+            "properties": {
+                "cimac_id": {
+                    "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+                    "$ref": "sample.json#properties/cimac_id"
+                },
+                "multichannel_image": {
+                    "description": "analysis-ready multichannel image in OME TIFF format",
+                    "$ref": "artifacts/artifact_image.json"
+                },
+                "cluster_labels": {
+                    "description": "cluster-labelled image in TIFF format",
+                    "$ref": "artifacts/artifact_image.json"
+                },
+                "channel_names": {
+                    "description": "channel names table in CSV format",
+                    "$ref": "artifacts/artifact_csv.json"
+                },
+                "single_cell_table": {
+                    "description": "single cell data table in CSV format",
+                    "$ref": "artifacts/artifact_csv.json"
+                },
+                "comment": {
+                    "description": "A text comment regarding this slide.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cimac_id"
+            ]
+        }
+    },
+    "properties": {
+        "assay_creator": {
+            "$ref": "assays/components/assay_core.json#properties/assay_creator"
+        },
+        "records": {
+            "type": "array",
+            "description": "A single data record from a MIBI assay.",
+            "items": {
+                "$ref": "assays/mibi_assay.json#definitions/record"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "cimac_id"
+            }
+        }
+    },
+    "required": [
+        "records",
+        "assay_creator"
+    ]
+}

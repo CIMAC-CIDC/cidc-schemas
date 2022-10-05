@@ -438,6 +438,133 @@ def hande() -> PrismTestData:
 
 
 @assay_data_generator
+def mibi() -> PrismTestData:
+    upload_type = "mibi"
+    prismify_args = get_prismify_args(upload_type)
+    prismify_patch = {
+        "protocol_identifier": "123",
+        "assays": {
+            "mibi": [
+                {
+                    "records": [
+                        {
+                            "cimac_id": "CTTTPP111.00",
+                            "comment": "some comments",
+                            "multichannel_image": {
+                                "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
+                            },
+                            "cluster_labels": {
+                                "upload_placeholder": "feeeeeee-047f-4df6-b614-871289a1a2a8"
+                            },
+                            "channel_names": {
+                                "upload_placeholder": "fffeeeee-047f-4df6-b614-871289a1a2a8"
+                            },
+                            "single_cell_table": {
+                                "upload_placeholder": "ffffffff-047f-4df6-b614-871289a1a2a8"
+                            },
+                        },
+                        {
+                            "cimac_id": "CTTTPP121.00",
+                            "multichannel_image": {
+                                "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                            },
+                            "cluster_labels": {
+                                "upload_placeholder": "feeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                            },
+                            "channel_names": {
+                                "upload_placeholder": "fffeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                            },
+                            "single_cell_table": {
+                                "upload_placeholder": "ffffffff-669c-48c7-aee0-f0d5e5e8a341"
+                            },
+                        },
+                    ],
+                    "assay_creator": "Stanford",
+                },
+            ]
+        },
+    }
+    upload_entries = [
+        LocalFileUploadEntry(
+            local_path="dataset-1/3D_image_stack.ome.tiff",
+            gs_key="123/mibi/CTTTPP111.00/multichannel_image.ome.tiff",
+            upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-1/Mapping/cluster_labels_image.tif",
+            gs_key="123/mibi/CTTTPP111.00/cluster_labels.tif",
+            upload_placeholder="feeeeeee-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-1/mcd/channelnames_report.csv",
+            gs_key="123/mibi/CTTTPP111.00/channel_names.csv",
+            upload_placeholder="fffeeeee-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-1/SingleCellData/cells.csv",
+            gs_key="123/mibi/CTTTPP111.00/single_cell_table.csv",
+            upload_placeholder="ffffffff-047f-4df6-b614-871289a1a2a8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-2/3D_image_stack.ome.tiff",
+            gs_key="123/mibi/CTTTPP121.00/multichannel_image.ome.tiff",
+            upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-2/Mapping/cluster_labels_image.tif",
+            gs_key="123/mibi/CTTTPP121.00/cluster_labels.tif",
+            upload_placeholder="feeeeeee-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-2/mcd/channelnames_report.csv",
+            gs_key="123/mibi/CTTTPP121.00/channel_names.csv",
+            upload_placeholder="fffeeeee-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dataset-2/SingleCellData/cells.csv",
+            gs_key="123/mibi/CTTTPP121.00/single_cell_table.csv",
+            upload_placeholder="ffffffff-669c-48c7-aee0-f0d5e5e8a341",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+    ]
+
+    cimac_ids = [
+        record["cimac_id"]
+        for batch in prismify_patch["assays"]["mibi"]
+        for record in batch["records"]
+    ]
+    base_trial = get_test_trial(cimac_ids)
+
+    base_trial[PROTOCOL_ID_FIELD_NAME] = "123"
+
+    target_trial = copy_dict_with_branch(base_trial, prismify_patch, "assays")
+
+    return PrismTestData(
+        upload_type,
+        prismify_args,
+        prismify_patch,
+        upload_entries,
+        base_trial,
+        target_trial,
+    )
+
+
+@assay_data_generator
 def wes_bam() -> PrismTestData:
     upload_type = "wes_bam"
     prismify_args = get_prismify_args(upload_type)

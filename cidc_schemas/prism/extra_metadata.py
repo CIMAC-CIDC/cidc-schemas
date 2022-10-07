@@ -163,7 +163,9 @@ def parse_clinical(file: BinaryIO) -> dict:
     except:
 
         # seek back to the beginning of the file
-        if file.seekable():
+        file.seek(0)
+        # if it starts with a version, just skip it
+        if not file.readline().startswith("version,"):
             file.seek(0)
 
         try:

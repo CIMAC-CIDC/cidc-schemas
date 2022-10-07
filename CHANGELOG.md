@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.1` - 7 Oct 2022
+
+- `added` handling for clinical CSV files with version as first row
+
 ## Version `0.26.0` - 14 Sep 2022
 
 - `changed` change schemas documentation format for the portal

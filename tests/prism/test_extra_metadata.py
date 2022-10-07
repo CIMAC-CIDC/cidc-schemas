@@ -1,7 +1,4 @@
 import os
-from io import BytesIO
-from typing import BinaryIO
-from zipfile import BadZipFile
 
 import pytest
 
@@ -61,6 +58,7 @@ elisa_metadata_2 = {
 
 # CLINCAL file and metadata
 clinical_file_path_1_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.csv")
+clinical_file_path_2_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.2.csv")
 clinical_file_path_1 = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.xlsx")
 clinical_metadata_1 = {
     "number_of_participants": 3,
@@ -130,6 +128,12 @@ def test_parse_clinical():
     # this tests csv parsing
     clinical_file_path_1_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.1.csv")
     with open(clinical_file_path_1_csv, "rb") as f:
+        data = parse_clinical(f)
+        _check_clin_eq(data, clinical_metadata_1)
+
+    # this tests versioned csv parsing
+    clinical_file_path_2_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.2.csv")
+    with open(clinical_file_path_2_csv, "rb") as f:
         data = parse_clinical(f)
         _check_clin_eq(data, clinical_metadata_1)
 

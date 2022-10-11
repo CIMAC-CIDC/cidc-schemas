@@ -60,9 +60,5 @@
       "$ref": "artifacts/artifact_core.json"
     }
   ],
-  "mergeStrategy": "objectMerge",
-  "anyOf": [
-    { "required": ["height", "width", "channels"] },
-    { "required": ["upload_placeholder"] }
-  ]
+  "mergeStrategy": "objectMerge"
 }

@@ -558,3 +558,28 @@ def test_ctdna():
     # create validator assert schemas are valid.
     validator = _fetch_validator("ctdna")
     validator.validate(obj)
+
+
+def test_mibi():
+    # set up generic artifacts
+    tif = ARTIFACT_OBJ.copy()
+    tif["data_format"] = "IMAGE"
+    csv = ARTIFACT_OBJ.copy()
+    csv["data_format"] = "CSV"
+
+    # create the record
+    record = {
+        "cimac_id": "CTTTPPPSA.00",
+        "multichannel_image": tif,
+        "cluster_labels": tif,
+        "channel_names": csv,
+        "single_cell_table": csv,
+    }
+
+    # add a demo record.
+    obj = ASSAY_CORE.copy()
+    obj["records"] = [record]
+
+    # create validator assert schemas are valid.
+    validator = _fetch_validator("mibi")
+    validator.validate(obj)

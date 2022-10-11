@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.2` - 10 Oct 2022
+
+- `added` MIBI assay support
+- `removed` unused requirement on image artifacts
+
 ## Version `0.26.1` - 7 Oct 2022
 
 - `added` handling for clinical CSV files with version as first row

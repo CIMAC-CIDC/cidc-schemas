@@ -1,4 +1,4 @@
-"#title","Shipping manifest for tissue dna extracted from tumor tissue samples"
+"#title","Biospecimen manifest for tumor tissue rna"
 "#preamble","Manifest id","test_prism_trial_tumor_tissue_RNA"
 "#preamble","Protocol identifier","test_prism_trial_id"
 "#preamble","Assay priority","4"

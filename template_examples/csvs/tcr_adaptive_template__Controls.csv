@@ -2,5 +2,5 @@
 "#preamble","Batch id","XYZ"
 
 "#skip","Controls"
-"#header","Id","Tsv reads"
+"#header","Control id","Tsv reads"
 "#data","neg","neg.tsv"

@@ -57,6 +57,7 @@
     "reverse_fastq": {"$ref": "artifacts/artifact_fastq_gz.json"},
     "reverse_index": {"$ref": "artifacts/artifact_fastq_gz.json"},
     "otu_table": {"$ref": "artifacts/artifact_tsv.json"},
+    "summary_file": {"$ref": "artifacts/artifact_pdf.json"},
 
     "records": {
       "type": "array",

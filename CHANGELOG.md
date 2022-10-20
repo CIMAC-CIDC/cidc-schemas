@@ -9,11 +9,16 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.26.3` - 19 Oct 2022
+## Version `0.26.4` - 21 Oct 2022
 
 - `changed` pipeline configuration generated for RIMA
 - `added` ingestion sheet generation for RIMA
 - `removed` metasheet generation for RIMA
+
+## Version `0.26.3` - 20 Oct 2022
+
+- `added` current ctDNA and microbiome analysis files into the assay schemas
+- `removed` ctDNA and microbiome analysis schemas
 
 ## Version `0.26.2` - 10 Oct 2022
 

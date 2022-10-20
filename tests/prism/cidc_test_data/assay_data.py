@@ -3136,6 +3136,9 @@ def ctdna() -> PrismTestData:
                 {
                     "assay_creator": "Broad",
                     "batch_id": "test_batch",
+                    "summary_plots": {
+                        "upload_placeholder": "3f079fc0-d666-4593-b7c0-4ee020e16e27"
+                    },
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
@@ -3145,6 +3148,24 @@ def ctdna() -> PrismTestData:
                             "demultiplexed_bam_index": {
                                 "upload_placeholder": "426fa1bb-04a5-41af-a1c3-404f5f83ec55"
                             },
+                            "genome-wide_plots": {
+                                "upload_placeholder": "c391e7e6-a82a-467b-9adc-c76781170eb6"
+                            },
+                            "bias_qc_plots": {
+                                "upload_placeholder": "c7030837-d2b6-4e09-b980-2606cb313b6b"
+                            },
+                            "optimal_solution": {
+                                "upload_placeholder": "dbc2e076-2c89-4f07-a371-be39d80e7b47"
+                            },
+                            "other_solutions": {
+                                "upload_placeholder": "4c409c82-dff7-4f78-801c-0544b3e28d71"
+                            },
+                            "fraction_cna_subclonal": 0.1,
+                            "fraction_genome_subclonal": 0.2,
+                            "gc_map_correction_mad": 0.04,
+                            "subclone_fraction": 0.15,
+                            "tumor_fraction": 0.25,
+                            "tumor_ploidy": 2.599,
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
@@ -3154,6 +3175,25 @@ def ctdna() -> PrismTestData:
                             "demultiplexed_bam_index": {
                                 "upload_placeholder": "e63988e4-948d-4d55-8822-600754d5259c"
                             },
+                            "genome-wide_plots": {
+                                "upload_placeholder": "f36c218d-9939-45d2-8184-d8194a10e61e"
+                            },
+                            "bias_qc_plots": {
+                                "upload_placeholder": "526fa1bb-04a5-41af-a1c3-404f5f83ec55"
+                            },
+                            "optimal_solution": {
+                                "upload_placeholder": "289068fe-4c00-4a67-9a98-74223266c1e0"
+                            },
+                            "other_solutions": {
+                                "upload_placeholder": "f63988e4-948d-4d55-8822-600754d5259c"
+                            },
+                            "fraction_cna_subclonal": 0.2,
+                            "fraction_genome_subclonal": 0.3,
+                            "gc_map_correction_mad": 0.05,
+                            "subclone_fraction": 0.16,
+                            "tumor_fraction": 0.26,
+                            "tumor_ploidy": 2.699,
+                            "comments": "note about sample 2",
                         },
                     ],
                 }
@@ -3176,6 +3216,34 @@ def ctdna() -> PrismTestData:
             allow_empty=False,
         ),
         LocalFileUploadEntry(
+            local_path="CTTTPP111.00/allGenomeWidePlots.pdf",
+            upload_placeholder="c391e7e6-a82a-467b-9adc-c76781170eb6",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/genome-wide_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/bias.pdf",
+            upload_placeholder="c7030837-d2b6-4e09-b980-2606cb313b6b",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/bias_qc_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/optimalSolution.zip",
+            upload_placeholder="dbc2e076-2c89-4f07-a371-be39d80e7b47",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/optimal_solution.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP111.00/outSolutions.zip",
+            upload_placeholder="4c409c82-dff7-4f78-801c-0544b3e28d71",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP111.00/other_solutions.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
             local_path="CTTTPP121_00.bam",
             upload_placeholder="189068fe-4c00-4a67-9a98-74223266c1e0",
             gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/demultiplexed.bam",
@@ -3186,6 +3254,41 @@ def ctdna() -> PrismTestData:
             local_path="CTTTPP121_00.bai",
             upload_placeholder="e63988e4-948d-4d55-8822-600754d5259c",
             gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/demultiplexed.bam.bai",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="summary_plot.pdf",
+            upload_placeholder="3f079fc0-d666-4593-b7c0-4ee020e16e27",
+            gs_key="test_prism_trial_id/ctdna/test_batch/summary_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/allGenomeWidePlots.pdf",
+            upload_placeholder="f36c218d-9939-45d2-8184-d8194a10e61e",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/genome-wide_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/bias.pdf",
+            upload_placeholder="526fa1bb-04a5-41af-a1c3-404f5f83ec55",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/bias_qc_plots.pdf",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/optimalSolution.zip",
+            upload_placeholder="289068fe-4c00-4a67-9a98-74223266c1e0",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/optimal_solution.zip",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="CTTTPP121.00/outSolutions.zip",
+            upload_placeholder="f63988e4-948d-4d55-8822-600754d5259c",
+            gs_key="test_prism_trial_id/ctdna/test_batch/CTTTPP121.00/other_solutions.zip",
             metadata_availability=False,
             allow_empty=False,
         ),
@@ -3243,6 +3346,9 @@ def microbiome() -> PrismTestData:
                     "otu_table": {
                         "upload_placeholder": "940fa384-c4af-4e01-b44c-5852b84df45c"
                     },
+                    "summary_file": {
+                        "upload_placeholder": "7e09895b-d6df-42d3-8f01-abe3d2fd07fa"
+                    },
                 }
             ]
         },
@@ -3282,6 +3388,13 @@ def microbiome() -> PrismTestData:
             upload_placeholder="940fa384-c4af-4e01-b44c-5852b84df45c",
             metadata_availability=False,
             allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/summary.pdf",
+            gs_key="test_prism_trial_id/microbiome/batch1/summary.pdf",
+            upload_placeholder="7e09895b-d6df-42d3-8f01-abe3d2fd07fa",
+            metadata_availability=False,
+            allow_empty=True,
         ),
     ]
 

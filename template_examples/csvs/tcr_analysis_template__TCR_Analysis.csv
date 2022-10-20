@@ -1,0 +1,10 @@
+"#title","Tcr analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Batch id","XYZ"
+"#preamble","Summary info","summary_info.csv"
+"#preamble","Report trial","9204_report.tar.gz"
+
+"#skip","TCR Runs"
+"#header","Cimac id","Tra clones umi counts","Trb clones umi counts","Comments"
+"#data","CTTTPP111.00","1A_10_0_TRA_clones_umi_count.csv","1A_10_0_TRB_clones_umi_count.csv"
+"#data","CTTTPP121.00","2A_10_0_TRA_clones_umi_count.csv","2A_10_0_TRB_clones_umi_count.csv"

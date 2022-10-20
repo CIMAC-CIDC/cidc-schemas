@@ -11,5 +11,5 @@
 "","Tsv reads","String","Path to a file on a user's computer."
 "","Legend for tab 'Controls'"
 "","Section 'Replicates' of tab 'Controls'"
-"","Id","String"
+"","Control id","String"
 "","Tsv reads","String","Path to a file on a user's computer."

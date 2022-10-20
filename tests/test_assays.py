@@ -482,6 +482,8 @@ def test_microbiome():
     fastq["data_format"] = "FASTQ.GZ"
     tsv = ARTIFACT_OBJ.copy()
     tsv["data_format"] = "TSV"
+    pdf = ARTIFACT_OBJ.copy()
+    pdf["data_format"] = "PDF"
 
     # add custom entry
     obj["batch_id"] = "batch1"
@@ -490,6 +492,7 @@ def test_microbiome():
     obj["reverse_fastq"] = fastq
     obj["reverse_index"] = fastq
     obj["otu_table"] = tsv
+    obj["summary_file"] = pdf
 
     # create the microbiome object
     record = {
@@ -542,17 +545,32 @@ def test_ctdna():
     bam["data_format"] = "BAM"
     bai = ARTIFACT_OBJ.copy()
     bai["data_format"] = "BAM.BAI"
+    pdf = ARTIFACT_OBJ.copy()
+    pdf["data_format"] = "PDF"
+    zip = ARTIFACT_OBJ.copy()
+    zip["data_format"] = "ZIP"
 
     # create the record
     record = {
         "cimac_id": "CTTTPPPSA.00",
         "demultiplexed_bam": bam,
         "demultiplexed_bam_index": bai,
+        "genome-wide_plots": pdf,
+        "bias_qc_plots": pdf,
+        "optimal_solution": zip,
+        "other_solutions": zip,
+        "fraction_cna_subclonal": 0.1,
+        "fraction_genome_subclonal": 0.2,
+        "gc_map_correction_mad": 0.04,
+        "subclone_fraction": 0.15,
+        "tumor_fraction": 0.25,
+        "tumor_ploidy": 2.5,
     }
 
     # add a demo record.
     obj = ASSAY_CORE.copy()
     obj["batch_id"] = "test_batch"
+    obj["summary_plots"] = pdf
     obj["records"] = [record]
 
     # create validator assert schemas are valid.

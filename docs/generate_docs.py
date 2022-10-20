@@ -284,7 +284,7 @@ class AssaySchema(Schema):
                 recursive=False,
             )[""][f"{self.name}_analysis"]["properties"]
 
-        elif for_analysis and self.name in ("ctdna", "microbiome", "tcr", "wes"):
+        elif for_analysis and self.name in ("tcr", "wes"):
             root = utils.load_schemas_in_directory(
                 schema_dir=os.path.join(SCHEMA_DIR, "assays"),
                 recursive=False,
@@ -632,11 +632,6 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     all_analysis_template_schemas: Dict[str, dict] = utils.load_schemas_in_directory(
         schema_dir=os.path.join(SCHEMA_DIR, "templates", "analyses"),
     )[""]
-    all_analysis_template_schemas.update(
-        utils.load_schemas_in_directory(
-            schema_dir=os.path.join(SCHEMA_DIR, "templates", "analyses"),
-        )[""]
-    )
 
     # load assay DM schemas from SCHEMA_DIR/assays
     all_assay_schemas = utils.load_schemas_in_directory(

@@ -55,6 +55,13 @@
               "is_artifact": 1,
               "allow_empty": true,
               "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/otu_table.tsv"
+            },
+            "summary file": {
+              "merge_pointer": "0/summary_file",
+              "type_ref": "assays/components/local_file.json#properties/file_path",
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/summary.pdf",
+              "is_artifact": 1,
+              "allow_empty": true
             }
           },
           "data_columns": {

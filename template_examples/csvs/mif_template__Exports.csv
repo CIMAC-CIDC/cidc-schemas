@@ -1,0 +1,8 @@
+"#preamble","Protocol identifier","test_prism_trial_id"
+
+"#skip","Exports"
+"#header","Cimac id","Roi id","Export id","Score data files","Inform export prefix"
+"#data","CTTTPP111.00","1","CD4","111/1_score_data.txt,111_extra/1_score_data.txt","111/1/CD4/"
+"#data","CTTTPP111.00","1","CD8","111/1_score_data.txt,111_extra/1_score_data.txt","111/1/CD8/"
+"#data","CTTTPP121.00","1","CD4","121/1_score_data.txt","121/1/CD4/"
+"#data","CTTTPP121.00","2","CD4","121/2_score_data.txt","121/2/CD4/"

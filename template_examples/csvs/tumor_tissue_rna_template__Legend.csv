@@ -22,7 +22,7 @@
 "","Participant id","String","Trial Participant Identifier. Crypto-hashed after upload."
 "","Parent sample id","String","Sample identifier assigned by the biorepository site. Crypto-hashed after upload."
 "","Processed sample id","String","Aliquot identifier assigned by the biorepository site. Crypto-hashed after upload."
-"","Cimac id","String: regex ^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$ ","Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as C????????.??","E.g. 'CTTTP01A1.00'"
+"","Cimac id","String: regex ^C[A-Z0-9]{3}[A-Z0-9]{3}[A-Z0-9]{2}.[0-9]{2}$ ","Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.","E.g. 'CTTTP01A1.00'"
 "","Section 'Specimen Info Filled by Biorepository' of tab 'Samples'"
 "","Box number","String","Identifier if sample shipment container includes multiple boxes for each assay."
 "","Sample location","String","Sample location within the shipping container. Example: A1."

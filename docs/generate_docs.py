@@ -284,7 +284,7 @@ class AssaySchema(Schema):
                 recursive=False,
             )[""][f"{self.name}_analysis"]["properties"]
 
-        elif for_analysis and self.name in ("ctdna", "microbiome", "tcr", "wes"):
+        elif for_analysis and self.name in ("tcr", "wes"):
             root = utils.load_schemas_in_directory(
                 schema_dir=os.path.join(SCHEMA_DIR, "assays"),
                 recursive=False,

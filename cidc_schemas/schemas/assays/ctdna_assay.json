@@ -17,7 +17,17 @@
 			"required": [
 				"cimac_id",
 				"demultiplexed_bam",
-				"demultiplexed_bam_index"
+				"demultiplexed_bam_index",
+				"genome-wide_plots",
+				"bias_qc_plots",
+				"optimal_solution",
+				"other_solutions",
+				"fraction_cna_subclonal",
+				"fraction_genome_subclonal",
+				"gc_map_correction_mad",
+				"subclone_fraction",
+				"tumor_fraction",
+				"tumor_ploidy"
 			],
 			"properties": {
 				"cimac_id": {"$ref": "assays/components/ngs/ngs_assay_record.json#properties/cimac_id"},
@@ -26,7 +36,41 @@
 				},
 				"demultiplexed_bam_index": {
 				  "$ref": "artifacts/artifact_bam_bai.json"
-				}
+				},
+				"genome-wide_plots": {"$ref": "artifacts/artifact_pdf.json"},
+				"bias_qc_plots": {"$ref": "artifacts/artifact_pdf.json"},
+				"optimal_solution": {"$ref": "artifacts/artifact_zip.json"},
+				"other_solutions": {"$ref": "artifacts/artifact_zip.json"},
+
+				"fraction_cna_subclonal": {
+					"description": "Fraction of copy number altered bins that are subclonal. Accepts NaN. (0-1)",
+					"type": ["number", "string"]
+				},
+				"fraction_genome_subclonal": {
+					"description": "Fraction of all (genomic) bins that are subclonal. (0-1)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"gc_map_correction_mad": {
+					"description": "Measure of the noise in the data following GC-content bias correction. Computed as the median absolute deviation of differences between adjacent bins.",
+					"type": "number"
+				},
+				"subclone_fraction": {
+					"description": "Fraction of tumor-derived DNA that is subclonal. Accepts NA. (0-1)",
+					"type": ["number", "string"]
+				},
+				"tumor_fraction": {
+					"description": "Estimated fraction of tumor-derived DNA. Equivalent to purity in bulk tumor analysis. (0-1)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"tumor_ploidy": {
+					"description": "Average number of copies of the tumor-derived genome. Note that the overall sample ploidy is 2 * (1 - tumor.fraction) + tumor.fraction * tumor.ploidy.",
+					"type": "number"
+				},
+				"comments": {"type": "string"}
 			}
 		}
 	},
@@ -45,6 +89,7 @@
             "description": "ctDNA batch identification number. Unique to every batch.",
             "type": "string"
         },
+		"summary_plots": {"$ref": "artifacts/artifact_pdf.json"},
 		"records": {
 			"type": "array",
 			"description": "A single data record from ctDNA assay.",

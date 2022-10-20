@@ -1,0 +1,9 @@
+"#title","Mibi assay template"
+"#preamble","Protocol identifier","123"
+"#preamble","Assay creator","Stanford"
+"#preamble","Folder"
+
+"#skip","Samples"
+"#header","Cimac id","Dataset","Comment"
+"#data","CTTTPP111.00 ","dataset-1 ","some comments "
+"#data","CTTTPP121.00 ","dataset-2 "

@@ -46,13 +46,11 @@ SUPPORTED_MANIFESTS = SUPPORTED_SHIPPING_MANIFESTS + SUPPORTED_WEIRD_MANIFESTS
 
 SUPPORTED_ANALYSES = [
     "atacseq_analysis",
-    "ctdna_analysis",
     "cytof_analysis",
     "rna_level1_analysis",
     "tcr_analysis",
     "wes_analysis",
     "wes_tumor_only_analysis",
-    "microbiome_analysis",
 ]
 
 SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSES
@@ -80,9 +78,7 @@ ASSAY_TO_FILEPATH: Dict[str, str] = {
     **{
         k: k
         for k in [
-            "ctdna_analysis",
             "cytof_analysis",
-            "microbiome_analysis",
             "tcr_analysis",
             "ctdna",
             "cytof",

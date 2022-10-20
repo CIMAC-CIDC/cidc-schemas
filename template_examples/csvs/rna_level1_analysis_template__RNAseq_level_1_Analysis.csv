@@ -1,0 +1,8 @@
+"#title","Rnaseq level 1 analysis template"
+"#preamble","Protocol identifier","test_prism_trial_id"
+"#preamble","Folder","gs://"
+
+"#skip","RNAseq level 1 Runs"
+"#header","Cimac id","Comments"
+"#data","CTTTPP111.00"
+"#data","CTTTPP121.00"

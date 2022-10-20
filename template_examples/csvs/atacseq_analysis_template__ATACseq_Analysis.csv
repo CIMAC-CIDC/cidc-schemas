@@ -4,7 +4,7 @@
 "#preamble","Batch id","XYZ"
 "#preamble","Report","test_prism_trial_id/atacseq/analysis/XYZ/report.zip"
 
-"#skip","ATACSeq Runs"
+"#skip","ATACSEQ Runs"
 "#header","Cimac id","Comments"
 "#data","CTTTPP111.00"
 "#data","CTTTPP121.00"

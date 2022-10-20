@@ -32,11 +32,11 @@
             <a href="index.html">CIDC Documentation</a>
         </p>
         <h1>
-            Microbiome Assay
+            MIBI Assay
             
         </h1>
         <p>
-            <b>Description:</b>  Microbiome Assay.
+            <b>Description:</b>  Multiplexed Ion Beam Imaging (MIBI) assay
         </p>
     </div>
 
@@ -75,235 +75,14 @@
             
             
                 
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="batch_id">
-                batch_id
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Microbiome batch identification number.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="forward_fastq">
-                forward_fastq
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Gzipped FASTQ file.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="forward_index">
-                forward_index
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Gzipped FASTQ file.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="protocol_identifier">
-                protocol_identifier
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
-        
-    </td>
-    <td>
-        
-            &lt; 
-                
-        string
-    
-
-    
-            &gt;
-            
-            
-            
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="reverse_fastq">
-                reverse_fastq
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Gzipped FASTQ file.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="reverse_index">
-                reverse_index
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Gzipped FASTQ file.
-        
-    </td>
-    <td>
-        
-            <a href="files.fastq_gz.html">
-                fastq gz
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-            
-            
-                
-            
-        
-            
-            
-            
-                
-            
-        
-        
-            
-                
                     <tr>
     <td>
         
             <span id="assay_creator">
                 assay_creator
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
@@ -347,70 +126,23 @@
             
         
             
-                
             
-        
-            
-                
-            
-        
-            
-                
-            
-        
             
                 
                     <tr>
     <td>
         
-            <span id="otu_table">
-                otu_table
+            <span id="protocol_identifier">
+                protocol_identifier
             </span>
+            
+                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Information about a tab Separated file.
-        
-    </td>
-    <td>
-        
-            <a href="files.tsv.html">
-                tsv
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-            
-                
-            
-        
-            
-                
-            
-        
-            
-                
-            
-        
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="sequencer_platform">
-                sequencer_platform
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Sequencer Model, e.g. HiSeq 2500, NextSeq, NovaSeq.
+            Trial identifier used by lead organization, ie. Center for Experimental Therapeutics Program (CTEP) ID or Industry Sponsored ID.  This is usually a short identifier. Example: E4412.
         
     </td>
     <td>
@@ -423,24 +155,6 @@
     
             &gt;
             
-                <ul>
-                    
-                        <li>"Adaptive"</li>
-                    
-                        <li>"Illumina - HiSeq 2500"</li>
-                    
-                        <li>"Illumina - HiSeq 3000"</li>
-                    
-                        <li>"Illumina - NextSeq 550"</li>
-                    
-                        <li>"Illumina - HiSeq 4000"</li>
-                    
-                        <li>"Illumina - NovaSeq 6000"</li>
-                    
-                        <li>"MiSeq"</li>
-                    
-                </ul>
-            
             
             
         
@@ -449,49 +163,15 @@
                 
             
         
+        
             
-                
-                    <tr>
-    <td>
-        
-            <span id="summary_file">
-                summary_file
-            </span>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Portable Document Format file.
-        
-    </td>
-    <td>
-        
-            <a href="files.pdf.html">
-                pdf
-            </a>
-        
-    </td>
-</tr>
                 
             
         
-        
+            
+                
             
         
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
-        
-            
         
             
         
@@ -562,7 +242,7 @@
                 <div id="records_card" class="collapse" aria-labelledby="records">
                     <div class="card-body">
                         
-                            A single data record from microbiome assay.
+                            A single data record from a MIBI assay.
                         
                         <br>
                         
@@ -582,6 +262,20 @@
             <th>Data Type</th>
         </tr>
         </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
         
             
             
@@ -626,42 +320,111 @@
             
             
             
-        
-            
-            
+                
             
         
             
             
             
                 
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
                     <tr>
     <td>
         
-            <span id="library_yield_ng">
-                library_yield_ng
+            <span id="channel_names">
+                channel_names
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            Resulting yield (in ng) from library construction.
+            channel names table in CSV format
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cluster_labels">
+                cluster_labels
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            cluster-labelled image in TIFF format
+        
+    </td>
+    <td>
+        
+            <a href="files.image.html">
+                image
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="comment">
+                comment
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text comment regarding this slide.
         
     </td>
     <td>
         
             &lt; 
                 
-        
-            number
-            , 
-        
-            string
-            
-        
+        string
     
 
     
@@ -675,19 +438,68 @@
                 
             
         
-        
             
+                
+                    <tr>
+    <td>
+        
+            <span id="multichannel_image">
+                multichannel_image
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            analysis-ready multichannel image in OME TIFF format
+        
+    </td>
+    <td>
+        
+            <a href="files.image.html">
+                image
+            </a>
+        
+    </td>
+</tr>
                 
             
         
             
+                
+                    <tr>
+    <td>
         
+            <span id="single_cell_table">
+                single_cell_table
+            </span>
             
         
-            
+    </td>
+    <td width=55%>
+        
+            single cell data table in CSV format
+        
+    </td>
+    <td>
+        
+            <a href="files.csv.html">
+                csv
+            </a>
+        
+    </td>
+</tr>
                 
             
         
+        
+            
+        
+            
+        
+            
+        
+            
         
             
         
@@ -735,12 +547,12 @@
         
             <tr>
                 <td width=25%>
-                    <a href='assays.microbiome.microbiome_template.html'>
-                        Metadata file for microbiome.
+                    <a href='assays.mibi.mibi_template.html'>
+                        MIBI assay template
                     </a>
                 </td>
                 <td>
-                    Metadata information for Microbiome data submission.
+                    Multiplexed Ion Beam Imaging (MIBI) submission.
                 </td>
             </tr>
         

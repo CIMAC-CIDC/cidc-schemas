@@ -32,11 +32,11 @@
             <a href="index.html">CIDC Documentation</a>
         </p>
         <h1>
-            Microbiome analysis template
+            MIBI assay template
             
         </h1>
         <p>
-            <b>Description:</b>  Metadata information for Microbiome Analysis output.
+            <b>Description:</b>  Multiplexed Ion Beam Imaging (MIBI) submission.
         </p>
     </div>
 
@@ -44,28 +44,28 @@
         
             
 
-    <div class="accordion" id="Microbiome_Analysis_accordion">
+    <div class="accordion" id="MIBI_accordion">
         <div class="card">
-            <div class="card-header" id="Microbiome_Analysis">
+            <div class="card-header" id="MIBI">
                 <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Microbiome_Analysis_card" aria-expanded="false" aria-controls="Microbiome_Analysis_card">
-                        Worksheet - Microbiome Analysis
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#MIBI_card" aria-expanded="false" aria-controls="MIBI_card">
+                        Worksheet - MIBI
                     </button>
                 </h2>
             </div>
-            <div id="Microbiome_Analysis_card" class="collapse" aria-labelledby="Microbiome_Analysis" data-parent="#Microbiome_Analysis_accordion">
+            <div id="MIBI_card" class="collapse" aria-labelledby="MIBI" data-parent="#MIBI_accordion">
                 <div class="card-body">
                     
-                        <div class="accordion" id="Microbiome_Analysis_preamble_accordion">
+                        <div class="accordion" id="MIBI_preamble_accordion">
                             <div class="card">
-                                <div class="card-header" id="Microbiome_Analysis_preamble">
+                                <div class="card-header" id="MIBI_preamble">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Microbiome_Analysis_preamble_card" aria-expanded="false" aria-controls="Microbiome_Analysis_preamble_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#MIBI_preamble_card" aria-expanded="false" aria-controls="MIBI_preamble_card">
                                             Preamble Rows
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="Microbiome_Analysis_preamble_card" class="collapse" aria-labelledby="Microbiome_Analysis_preamble" data-parent="#Microbiome_Analysis_preamble_accordion">
+                                <div id="MIBI_preamble_card" class="collapse" aria-labelledby="MIBI_preamble" data-parent="#MIBI_preamble_accordion">
                                     <div class="card-body">
                                         
     
@@ -130,8 +130,8 @@
                     <tr>
     <td>
         
-            <span id="batch id">
-                batch id
+            <span id="assay creator">
+                assay creator
             </span>
             
                 <br><sup><mark>required</mark></sup>
@@ -140,7 +140,70 @@
     </td>
     <td width=55%>
         
-            Microbiome batch identification number.
+            Indicates what site is filling out the assay.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+                <ul>
+                    
+                        <li>"DFCI"</li>
+                    
+                        <li>"Mount Sinai"</li>
+                    
+                        <li>"Stanford"</li>
+                    
+                        <li>"MD Anderson"</li>
+                    
+                        <li>"Adaptive"</li>
+                    
+                        <li>"Broad"</li>
+                    
+                </ul>
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="folder">
+                folder
+            </span>
+            
+        
+    </td>
+    <td width=55%>
         
     </td>
     <td>
@@ -161,50 +224,6 @@
                 
             
         
-            
-            
-            
-                
-                    <tr>
-    <td>
-        
-            <span id="summary file">
-                summary file
-            </span>
-            
-                <br><sup><mark>required</mark></sup>
-            
-        
-    </td>
-    <td width=55%>
-        
-            Information about a Portable Document Format file.
-        
-    </td>
-    <td>
-        
-            <a href="files.pdf.html">
-                pdf
-            </a>
-        
-    </td>
-</tr>
-                
-            
-        
-        
-            
-                
-            
-        
-            
-                
-            
-        
-            
-                
-            
-        
         
             
         
@@ -219,39 +238,19 @@
                         </div>
                     
                     
-                </div>
-            </div>
-        </div>
-    </div>
-        
-            
-
-    <div class="accordion" id="Excluded_Samples_accordion">
-        <div class="card">
-            <div class="card-header" id="Excluded_Samples">
-                <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Excluded_Samples_card" aria-expanded="false" aria-controls="Excluded_Samples_card">
-                        Worksheet - Excluded Samples
-                    </button>
-                </h2>
-            </div>
-            <div id="Excluded_Samples_card" class="collapse" aria-labelledby="Excluded_Samples" data-parent="#Excluded_Samples_accordion">
-                <div class="card-body">
-                    
-                    
-                        <div class="accordion" id="Excluded_Samples_body_accordion">
+                        <div class="accordion" id="MIBI_body_accordion">
                             <div class="card">
-                                <div class="card-header" id="Excluded_Samples_body">
+                                <div class="card-header" id="MIBI_body">
                                     <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#Excluded_Samples_body_card" aria-expanded="false" aria-controls="Excluded_Samples_body_card">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#MIBI_body_card" aria-expanded="false" aria-controls="MIBI_body_card">
                                             Data Columns
                                         </button>
                                     </h2>
                                 </div>
-                                <div id="Excluded_Samples_body_card" class="collapse" aria-labelledby="Excluded_Samples_body" data-parent="#Excluded_Samples_body_accordion">
+                                <div id="MIBI_body_card" class="collapse" aria-labelledby="MIBI_body" data-parent="#MIBI_body_accordion">
                                     <div class="card-body">
                                         
-                                            <h5 class="text-muted">Samples Excluded From Analysis</h4>
+                                            <h5 class="text-muted">Samples</h4>
                                             
     
 
@@ -313,21 +312,34 @@
             
             
             
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
                 
                     <tr>
     <td>
         
-            <span id="reason">
-                reason
+            <span id="comment">
+                comment
             </span>
-            
-                <br><sup><mark>required</mark></sup>
             
         
     </td>
     <td width=55%>
         
-            A comment describing why this sample is missing from the pipeline output.
+            A text comment regarding this slide.
         
     </td>
     <td>
@@ -350,14 +362,135 @@
         
         
             
-                
-            
         
             
-                
-            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="dataset_accordion">
+            <div class="card">
+                <div class="card-header" id="dataset">
+                    <div class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#dataset_card" aria-expanded="false" aria-controls="dataset_card">
+                            dataset
+                        </button>
+                        
+                            <sup><mark>required</mark></sup>
+                        
+                        <div style="float: right;">
+                            &lt; 
+                                
+        string
+    
+
+    
+                            &gt;
+                        </div>
+                    </div>
+                </div>
+                <div id="dataset_card" class="collapse" aria-labelledby="dataset">
+                    <div class="card-body">
+                        
+                        <br>
+                        All files are
+                        <sup><mark>required</mark></sup>
+                        <br>
+                        
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>File name</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
         
+            <tr>
+                <td>
+                    
+                        {folder or ""}{dataset}/3D_image_stack.ome.tiff
+                    
+                </td>
+                <td width=55%>
+                    
+                        analysis-ready multichannel image in OME TIFF format
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.image.html">
+                            image
+                        </a>
+                    
+                </td>
+            </tr>
         
+            <tr>
+                <td>
+                    
+                        {folder or ""}{dataset}/Mapping/cluster_labels_image.tif
+                    
+                </td>
+                <td width=55%>
+                    
+                        cluster-labelled image in TIFF format
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.image.html">
+                            image
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}{dataset}/mcd/channelnames_report.csv
+                    
+                </td>
+                <td width=55%>
+                    
+                        channel names table in CSV format
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.csv.html">
+                            csv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+            <tr>
+                <td>
+                    
+                        {folder or ""}{dataset}/SingleCellData/cells.csv
+                    
+                </td>
+                <td width=55%>
+                    
+                        single cell data table in CSV format
+                    
+                </td>
+                <td>
+                    
+                        <a href="files.csv.html">
+                            csv
+                        </a>
+                    
+                </td>
+            </tr>
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
             
         
             

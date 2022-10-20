@@ -1,20 +1,23 @@
 """Tests for pipeline config generation."""
+from collections import defaultdict
+from ctypes import Union
 import os
 import copy
 from tempfile import NamedTemporaryFile
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 import openpyxl
 import yaml
 
 import pytest
-from cidc_schemas.prism.constants import SUPPORTED_SHIPPING_MANIFESTS
 
 from cidc_schemas.template import Template
 from cidc_schemas.template_reader import XlTemplateReader
-from cidc_schemas.prism import core, pipelines, merger
+from cidc_schemas.prism import constants, core, pipelines, merger
+from cidc_schemas.util import participant_id_from_cimac
 
 from ..constants import TEMPLATE_EXAMPLES_DIR
 from ..test_templates import (
+    # testing fixtures
     template_set,
     template,
     template_example,
@@ -314,7 +317,15 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         return
 
     full_ct = get_test_trial(
-        ["CTTTPP111.00", "CTTTPP121.00", "CTTTPP122.00", "CTTTPP123.00"],
+        [
+            "CTTTPP111.00",
+            "CTTTPP121.00",
+            "CTTTPP122.00",
+            "CTTTPP123.00",
+            "CTTTPP124.00",
+            "CTTTPP125.00",
+            "CTTTPP126.00",
+        ],
         assays={"rna": []},
     )
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
@@ -339,43 +350,112 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         return
 
     if template.type in ["rna_fastq", "rna_bam"]:
-        # one config with all samples from one participant in one example .xlsx
-        # plus one metasheet.csv
-        assert len(res) == 1 + 1
+        # one config and one ingestion sheet per batch
+        # two samples in fastq example .yaml
+        # five samples in bam example .yaml
+        assert len(res) == 2 * (1 if template.type == "rna_fastq" else 2)
 
     else:
         assert False, f"Unexpected RNAseq template test {template.type}"
 
+    # separate batches by int for comparison
+    batches: Dict[int, Dict[str, Union[bytes, str]]] = defaultdict(dict)
     for fname, fcontent in res.items():
+        # one of:
+        # f"rna_ingestion_{trial_id}.batch_{batch_num}_of_{num_batches}.{timestamp}.xlsx"
+        # f"rna_pipeline_{trial_id}.batch_{batch_num}_of_{num_batches}.{timestamp}.yaml"
+        batch_num: int = int(fname.split(".")[1].split("_")[1])
+        batches[batch_num][fname] = fcontent
 
-        if not fname.endswith(".yaml"):
-            assert fname.endswith(".csv")
+    total_samples: int = 0
+    for batch_num, batch in batches.items():
+        assert len(batch) == 2  # yaml, xlsx
+        yaml_keys: List[str] = [
+            fname for fname in batch.keys() if fname.endswith(".yaml")
+        ]
+        excel_keys: List[str] = [
+            fname for fname in batch.keys() if fname.endswith(".xlsx")
+        ]
+        assert len(yaml_keys) == 1 and len(excel_keys) == 1
 
-            assert (
-                fcontent
-                == "cimac_id,cimac_participant_id,collection_event_name,type_of_sample,processed_sample_derivative"
-                "\r\nCTTTPP122.00,CTTTPP1,Not_reported,Not Reported,"
-                "\r\nCTTTPP123.00,CTTTPP1,Not_reported,Not Reported,"
+        yaml_content: str = batch[yaml_keys[0]]
+        excel_content: bytes = batch[excel_keys[0]]
+
+        # --- Check the ingestion sheet --- #
+        # openpyxl needs to file to have an .xlsx extension to open it
+        with NamedTemporaryFile(suffix=".xlsx") as tmp_excel:
+            tmp_excel.write(excel_content)
+            tmp_excel.seek(0)
+            wb = openpyxl.load_workbook(tmp_excel.name, data_only=True)
+
+        assert sum([ws.lower().startswith("rna") for ws in wb.sheetnames]) == 1
+        sht = wb[[ws for ws in wb.sheetnames if ws.lower().startswith("rna")][0]]
+        assert sht["C2"].value == "test_prism_trial_id"
+        assert sht["C3"].value == pipelines.RNA_INGESTION_FOLDER
+
+        if template.type == "rna_fastq":
+            cimac_ids = [sht["B7"].value, sht["B8"].value]
+            assert sht["B9"].value in ["", None]
+            assert sorted(cimac_ids) == ["CTTTPP122.00", "CTTTPP123.00"]
+        else:  # if template.type == "rna_bam"
+            cimac_ids = [
+                c
+                for c in [
+                    sht["B7"].value,
+                    sht["B8"].value,
+                    sht["B9"].value,
+                    sht["B10"].value,
+                ]
+                if c
+            ]
+            assert sht["B11"].value in ["", None]
+            assert sorted(cimac_ids) in (
+                ["CTTTPP122.00", "CTTTPP123.00", "CTTTPP124.00", "CTTTPP125.00"],
+                ["CTTTPP126.00"],
             )
 
-        else:
+        # --- Check the configuration sheet --- #
+        conf = yaml.load(yaml_content, Loader=yaml.FullLoader)
+        for key in [
+            "instance_name",
+            "cores",
+            "disk_size",
+            "google_bucket_path",
+            "rima_commit",
+            "serviceAcct",
+            "image",
+            "rima_ref_snapshot",
+        ]:
+            assert key in conf, key
 
-            conf = yaml.load(fcontent, Loader=yaml.FullLoader)
+        total_samples += len(conf["samples"])
+        for sample in conf["samples"].values():
+            # at least one bam or two fastq file per sample
+            assert len(sample) > (1 if template.type == "rna_fastq" else 0)
+            assert all("my-biofx-bucket" in f for f in sample)
+            assert all(f.endswith(".fastq.gz") for f in sample) or all(
+                f.endswith(".bam") for f in sample
+            )
 
-            assert len(conf["runs"]) == 2  # two runs for two samples in example .xlsx
+        for cimac_id, sample in conf["metasheet"].items():
+            assert sample["SampleName"] == cimac_id
+            assert sample["PatName"] == participant_id_from_cimac(cimac_id)
 
+        if template.type == "rna_fastq":
             assert len(conf["samples"]) == 2  # two samples in example .xlsx
-            for sample in conf["samples"].values():
-                assert len(sample) > 0  # at lease one data file per sample
-                assert all("my-biofx-bucket" in f for f in sample)
-                assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                    f.endswith(".bam") for f in sample
-                )
+        else:  # if template.type == "rna_bam"
+            assert len(conf["samples"]) in (1, 4)  # five samples in example .xlsx
+
+    # outside of `for`, so after all is done
+    if template.type == "rna_fastq":
+        assert total_samples == 2  # two samples in example .xlsx
+    else:  # if template.type == "rna_bam"
+        assert total_samples == 5  # five samples in example .xlsx
 
 
 def test_shipping_manifest_new_participants_after_prismify(prismify_result, template):
 
-    if not template.type in SUPPORTED_SHIPPING_MANIFESTS:
+    if not template.type in constants.SUPPORTED_SHIPPING_MANIFESTS:
         return
 
     base_ct = get_test_trial(

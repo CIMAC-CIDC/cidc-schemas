@@ -1,20 +1,29 @@
 """Analysis pipeline configuration generators."""
-import csv
-import io
-
+from collections import defaultdict
+from datetime import datetime
 import logging
 from tempfile import NamedTemporaryFile
 from typing import Dict, List, NamedTuple, Tuple, Union
-from datetime import datetime
-from collections import defaultdict
 
-from cidc_schemas.template import Template
+import jinja2
 
-from ..util import load_pipeline_config_template, participant_id_from_cimac
 from .constants import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
+from ..template import Template
+from ..util import load_pipeline_config_template, participant_id_from_cimac
 
 BIOFX_WES_ANALYSIS_FOLDER: str = "/mnt/ssd/wes/analysis"
 logger = logging.getLogger(__file__)
+
+
+def RNA_GOOGLE_BUCKET_PATH_FN(trial_id: str, batch_num: int) -> str:
+    return f"gs://repro_{trial_id}/RNA/set{batch_num+1}"
+
+
+def RNA_INSTANCE_NAME_FN(trial_id: str, batch_num: int) -> str:
+    return f"rima_{trial_id}_set{batch_num+1}"
+
+
+RNA_INGESTION_FOLDER: str = "/mnt/ssd/rima/analysis/"
 
 
 class _AnalysisRun(NamedTuple):
@@ -313,7 +322,7 @@ class _Wes_pipeline_config:
         return tumor_pair_list
 
     def _generate_run_config(
-        self, run: _AnalysisRun, all_wes_records: Dict[str, dict], bucket: str
+        self, run: _AnalysisRun, all_wes_records: Dict[str, dict], data_bucket: str
     ) -> str:
         # if we have data files for *both* items in a tumor/normal pair
         if (
@@ -327,7 +336,7 @@ class _Wes_pipeline_config:
                     "run_id": run.run_id,
                     "tumor_sample": all_wes_records[run.tumor_cimac_id],
                     "normal_sample": all_wes_records[run.normal_cimac_id],
-                    "BIOFX_BUCKET_NAME": bucket,
+                    "BIOFX_BUCKET_NAME": data_bucket,
                 }
             )
 
@@ -340,7 +349,7 @@ class _Wes_pipeline_config:
                 **{
                     "run_id": run_id,
                     "tumor_sample": all_wes_records[run.tumor_cimac_id],
-                    "BIOFX_BUCKET_NAME": bucket,
+                    "BIOFX_BUCKET_NAME": data_bucket,
                 }
             )
 
@@ -353,7 +362,7 @@ class _Wes_pipeline_config:
         return file_content
 
     def __call__(
-        self, full_ct: dict, patch: dict, bucket: str
+        self, full_ct: dict, patch: dict, data_bucket: str
     ) -> Dict[str, Union[bytes, str]]:
         """
         Generates a mapping from filename to the files to attach.
@@ -408,7 +417,7 @@ class _Wes_pipeline_config:
             res[run_id + ".yaml"] = self._generate_run_config(
                 run,
                 all_wes_records=all_wes_records,
-                bucket=bucket,
+                data_bucket=data_bucket,
             )
             res[run_id + ".template.xlsx"] = self._generate_template_excel(
                 trial_id=full_ct[PROTOCOL_ID_FIELD_NAME],
@@ -421,50 +430,40 @@ class _Wes_pipeline_config:
         return res
 
 
-def _csv2string(data):
-    si = io.StringIO()
-    cw = csv.writer(si)
-    cw.writerows(data)
-    return si.getvalue().strip("\r\n")
+def _generate_rna_template_excel(
+    trial_id: str,
+    rna_records: Dict[str, dict],
+    rnaseq_analysis_template: Template,
+) -> bytes:
+    """
+    Generates the Excel upload template for the given WES analysis run
+    """
+    worksheet_name: str = [
+        wk
+        for wk in rnaseq_analysis_template.schema["properties"]["worksheets"]
+        if wk.lower().startswith("rna")
+    ][0]
 
+    with NamedTemporaryFile() as tmp:
+        workbook = rnaseq_analysis_template.to_excel(tmp.name, close=False)
+        worksheet = workbook.get_worksheet_by_name(worksheet_name)
 
-RNA_METASHEET_KEYS = [
-    "cimac_id",
-    "cimac_participant_id",
-    "collection_event_name",
-    "type_of_sample",
-    "processed_sample_derivative",
-]
+        worksheet.write(1, 2, trial_id)
+        worksheet.write(2, 2, RNA_INGESTION_FOLDER)
 
+        for n, sample in enumerate(rna_records):
+            worksheet.write(6 + n, 1, sample["cimac_id"])
 
-def _extract_sample_metadata(participants, records):
-    per_participant_cimac_ids = defaultdict(set)
-    for record in records:
-        cid = record["cimac_id"]
-        pid = participant_id_from_cimac(cid)
+        workbook.close()
 
-        per_participant_cimac_ids[pid].add(cid)
-
-    all_participants = {
-        participant["cimac_participant_id"]: participant["samples"]
-        for participant in participants
-    }
-
-    sample_metadata = {}
-    # we expect to be guaranteed that all cimac_ids in the `patch` to be present
-    # in `full_ct` sample set, because they should have been created by previous manifest upload
-    for pid, cimac_ids_list in per_participant_cimac_ids.items():
-        for sample in all_participants[pid]:
-            cid = sample["cimac_id"]
-            if cid in cimac_ids_list:
-                sample_metadata[cid] = dict(sample, cimac_participant_id=pid)
-
-    return sample_metadata
+        tmp.seek(0)
+        ret: bytes = tmp.read()
+    return ret
 
 
 def _rna_level1_pipeline_config(
-    full_ct: dict, patch: dict, bucket: str
-) -> Dict[str, str]:
+    full_ct: dict, patch: dict, data_bucket: str
+) -> Dict[str, Union[bytes, str]]:
     """
     Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
     Returns a filename to file content map.
@@ -472,44 +471,59 @@ def _rna_level1_pipeline_config(
     Patch is expected to be already merged into full_ct.
     """
 
-    tid = full_ct[PROTOCOL_ID_FIELD_NAME]
+    trial_id: str = full_ct[PROTOCOL_ID_FIELD_NAME]
 
-    templ = load_pipeline_config_template("rna_level1_analysis_config")
+    templ: jinja2.Template = load_pipeline_config_template("rna_level1_analysis_config")
+    rnaseq_level1_analysis_template: Template = Template.from_type(
+        "rna_level1_analysis"
+    )
 
-    # as we know that `patch` is a prism result of a rna_fastq upload
+    # as we know that `patch` is a prism result of a rna_[fastq/bam] upload
     # we are sure these getitem calls should be fine
     # and that there should be just one rna assay
-    assay = patch["assays"]["rna"][0]
+    assay: dict = patch["assays"]["rna"][0]
 
-    dt = datetime.now().isoformat(timespec="minutes").replace(":", "-")
+    timestamp: str = datetime.now().isoformat(timespec="minutes").replace(":", "-")
 
-    # now we collect metadata for every sample in the patch
-    sample_metadata = _extract_sample_metadata(
-        full_ct["participants"], assay["records"]
-    )
+    res: Dict[str, str] = {}
 
-    res = {
-        f"metasheet_{tid}_{dt}.csv": _csv2string(
-            [RNA_METASHEET_KEYS]
-            + [[s.get(k) for k in RNA_METASHEET_KEYS] for s in sample_metadata.values()]
+    # separate into chunks of (up to) 4 samples and render them in batches
+    num_batches: int = len(assay["records"]) // 4 + 1
+    for batch_num in range(num_batches):
+        instance_name: str = RNA_INSTANCE_NAME_FN(
+            trial_id=trial_id, batch_num=batch_num
         )
-    }
+        google_bucket_path: str = RNA_GOOGLE_BUCKET_PATH_FN(
+            trial_id=trial_id, batch_num=batch_num
+        )
 
-    config_str = templ.render(
-        BIOFX_BUCKET_NAME=bucket,
-        samples=assay["records"],
-        paired_end_reads=assay["paired_end_reads"],
-        dt=dt,
-    )
-    # keying on participant id and date time, so if data for one participant
-    # comes in different uploads, those runs will be distinguishable
-    res[f"rna_pipeline_{tid}_{dt}.yaml"] = config_str
+        samples: List[dict] = assay["records"][
+            batch_num * 4 : min(batch_num * 4 + 4, len(assay["records"]))
+        ]
+
+        # keying on trial_id and timestamp, so configs from reupload will be distinguishable
+        res[
+            f"rna_pipeline_{trial_id}.batch_{batch_num+1}_of_{num_batches}.{timestamp}.yaml"
+        ] = templ.render(
+            participant_id_from_cimac=participant_id_from_cimac,
+            data_bucket=data_bucket,
+            google_bucket_path=google_bucket_path,
+            instance_name=instance_name,
+            samples=samples,
+        )
+        res[
+            f"rna_ingestion_{trial_id}.batch_{batch_num+1}_of_{num_batches}.{timestamp}.xlsx"
+        ] = _generate_rna_template_excel(
+            trial_id=trial_id,
+            rna_records=samples,
+            rnaseq_analysis_template=rnaseq_level1_analysis_template,
+        )
 
     return res
 
 
 def _shipping_manifest_new_participants(
-    full_ct: dict, patch: dict, bucket: str
+    full_ct: dict, patch: dict, data_bucket: str
 ) -> Dict[str, str]:
     """
     Parameters
@@ -537,7 +551,7 @@ def _shipping_manifest_new_participants(
 
 
 # This is a map from a assay type to a config generators,
-# that should take (full_ct: dict, patch: dict, bucket: str) as arguments
+# that should take (full_ct: dict, patch: dict, data_bucket: str) as arguments
 # and return a map {"file_name": ["whatever pipeline config is"]}
 _ANALYSIS_CONF_GENERATORS = {
     "wes_fastq": _Wes_pipeline_config("assay"),
@@ -549,7 +563,7 @@ _ANALYSIS_CONF_GENERATORS = {
 
 
 def generate_analysis_configs_from_upload_patch(
-    ct: dict, patch: dict, template_type: str, bucket: str
+    ct: dict, patch: dict, template_type: str, data_bucket: str
 ) -> Dict[str, str]:
     """
     Generates all needed pipeline configs, from a new upload info.
@@ -557,7 +571,7 @@ def generate_analysis_configs_from_upload_patch(
         ct: full metadata object *with `patch` merged*!
         patch: metadata patch passed from upload (assay or manifest)
         template_type: assay or manifest type
-        bucket: a name of a bucket where data files are expected to be
+        data_bucket: a name of a data_bucket where data files are expected to be
                 available for the pipeline runner
     Returns:
         Filename to pipeline configs as a string map.
@@ -565,9 +579,9 @@ def generate_analysis_configs_from_upload_patch(
     ret = {}
 
     if template_type in SUPPORTED_SHIPPING_MANIFESTS:
-        ret.update(_shipping_manifest_new_participants(ct, patch, bucket))
+        ret.update(_shipping_manifest_new_participants(ct, patch, data_bucket))
 
     if template_type in _ANALYSIS_CONF_GENERATORS:
-        ret.update(_ANALYSIS_CONF_GENERATORS[template_type](ct, patch, bucket))
+        ret.update(_ANALYSIS_CONF_GENERATORS[template_type](ct, patch, data_bucket))
 
     return ret

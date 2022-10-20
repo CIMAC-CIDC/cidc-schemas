@@ -1554,6 +1554,48 @@ def rna_bam() -> PrismTestData:
                             "rin": 9.0,
                             "quality_flag": 1.0,
                         },
+                        {
+                            "cimac_id": "CTTTPP124.00",
+                            "files": {
+                                "bam": [
+                                    {
+                                        "upload_placeholder": "d7cf5b84-b924-48dd-9f7b-a32efd6a7b0d"
+                                    },
+                                ]
+                            },
+                            "dv200": 0.4,
+                            "rqs": 4.0,
+                            "rin": 4.0,
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP125.00",
+                            "files": {
+                                "bam": [
+                                    {
+                                        "upload_placeholder": "e7cf5b84-b924-48dd-9f7b-a32efd6a7b0d"
+                                    },
+                                ]
+                            },
+                            "dv200": 0.5,
+                            "rqs": 5.0,
+                            "rin": 5.0,
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP126.00",
+                            "files": {
+                                "bam": [
+                                    {
+                                        "upload_placeholder": "f7cf5b84-b924-48dd-9f7b-a32efd6a7b0d"
+                                    },
+                                ]
+                            },
+                            "dv200": 0.6,
+                            "rqs": 6.0,
+                            "rin": 6.0,
+                            "quality_flag": 1.0,
+                        },
                     ],
                     "assay_creator": "DFCI",
                     "enrichment_method": "Transcriptome capture v1",
@@ -1589,6 +1631,27 @@ def rna_bam() -> PrismTestData:
             local_path="gs://local/path/to/fwd.1.2.1_2.bam",
             gs_key="test_prism_trial_id/rna/CTTTPP123.00/reads_1.bam",
             upload_placeholder="c7cf5b84-b924-48dd-9f7b-a32efd6a7b0d",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="gs://local/path/to/fwd.1.2.4.bam",
+            gs_key="test_prism_trial_id/rna/CTTTPP124.00/reads_0.bam",
+            upload_placeholder="d7cf5b84-b924-48dd-9f7b-a32efd6a7b0d",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="gs://local/path/to/fwd.1.2.5.bam",
+            gs_key="test_prism_trial_id/rna/CTTTPP125.00/reads_0.bam",
+            upload_placeholder="e7cf5b84-b924-48dd-9f7b-a32efd6a7b0d",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="gs://local/path/to/fwd.1.2.6.bam",
+            gs_key="test_prism_trial_id/rna/CTTTPP126.00/reads_0.bam",
+            upload_placeholder="f7cf5b84-b924-48dd-9f7b-a32efd6a7b0d",
             metadata_availability=False,
             allow_empty=False,
         ),

@@ -960,6 +960,108 @@ def wes_fastq() -> PrismTestData:
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
                         },
+                        {
+                            "cimac_id": "CTTTPP512.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507g"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c7"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP513.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507h"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c8"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP514.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507i"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c9"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP515.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507j"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c0"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP516.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507a"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c1"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
+                        {
+                            "cimac_id": "CTTTPP517.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507b"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c2"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
                     ],
                     "assay_creator": "Mount Sinai",
                     "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
@@ -1222,6 +1324,90 @@ def wes_fastq() -> PrismTestData:
             local_path="/local/path/to/rev.5.1.1.fastq.gz",
             gs_key="test_prism_trial_id/wes/CTTTPP511.00/r2_L1.fastq.gz",
             upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c6",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP512.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507g",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.2.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP512.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c7",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.3.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP513.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507h",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.3.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP513.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c8",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.4.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP514.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507i",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.4.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP514.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c9",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.5.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP515.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507j",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.5.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP515.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c0",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.6.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP516.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507a",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.6.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP516.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c1",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.7.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP517.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507b",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.7.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP517.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c2",
             metadata_availability=False,
             allow_empty=False,
         ),

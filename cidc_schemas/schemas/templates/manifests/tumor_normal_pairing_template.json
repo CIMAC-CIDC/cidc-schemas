@@ -32,6 +32,31 @@
                         }
                     }
                 }
+            },
+            "Tumor-only": {
+                "prism_preamble_object_schema": "clinical_trial.json",
+                "prism_preamble_object_pointer": "#",
+                "preamble_rows": {
+                    "protocol identifier": {
+                        "merge_pointer": "/protocol_identifier",
+                        "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    }
+                },
+                "prism_data_object_pointer": "/analysis/wes_tumor_only_analysis/runs/-",
+                "data_columns": {
+                    "Tumor-only": {
+                        "tumor sample CIMAC ID": {
+                            "merge_pointer": "/tumor/cimac_id",
+                            "type_ref": "sample.json#properties/cimac_id",
+                            "process_as": [
+                                {
+                                    "merge_pointer": "/run_id",
+                                    "type_ref": "assays/wes_tumor_only_analysis.json#definitions/sample_analysis/properties/run_id"
+                                }
+                            ] 
+                        }
+                    }
+                }
             }
         }
     }

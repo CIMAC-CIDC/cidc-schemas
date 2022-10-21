@@ -1833,7 +1833,37 @@ def tumor_normal_pairing():
                         "normal": {"cimac_id": "CTTTPP121.00"},
                     }
                 ]
-            }
+            },
+            "wes_tumor_only_analysis": {
+                "runs": [
+                    {
+                        "run_id": cimac_id,
+                        "tumor": {"cimac_id": cimac_id},
+                    }
+                    for cimac_id in [
+                        "CTTTPP122.00",
+                        "CTTTPP123.00",
+                        "CTTTPP124.00",
+                        "CTTTPP211.00",
+                        "CTTTPP212.00",
+                        "CTTTPP213.00",
+                        "CTTTPP214.00",
+                        "CTTTPP311.00",
+                        "CTTTPP312.00",
+                        "CTTTPP313.00",
+                        "CTTTPP411.00",
+                        "CTTTPP412.00",
+                        "CTTTPP413.00",
+                        "CTTTPP511.00",
+                        "CTTTPP512.00",
+                        "CTTTPP513.00",
+                        "CTTTPP514.00",
+                        "CTTTPP515.00",
+                        "CTTTPP516.00",
+                        "CTTTPP517.00",
+                    ]
+                ],
+            },
         },
     }
     upload_entries = []
@@ -1842,6 +1872,9 @@ def tumor_normal_pairing():
         sample["cimac_id"]
         for pair_run in prismify_patch["analysis"]["wes_analysis"]["pair_runs"]
         for sample in [pair_run["tumor"], pair_run["normal"]]
+    ] + [
+        run["tumor"]["cimac_id"]
+        for run in prismify_patch["analysis"]["wes_tumor_only_analysis"]["runs"]
     ]
     base_trial = get_test_trial(cimac_ids)
 

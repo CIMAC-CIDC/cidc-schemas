@@ -1,15 +1,12 @@
 import pytest
 from copy import deepcopy
 from deepdiff import DeepDiff, grep
-from unittest.mock import MagicMock
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.prism import (
     prismify,
     merge_clinical_trial_metadata,
-    merge_artifact,
     merge_artifacts,
-    merge_artifact_extra_metadata,
     PROTOCOL_ID_FIELD_NAME,
     ArtifactInfo,
 )
@@ -39,7 +36,6 @@ def assert_metadata_matches(received: dict, expected: dict, upload_entries: list
         assert len(diff) == 2, str(
             diff
         )  # only "values_changed" and "dictionary_item_added"
-        print(diff)
         assert len(diff["dictionary_item_added"]) == len(upload_entries), str(diff)
         assert len(diff["values_changed"]) == len(upload_entries), str(diff)
         for changed_key in diff["values_changed"].keys():
@@ -90,7 +86,11 @@ def test_prismify(prism_test: PrismTestData, monkeypatch):
         assert received.metadata_availability == expected.metadata_availability
 
     # Compare the received and expected prism metadata patches
-    assert_metadata_matches(patch, prism_test.prismify_patch, upload_entries)
+    assert_metadata_matches(
+        received=patch,
+        expected=prism_test.prismify_patch,
+        upload_entries=upload_entries,
+    )
 
 
 def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
@@ -106,7 +106,9 @@ def test_merge_patch_into_trial(prism_test: PrismTestData, ct_validator):
     ct_validator.validate(result)
 
     target = prism_test.target_trial
-    assert_metadata_matches(result, target, prism_test.upload_entries)
+    assert_metadata_matches(
+        received=result, expected=target, upload_entries=prism_test.upload_entries
+    )
 
 
 def test_merge_artifacts(prism_test: PrismTestData, ct_validator):

@@ -6,6 +6,7 @@ import copy
 from tempfile import NamedTemporaryFile
 from typing import Dict, List, Tuple
 import openpyxl
+import pandas as pd
 import yaml
 
 import pytest
@@ -121,6 +122,12 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP412.00",
             "CTTTPP413.00",
             "CTTTPP511.00",
+            "CTTTPP512.00",
+            "CTTTPP513.00",
+            "CTTTPP514.00",
+            "CTTTPP515.00",
+            "CTTTPP516.00",
+            "CTTTPP517.00",
         ],
         allowed_collection_event_names=[
             "Not_reported",
@@ -171,9 +178,10 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 partic["samples"][1]["collection_event_name"] = "On_Treatment"
                 partic["samples"][2]["collection_event_name"] = "Week_1"
             elif partic_id == "CTTTPP5":
-                # test 1 tumor sample with no paired normal
-                partic["samples"][0]["processed_sample_derivative"] = "Tumor DNA"
-                partic["samples"][0]["collection_event_name"] = "On_Treatment"
+                # test tumor samples with no paired normal
+                for i in range(len(partic["samples"])):
+                    partic["samples"][i]["processed_sample_derivative"] = "Tumor DNA"
+                    partic["samples"][i]["collection_event_name"] = "On_Treatment"
 
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 
@@ -190,125 +198,207 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
     )
 
-    pairing_filename = full_ct["protocol_identifier"] + "_pairing.csv"
-    # wes_bam
-    if template.type == "wes_bam":
-        # 2 config, tumor-only for both samples
-        # 2 template, wes_tumor_only_analysis for both
-        # 1 pairing file
-        assert len(res) == 5
-        assert (
-            res[pairing_filename]
-            == "protocol_identifier,test_prism_trial_id\ntumor,tumor_collection_event,normal,normal_collection_event\nCTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported"
-        )
-    elif template.type == "tumor_normal_pairing":
-        # 1 config, tumor/normal, config for CTTTPP122.00 was generated on wes_fastq upload
-        # 1 template, wes_analysis for pair
-        # 1 pairing file
-        assert len(res) == 3
-        assert (
-            res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
-            "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
-            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
-            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            ",,CTTTPP214.00,Baseline\n"
-            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
-            ",,CTTTPP312.00,On_Treatment\n"
-            "CTTTPP411.00,Not_reported,,\n"
-            ",,CTTTPP412.00,On_Treatment\n"
-            ",,CTTTPP413.00,Week_1\n"
-            "CTTTPP511.00,On_Treatment,,"
-        )
-    elif template.type == "wes_fastq":
-        # 16 configs, tumor-only for all samples
-        # 16 wes_tumor_only_analysis for all
-        # 1 pairing file
-        assert len(res) == 33
-        assert (
-            res[pairing_filename] == "protocol_identifier,test_prism_trial_id\n"
-            "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
-            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
-            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            ",,CTTTPP214.00,Baseline\n"
-            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
-            ",,CTTTPP312.00,On_Treatment\n"
-            "CTTTPP411.00,Not_reported,,\n"
-            ",,CTTTPP412.00,On_Treatment\n"
-            ",,CTTTPP413.00,Week_1\n"
-            "CTTTPP511.00,On_Treatment,,"
-        )
-    else:  # where we don't expect to have configs
-        assert res == {}
+    if "analysis" in template.type:
+        # where we don't expect to have configs
+        assert len(res) == 0
+        # that's it, nothing in res to check
         return
 
-    for fname, conf in res.items():
-        if fname.endswith("yaml"):
-            conf = yaml.load(conf, Loader=yaml.FullLoader)
-            assert len(conf["metasheet"]) == 1  # one run
+    elif "wes" in template.type:
+        # 1 pairing csv
+        assert len(res) == 1
 
-            if "pair" in template.type:
-                assert len(conf["samples"]) in [1, 2]
-                assert conf["instance_name"] == (
-                    "ctttpp111-00"  # run_id from sheet
-                    if len(conf["samples"]) == 2  # tumor/normal
-                    else "ctttpp122-00"  # tumor id for tumor-only
-                )  # run ID but lowercase & hyphenated
+    else:  # if template.type == "tumor_normal_pairing"
+        # 2 config, 1 paired plus 20 tumor-only
+        # 20 wes_tumor_only_analysis xlsx
+        # 1 wes_analysis xlsx
+        # 1 pairing csv
+        assert len(res) == 24, list(res.keys())
 
-            else:
-                assert len(conf["samples"]) == 1  # tumor only
-                assert conf["instance_name"] in [
-                    "ctttpp111-00",
-                    "ctttpp121-00",
-                    "ctttpp122-00",
-                    "ctttpp123-00",
-                    "ctttpp124-00",
-                    "ctttpp211-00",
-                    "ctttpp212-00",
-                    "ctttpp213-00",
-                    "ctttpp214-00",
-                    "ctttpp311-00",
-                    "ctttpp312-00",
-                    "ctttpp313-00",
-                    "ctttpp411-00",
-                    "ctttpp412-00",
-                    "ctttpp413-00",
-                    "ctttpp511-00",
-                ]  # CIMAC ID but lowercase & hypenated
+    pairing_filename = full_ct["protocol_identifier"] + "_pairing.csv"
+    if template.type == "wes_bam":
+        assert (
+            res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
+            "tumor,tumor_collection_event,normal,normal_collection_event\n"
+            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported"
+        )
+    elif template.type == "wes_fastq":
+        assert (
+            res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
+            "tumor,tumor_collection_event,normal,normal_collection_event\n"
+            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
+            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
+            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
+            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
+            ",,CTTTPP214.00,Baseline\n"
+            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
+            ",,CTTTPP312.00,On_Treatment\n"
+            "CTTTPP411.00,Not_reported,,\n"
+            ",,CTTTPP412.00,On_Treatment\n"
+            ",,CTTTPP413.00,Week_1\n"
+            "CTTTPP511.00,On_Treatment,,\n"
+            "CTTTPP512.00,On_Treatment,,\n"
+            "CTTTPP513.00,On_Treatment,,\n"
+            "CTTTPP514.00,On_Treatment,,\n"
+            "CTTTPP515.00,On_Treatment,,\n"
+            "CTTTPP516.00,On_Treatment,,\n"
+            "CTTTPP517.00,On_Treatment,,"
+        )
+    else:  # if template.type == "tumor_normal_pairing"
+        assert (
+            res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
+            "tumor,tumor_collection_event,normal,normal_collection_event\n"
+            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
+            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
+            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
+            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
+            ",,CTTTPP214.00,Baseline\n"
+            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
+            ",,CTTTPP312.00,On_Treatment\n"
+            "CTTTPP411.00,Not_reported,,\n"
+            ",,CTTTPP412.00,On_Treatment\n"
+            ",,CTTTPP413.00,Week_1\n"
+            "CTTTPP511.00,On_Treatment,,\n"
+            "CTTTPP512.00,On_Treatment,,\n"
+            "CTTTPP513.00,On_Treatment,,\n"
+            "CTTTPP514.00,On_Treatment,,\n"
+            "CTTTPP515.00,On_Treatment,,\n"
+            "CTTTPP516.00,On_Treatment,,\n"
+            "CTTTPP517.00,On_Treatment,,"
+        )
 
-            for sample in conf["samples"].values():
-                assert len(sample) > 0  # at least one data file per sample
-                assert all("my-biofx-bucket" in f for f in sample)
-                assert all(f.endswith(".fastq.gz") for f in sample) or all(
-                    f.endswith(".bam") for f in sample
-                )
+    # only generated for pairing manifest
+    if "pairing" in template.type:
+        all_tumor_cimac_ids: List[
+            str
+        ] = []  # to make sure all are caught across configs
+        for fname, conf in res.items():
+            # check the ingestion template excels
+            if "template" in fname:
+                # openpyxl needs to file to have an .xlsx extension to open it
+                with NamedTemporaryFile(suffix=".xlsx") as tmp:
+                    tmp.write(conf)
+                    tmp.seek(0)
+                    wb = openpyxl.load_workbook(tmp.name, data_only=True)
 
-        elif fname.endswith("xlsx"):
-            # openpyxl needs to file to have an .xlsx extension to open it
-            with NamedTemporaryFile(suffix=".xlsx") as tmp:
-                tmp.write(conf)
-                tmp.seek(0)
-                wb = openpyxl.load_workbook(tmp.name, data_only=True)
+                if "WES Analysis" in wb.sheetnames:
+                    sht = wb["WES Analysis"]
+                elif "WES tumor-only Analysis" in wb.sheetnames:
+                    sht = wb["WES tumor-only Analysis"]
+                else:
+                    assert (
+                        False
+                    ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
 
-            if "WES Analysis" in wb.sheetnames:
-                sht = wb["WES Analysis"]
-            elif "WES tumor-only Analysis" in wb.sheetnames:
-                sht = wb["WES tumor-only Analysis"]
-            else:
+                assert sht["C2"].value == "test_prism_trial_id"
+                assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
+                assert sht["B7"].value  # run name
+                assert sht["C7"].value  # first id
+
+                if sht.title == "WES Analysis":
+                    assert sht["D7"].value  # second id
+                    assert sht["B7"].value == sht["D7"].value  # run name is tumor id
+                else:
+                    assert sht["B7"].value == sht["C7"].value  # run name is tumor id
+
+            # check the config template excels
+            else:  # if "wes_ingestion" in fname
+                df = pd.read_excel(conf)
+                all_tumor_cimac_ids.extend(df["tumor_cimac_id"].values)
                 assert (
-                    False
-                ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
+                    df["google_bucket_path"]
+                    .str.startswith("gs://repro_s1609_len/WES_v3/")
+                    .all()
+                )
+                assert df["rna_bam_file"].isna().all()
+                assert df["rna_expression_file"].isna().all()
+                assert (df["cores"] == 64).all()
+                assert (df["disk_size"] == 500).all()
+                assert (df["wes_commit"] == "21376c4").all()
+                assert (df["image"] == "wes-ver3-01c").all()
+                assert (df["wes_ref_snapshot"] == "wes-human-ref-ver1-8").all()
+                assert (df["somatic_caller"] == "tnscope").all()
+                assert (~df["trim_soft_clip"]).all()
+                assert (df["zone"] == "us-east1-c").all()
 
-            assert sht["C2"].value == "test_prism_trial_id"
-            assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
-            assert sht["B7"].value  # run name
-            assert sht["C7"].value  # first id
+                if df.shape[0] == 20:
+                    # first row is paired, so it's special
+                    # if we pop it, can use same code below for all tumor-only
+                    first_row, df = df.iloc[0], df.iloc[1:]
+                    assert not first_row["tumor_only"]
+                    assert first_row["tumor_cimac_id"] == "CTTTPP111.00"
+                    assert first_row["normal_cimac_id"] == "CTTTPP121.00"
+                    assert (
+                        first_row[
+                            [
+                                "normal_fastq_path_pair1",
+                                "normal_fastq_path_pair2",
+                            ]
+                        ]
+                        .str.startswith(
+                            "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
+                        )
+                        .all()
+                    )
+                else:
+                    assert df.shape[0] == 1
 
-            if sht.title == "WES Analysis":
-                assert sht["D7"].value  # second id
+                # if popped above, rest of the rows are tumor-only
+                # if only one row, should be tumor-only
+                assert (
+                    df["tumor_fastq_path_pair1"]
+                    .str.startswith(
+                        "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
+                    )
+                    .all()
+                )
+                assert (
+                    df["tumor_fastq_path_pair2"]
+                    .str.startswith(
+                        "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
+                    )
+                    .all()
+                )
+                assert (
+                    df[
+                        [
+                            "normal_cimac_id",
+                            "normal_fastq_path_pair1",
+                            "normal_fastq_path_pair2",
+                        ]
+                    ]
+                    .isna()
+                    .all()
+                    .all()
+                )
+                assert df["tumor_only"].all()
+
+        # outside of `for` ie once per test
+        # to make sure all are caught across configs
+        assert sorted(all_tumor_cimac_ids) == [
+            "CTTTPP111.00",
+            # CTTTPP121.00 is a normal paired to CTTTPP111.00
+            "CTTTPP122.00",
+            "CTTTPP123.00",
+            "CTTTPP124.00",
+            "CTTTPP211.00",
+            "CTTTPP212.00",
+            "CTTTPP213.00",
+            "CTTTPP214.00",
+            "CTTTPP311.00",
+            "CTTTPP312.00",
+            "CTTTPP313.00",
+            "CTTTPP411.00",
+            "CTTTPP412.00",
+            "CTTTPP413.00",
+            "CTTTPP511.00",
+            "CTTTPP512.00",
+            "CTTTPP513.00",
+            "CTTTPP514.00",
+            "CTTTPP515.00",
+            "CTTTPP516.00",
+            "CTTTPP517.00",
+        ]
 
 
 def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, template):

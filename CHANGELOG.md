@@ -9,11 +9,13 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.26.4` - 21 Oct 2022
+## Version `0.26.4` - 24 Oct 2022
 
-- `changed` pipeline configuration generated for RIMA
+- `changed` pipeline configuration generated for RIMA and WES
 - `added` ingestion sheet generation for RIMA
 - `removed` metasheet generation for RIMA
+- `added` tumor-only sheet to tumor-normal pairing manifest
+- `removed` configuration/ingestion on WES assay upload
 
 ## Version `0.26.3` - 20 Oct 2022
 

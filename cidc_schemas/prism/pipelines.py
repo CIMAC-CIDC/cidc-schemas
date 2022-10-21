@@ -335,8 +335,8 @@ class _Wes_pipeline_config:
                 if "r1" in normal_files:
                     to_append.update(
                         {
-                            "normal_fastq_path_pair1": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.tumor_cimac_id}_R1.fastq.gz",
-                            "normal_fastq_path_pair2": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.tumor_cimac_id}_R2.fastq.gz",
+                            "normal_fastq_path_pair1": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.normal_cimac_id}_R1.fastq.gz",
+                            "normal_fastq_path_pair2": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.normal_cimac_id}_R2.fastq.gz",
                         }
                     )
                 else:  # if "bam" in normal_files

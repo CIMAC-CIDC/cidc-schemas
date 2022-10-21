@@ -1,17 +1,16 @@
 """Tests for pipeline config generation."""
 from collections import defaultdict
-from ctypes import Union
 import os
 import copy
 from tempfile import NamedTemporaryFile
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Union
 import openpyxl
 import pandas as pd
 import yaml
 
 import pytest
 
-from cidc_schemas.template import Template
+from cidc_schemas.template import LocalFileUploadEntry, Template
 from cidc_schemas.template_reader import XlTemplateReader
 from cidc_schemas.prism import constants, core, pipelines, merger
 from cidc_schemas.util import participant_id_from_cimac
@@ -41,13 +40,18 @@ def prismify_result(template, template_example):
 
 
 def prism_patch_stage_artifacts(
-    prismify_result, template_type
-) -> Tuple[dict, List[Tuple[dict, dict]]]:
+    prismify_result: Tuple[
+        dict, List[LocalFileUploadEntry], List[Union[Exception, str]]
+    ],
+    template_type: str,
+) -> dict:
+    prism_patch: dict
+    prism_fmap: List[LocalFileUploadEntry]
 
     prism_patch, prism_fmap, _ = prismify_result
-    patch_copy_4_artifacts = copy.deepcopy(prism_patch)
+    patch_copy_4_artifacts: dict = copy.deepcopy(prism_patch)
 
-    patch_copy_4_artifacts = merger.merge_artifacts(
+    patch_copy_4_artifacts, _ = merger.merge_artifacts(
         patch_copy_4_artifacts,
         [
             merger.ArtifactInfo(
@@ -60,38 +64,51 @@ def prism_patch_stage_artifacts(
             )
             for i, fmap_entry in enumerate(prism_fmap)
         ],
-    )[0]
+    )
 
     return patch_copy_4_artifacts
 
 
-def stage_assay_for_analysis(template_type) -> Tuple[dict, List[Tuple[dict, dict]]]:
+def stage_assay_for_analysis(template_type: str, full_ct: dict) -> dict:
     """
     Simulates an initial assay upload by prismifying the initial assay template object.
+    Returns the updated full clinical trial data after merging.
     """
 
-    staging_map = {
-        "cytof_analysis": "cytof",
-        "tumor_normal_pairing": "wes_fastq",
+    staging_map: Dict[str, List[str]] = {
+        "cytof_analysis": ["cytof"],
+        "tumor_normal_pairing": ["wes_bam", "wes_fastq"],
     }
 
-    if not template_type in staging_map:
-        return {}
+    for to_patch in staging_map.get(template_type, []):
+        full_ct = stage_assay(template_type=to_patch, full_ct=full_ct)
 
-    prelim_assay = staging_map[template_type]
-
-    return stage_assay(template_type=prelim_assay)
+    return full_ct
 
 
-def stage_assay(template_type: str) -> Tuple[dict, List[Tuple[dict, dict]]]:
+def get_patch_for_staging(template_type: str) -> dict:
     preassay_xlsx_path = os.path.join(
         TEMPLATE_EXAMPLES_DIR, template_type + "_template.xlsx"
     )
     preassay_xlsx, _ = XlTemplateReader.from_excel(preassay_xlsx_path)
     preassay_template = Template.from_type(template_type)
-    prism_res = core.prismify(preassay_xlsx, preassay_template)
+    prism_res: Tuple[
+        dict, List[LocalFileUploadEntry], List[Union[Exception, str]]
+    ] = core.prismify(preassay_xlsx, preassay_template)
 
-    return prism_patch_stage_artifacts(prism_res, template_type)
+    patch_with_artifacts: dict = prism_patch_stage_artifacts(prism_res, template_type)
+    return patch_with_artifacts
+
+
+def stage_assay(template_type: str, full_ct: dict) -> dict:
+    patch_with_artifacts = get_patch_for_staging(template_type)
+    if patch_with_artifacts:
+        full_ct, errs = merger.merge_clinical_trial_metadata(
+            patch_with_artifacts, full_ct
+        )
+        assert 0 == len(errs), str(errs)
+
+    return full_ct
 
 
 def test_WES_pipeline_config_generation_after_prismify(prismify_result, template):
@@ -183,14 +200,10 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     partic["samples"][i]["processed_sample_derivative"] = "Tumor DNA"
                     partic["samples"][i]["collection_event_name"] = "On_Treatment"
 
-    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
-
     # if it's an analysis - we need to merge corresponding preliminary assay first
-    prelim_assay = stage_assay_for_analysis(template.type)
-    if prelim_assay:
-        full_ct, errs = merger.merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs), str(errs)
+    full_ct = stage_assay_for_analysis(template.type, full_ct)
 
+    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
     assert 0 == len(errs), str(errs)
 
@@ -226,7 +239,6 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         assert (
             res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
             "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
             "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
             "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
             "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
@@ -328,17 +340,15 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     assert not first_row["tumor_only"]
                     assert first_row["tumor_cimac_id"] == "CTTTPP111.00"
                     assert first_row["normal_cimac_id"] == "CTTTPP121.00"
-                    assert (
-                        first_row[
-                            [
-                                "normal_fastq_path_pair1",
-                                "normal_fastq_path_pair2",
-                            ]
-                        ]
-                        .str.startswith(
-                            "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
-                        )
-                        .all()
+                    assert first_row["tumor_fastq_path_pair1"].startswith(
+                        "gs://my-biofx-bucket/test_prism_trial_id/wes/CTTTPP111.00/"
+                    ) and first_row["tumor_fastq_path_pair1"].endswith(".bam")
+                    assert first_row["normal_fastq_path_pair1"].startswith(
+                        "gs://my-biofx-bucket/test_prism_trial_id/wes/CTTTPP121.00/"
+                    ) and first_row["normal_fastq_path_pair1"].endswith(".bam")
+
+                    assert pd.isna(first_row["tumor_fastq_path_pair2"]) and pd.isna(
+                        first_row["normal_fastq_path_pair2"]
                     )
                 else:
                     assert df.shape[0] == 1
@@ -421,10 +431,7 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
     patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
 
     # if it's an analysis - we need to merge corresponding preliminary assay first
-    prelim_assay = stage_assay_for_analysis(template.type)
-    if prelim_assay:
-        full_ct, errs = merger.merge_clinical_trial_metadata(prelim_assay, full_ct)
-        assert 0 == len(errs)
+    full_ct = stage_assay_for_analysis(template.type, full_ct)
 
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
 
@@ -556,7 +563,9 @@ def test_shipping_manifest_new_participants_after_prismify(prismify_result, temp
         ],
     )
 
-    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
+    patch_with_artifacts: dict = prism_patch_stage_artifacts(
+        prismify_result, template.type
+    )
     full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, base_ct)
     assert 0 == len(errs), "\n".join(errs)
 
@@ -581,7 +590,7 @@ def test_shipping_manifest_new_participants_after_prismify(prismify_result, temp
 
     # test ONLY new participants on subset
     if template.type == "h_and_e":
-        patch_with_artifacts = stage_assay(template_type="microbiome_dna")
+        patch_with_artifacts = get_patch_for_staging(template_type="microbiome_dna")
         full_ct, errs = merger.merge_clinical_trial_metadata(
             patch_with_artifacts, full_ct
         )
@@ -600,11 +609,7 @@ def test_shipping_manifest_new_participants_after_prismify(prismify_result, temp
 
     # test doesn't return if no new particpants
     if template.type == "pbmc":
-        patch_with_artifacts = stage_assay(template_type="plasma")
-        full_ct, errs = merger.merge_clinical_trial_metadata(
-            patch_with_artifacts, full_ct
-        )
-        assert 0 == len(errs), "\n".join(errs)
+        patch_with_artifacts = get_patch_for_staging(template_type="plasma")
         full_ct, errs = merger.merge_clinical_trial_metadata(
             patch_with_artifacts, full_ct
         )

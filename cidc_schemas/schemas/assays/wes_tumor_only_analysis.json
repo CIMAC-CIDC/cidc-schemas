@@ -12,10 +12,6 @@
 
       "required": [
         "run_id",
-        "somatic",
-        "report",
-        "neoantigen",
-        "msisensor",
         "tumor"
       ],
       "additionalProperties": false,

@@ -8,7 +8,7 @@ JSON = Union[dict, float, int, list, str]
 from deepdiff import grep
 
 
-def load_pipeline_config_template(name: str):
+def load_pipeline_config_template(name: str) -> jinja2.Template:
     curdir = os.path.dirname(os.path.abspath(__file__))
     loader = jinja2.FileSystemLoader(curdir)
     return jinja2.Environment(loader=loader).get_template(

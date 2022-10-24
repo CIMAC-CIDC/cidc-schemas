@@ -17,12 +17,22 @@ BIOFX_WES_ANALYSIS_FOLDER: str = "/mnt/ssd/wes/analysis"
 logger = logging.getLogger(__file__)
 
 
+# Note, bucket names must be all lowercase, dash, and underscore
+# https://cloud.google.com/storage/docs/naming-buckets#requirements
 def RNA_GOOGLE_BUCKET_PATH_FN(trial_id: str, batch_num: int) -> str:
-    return f"gs://repro_{trial_id}/RNA/set{batch_num+1}"
+    return f"gs://repro_{trial_id.lower()}/RNA/set{batch_num+1}"
 
 
 def RNA_INSTANCE_NAME_FN(trial_id: str, batch_num: int) -> str:
     return f"rima_{trial_id}_set{batch_num+1}"
+
+
+def WES_GOOGLE_BUCKET_PATH_FN(trial_id: str, run_id: str) -> str:
+    return f"gs://repro_{trial_id.lower()}/WES_v3/{run_id}"
+
+
+def WES_CONCAT_FASTQ_PATH_FN(trial_id: str, cimac_id: str, read: int) -> str:
+    return f"gs://repro_{trial_id.lower()}/WES/fastq/concat_all/analysis/concat/{cimac_id}_R{read}.fastq.gz"
 
 
 RNA_INGESTION_FOLDER: str = "/mnt/ssd/rima/analysis/"
@@ -293,16 +303,30 @@ class _Wes_pipeline_config:
 
     def _generate_batch_config(
         self,
+        trial_id: str,
         batch_runs: List[_AnalysisRun],
         data_bucket: str,
     ) -> bytes:
         df = pd.DataFrame(columns=WES_CONFIG_COLUMN_NAMES)
 
         for n, run in enumerate(batch_runs):
+            assay_creator: str = self.all_wes_samples[run.tumor_cimac_id][
+                "assay_creator"
+            ]
+            if assay_creator not in ["MD Anderson", "Broad"]:
+                raise Exception(
+                    f"assay_creator for WES expected to be either MD Anderson or Broad, not: {assay_creator}\n"
+                    f"Trial {trial_id}, run {run.run_id}, sample {run.tumor_cimac_id}"
+                )
+            cimac_center: str = "broad" if assay_creator == "Broad" else "mda"
+
             to_append: dict = {
                 "tumor_cimac_id": run.tumor_cimac_id,
                 "normal_cimac_id": run.normal_cimac_id,  # None if empty
-                "google_bucket_path": f"gs://repro_s1609_len/WES_v3/{run.tumor_cimac_id}",
+                "google_bucket_path": WES_GOOGLE_BUCKET_PATH_FN(
+                    trial_id=trial_id, run_id=run.run_id
+                ),
+                "cimac_center": cimac_center,
                 "cores": 64,
                 "disk_size": 500,
                 "wes_commit": "21376c4",
@@ -318,8 +342,12 @@ class _Wes_pipeline_config:
             if "r1" in tumor_files:
                 to_append.update(
                     {
-                        "tumor_fastq_path_pair1": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.tumor_cimac_id}_R1.fastq.gz",
-                        "tumor_fastq_path_pair2": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.tumor_cimac_id}_R2.fastq.gz",
+                        "tumor_fastq_path_pair1": WES_CONCAT_FASTQ_PATH_FN(
+                            trial_id=trial_id, cimac_id=run.tumor_cimac_id, read=1
+                        ),
+                        "tumor_fastq_path_pair2": WES_CONCAT_FASTQ_PATH_FN(
+                            trial_id=trial_id, cimac_id=run.tumor_cimac_id, read=2
+                        ),
                     }
                 )
             else:  # if "bam" in tumor_files
@@ -335,8 +363,12 @@ class _Wes_pipeline_config:
                 if "r1" in normal_files:
                     to_append.update(
                         {
-                            "normal_fastq_path_pair1": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.normal_cimac_id}_R1.fastq.gz",
-                            "normal_fastq_path_pair2": f"gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/{run.normal_cimac_id}_R2.fastq.gz",
+                            "normal_fastq_path_pair1": WES_CONCAT_FASTQ_PATH_FN(
+                                trial_id=trial_id, cimac_id=run.normal_cimac_id, read=1
+                            ),
+                            "normal_fastq_path_pair2": WES_CONCAT_FASTQ_PATH_FN(
+                                trial_id=trial_id, cimac_id=run.normal_cimac_id, read=2
+                            ),
                         }
                     )
                 else:  # if "bam" in normal_files
@@ -383,6 +415,7 @@ class _Wes_pipeline_config:
         res[
             f"wes_ingestion_{trial_id}.batch_{batch_num+1}_of_{self.num_batches}.{self.timestamp}.xlsx"
         ] = self._generate_batch_config(
+            trial_id=trial_id,
             batch_runs=batch_runs,
             data_bucket=data_bucket,
         )
@@ -464,7 +497,9 @@ class _Wes_pipeline_config:
         # so we can filter out analysis runs for which we have data for both samples
         # only keep ones we have assay files for
         self.all_wes_samples: Dict[str, dict] = {
-            r["cimac_id"]: r
+            # also note the assay_creator because we would need that for WES config generation
+            # assay_creator required on assays/wes entry
+            r["cimac_id"]: dict(assay_creator=wes["assay_creator"], **r)
             for wes in full_ct["assays"]["wes"]
             for r in wes["records"]
             if "files" in r

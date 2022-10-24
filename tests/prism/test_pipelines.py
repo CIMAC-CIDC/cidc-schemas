@@ -319,7 +319,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 all_tumor_cimac_ids.extend(df["tumor_cimac_id"].values)
                 assert (
                     df["google_bucket_path"]
-                    .str.startswith("gs://repro_s1609_len/WES_v3/")
+                    .str.startswith("gs://repro_test_prism_trial_id/WES_v3/")
                     .all()
                 )
                 assert df["rna_bam_file"].isna().all()
@@ -346,6 +346,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     assert first_row["normal_fastq_path_pair1"].startswith(
                         "gs://my-biofx-bucket/test_prism_trial_id/wes/CTTTPP121.00/"
                     ) and first_row["normal_fastq_path_pair1"].endswith(".bam")
+                    assert first_row["cimac_center"] == "broad"
 
                     assert pd.isna(first_row["tumor_fastq_path_pair2"]) and pd.isna(
                         first_row["normal_fastq_path_pair2"]
@@ -358,14 +359,14 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 assert (
                     df["tumor_fastq_path_pair1"]
                     .str.startswith(
-                        "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
+                        "gs://repro_test_prism_trial_id/WES/fastq/concat_all/analysis/concat/"
                     )
                     .all()
                 )
                 assert (
                     df["tumor_fastq_path_pair2"]
                     .str.startswith(
-                        "gs://repro_s1609_len/WES/fastq/concat_all/analysis/concat/"
+                        "gs://repro_test_prism_trial_id/WES/fastq/concat_all/analysis/concat/"
                     )
                     .all()
                 )
@@ -381,6 +382,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     .all()
                     .all()
                 )
+                assert (df["cimac_center"] == "mda").all()
                 assert df["tumor_only"].all()
 
         # outside of `for` ie once per test

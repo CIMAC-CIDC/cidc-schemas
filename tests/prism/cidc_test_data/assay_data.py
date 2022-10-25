@@ -446,100 +446,192 @@ def mibi() -> PrismTestData:
         "assays": {
             "mibi": [
                 {
+                    "batch_id": "test_batch",
+                    "metadata_tsv": {
+                        "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a9"
+                    },
                     "records": [
                         {
                             "cimac_id": "CTTTPP111.00",
-                            "comment": "some comments",
-                            "multichannel_image": {
-                                "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
-                            },
-                            "cluster_labels": {
-                                "upload_placeholder": "feeeeeee-047f-4df6-b614-871289a1a2a8"
-                            },
-                            "channel_names": {
-                                "upload_placeholder": "fffeeeee-047f-4df6-b614-871289a1a2a8"
-                            },
-                            "single_cell_table": {
-                                "upload_placeholder": "ffffffff-047f-4df6-b614-871289a1a2a8"
-                            },
+                            "regions_of_interest": [
+                                {
+                                    "roi_id": "1",
+                                    "description": "decidua",
+                                    "comment": "some comments",
+                                    "multichannel_image": {
+                                        "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"
+                                    },
+                                    "cluster_labels": {
+                                        "upload_placeholder": "feeeeeee-047f-4df6-b614-871289a1a2a8"
+                                    },
+                                    "channel_names": {
+                                        "upload_placeholder": "fffeeeee-047f-4df6-b614-871289a1a2a8"
+                                    },
+                                    "single_cell_table": {
+                                        "upload_placeholder": "ffffffff-047f-4df6-b614-871289a1a2a8"
+                                    },
+                                },
+                                {
+                                    "roi_id": "2",
+                                    "multichannel_image": {
+                                        "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                                    },
+                                    "cluster_labels": {
+                                        "upload_placeholder": "feeeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                                    },
+                                    "channel_names": {
+                                        "upload_placeholder": "fffeeeee-669c-48c7-aee0-f0d5e5e8a341"
+                                    },
+                                    "single_cell_table": {
+                                        "upload_placeholder": "ffffffff-669c-48c7-aee0-f0d5e5e8a341"
+                                    },
+                                },
+                            ],
                         },
                         {
                             "cimac_id": "CTTTPP121.00",
-                            "multichannel_image": {
-                                "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a341"
-                            },
-                            "cluster_labels": {
-                                "upload_placeholder": "feeeeeee-669c-48c7-aee0-f0d5e5e8a341"
-                            },
-                            "channel_names": {
-                                "upload_placeholder": "fffeeeee-669c-48c7-aee0-f0d5e5e8a341"
-                            },
-                            "single_cell_table": {
-                                "upload_placeholder": "ffffffff-669c-48c7-aee0-f0d5e5e8a341"
-                            },
+                            "regions_of_interest": [
+                                {
+                                    "roi_id": "1",
+                                    "multichannel_image": {
+                                        "upload_placeholder": "eeeeeeee-669c-48c7-aee0-f0d5e5e8a342"
+                                    },
+                                    "cluster_labels": {
+                                        "upload_placeholder": "feeeeeee-669c-48c7-aee0-f0d5e5e8a342"
+                                    },
+                                    "channel_names": {
+                                        "upload_placeholder": "fffeeeee-669c-48c7-aee0-f0d5e5e8a342"
+                                    },
+                                    "single_cell_table": {
+                                        "upload_placeholder": "ffffffff-669c-48c7-aee0-f0d5e5e8a342"
+                                    },
+                                }
+                            ],
                         },
                     ],
                     "assay_creator": "Stanford",
+                    "antibodies": [
+                        {
+                            "channel_id": "CD4",
+                            "antibody": "CD4",
+                            "scicrunch_rrid": "AB_CD4",
+                            "uniprot_accession_number": "P000",
+                            "lot_num": "1",
+                            "dilution": "1:10",
+                            "concentration_value": 10.0,
+                            "concentration_units": "mg",
+                            "cat_num": "c",
+                            "conjugated_tag": "tag",
+                        },
+                        {
+                            "channel_id": "CD31",
+                            "antibody": "CD31",
+                            "scicrunch_rrid": "AB_CD31",
+                            "uniprot_accession_number": "P001",
+                            "lot_num": "2",
+                            "dilution": "1:10",
+                            "concentration_value": 11.0,
+                        },
+                        {
+                            "channel_id": "CD11c",
+                            "antibody": "CD11c",
+                        },
+                    ],
                 },
             ]
         },
     }
     upload_entries = [
         LocalFileUploadEntry(
-            local_path="dataset-1/3D_image_stack.ome.tiff",
-            gs_key="123/mibi/CTTTPP111.00/multichannel_image.ome.tiff",
+            local_path="dir/dataset-1/3D_image_stack.ome.tiff",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/1/multichannel_image.ome.tiff",
             upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a8",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-1/Mapping/cluster_labels_image.tif",
-            gs_key="123/mibi/CTTTPP111.00/cluster_labels.tif",
+            local_path="dir/dataset-1/Mapping/cluster_labels_image.tif",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/1/cluster_labels.tif",
             upload_placeholder="feeeeeee-047f-4df6-b614-871289a1a2a8",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-1/mcd/channelnames_report.csv",
-            gs_key="123/mibi/CTTTPP111.00/channel_names.csv",
+            local_path="dir/dataset-1/mcd/channelnames_report.csv",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/1/channel_names.csv",
             upload_placeholder="fffeeeee-047f-4df6-b614-871289a1a2a8",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-1/SingleCellData/cells.csv",
-            gs_key="123/mibi/CTTTPP111.00/single_cell_table.csv",
+            local_path="dir/dataset-1/SingleCellData/cells.csv",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/1/single_cell_table.csv",
             upload_placeholder="ffffffff-047f-4df6-b614-871289a1a2a8",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-2/3D_image_stack.ome.tiff",
-            gs_key="123/mibi/CTTTPP121.00/multichannel_image.ome.tiff",
+            local_path="dir/dataset-2/3D_image_stack.ome.tiff",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/2/multichannel_image.ome.tiff",
             upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-2/Mapping/cluster_labels_image.tif",
-            gs_key="123/mibi/CTTTPP121.00/cluster_labels.tif",
+            local_path="dir/dataset-2/Mapping/cluster_labels_image.tif",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/2/cluster_labels.tif",
             upload_placeholder="feeeeeee-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-2/mcd/channelnames_report.csv",
-            gs_key="123/mibi/CTTTPP121.00/channel_names.csv",
+            local_path="dir/dataset-2/mcd/channelnames_report.csv",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/2/channel_names.csv",
             upload_placeholder="fffeeeee-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,
             allow_empty=False,
         ),
         LocalFileUploadEntry(
-            local_path="dataset-2/SingleCellData/cells.csv",
-            gs_key="123/mibi/CTTTPP121.00/single_cell_table.csv",
+            local_path="dir/dataset-2/SingleCellData/cells.csv",
+            gs_key="123/mibi/test_batch/CTTTPP111.00/2/single_cell_table.csv",
             upload_placeholder="ffffffff-669c-48c7-aee0-f0d5e5e8a341",
             metadata_availability=False,
             allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dir/dataset-3/3D_image_stack.ome.tiff",
+            gs_key="123/mibi/test_batch/CTTTPP121.00/1/multichannel_image.ome.tiff",
+            upload_placeholder="eeeeeeee-669c-48c7-aee0-f0d5e5e8a342",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dir/dataset-3/Mapping/cluster_labels_image.tif",
+            gs_key="123/mibi/test_batch/CTTTPP121.00/1/cluster_labels.tif",
+            upload_placeholder="feeeeeee-669c-48c7-aee0-f0d5e5e8a342",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dir/dataset-3/mcd/channelnames_report.csv",
+            gs_key="123/mibi/test_batch/CTTTPP121.00/1/channel_names.csv",
+            upload_placeholder="fffeeeee-669c-48c7-aee0-f0d5e5e8a342",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dir/dataset-3/SingleCellData/cells.csv",
+            gs_key="123/mibi/test_batch/CTTTPP121.00/1/single_cell_table.csv",
+            upload_placeholder="ffffffff-669c-48c7-aee0-f0d5e5e8a342",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="dir/metadata.tsv",
+            gs_key="123/mibi/test_batch/metadata.tsv",
+            upload_placeholder="eeeeeeee-047f-4df6-b614-871289a1a2a9",
+            metadata_availability=False,
+            allow_empty=True,
         ),
     ]
 

@@ -1,0 +1,50 @@
+{
+  "$schema": "metaschema/strict_meta_schema.json#",
+  "$id": "mibi_antibody",
+  "title": "MIBI antibody",
+  "description": "Data specific to antibody preparation for the MIBI assay.",
+  "additionalProperties": false,
+  "type": "object",
+  "allOf": [{ "$ref": "assays/components/antibody.json" }],
+  "properties": {
+      "antibody": {"$ref": "assays/components/antibody.json#properties/antibody"},
+      "clone": {"$ref": "assays/components/antibody.json#properties/clone"},
+      "company": {"$ref": "assays/components/antibody.json#properties/company"},
+      "cat_num": {"$ref": "assays/components/antibody.json#properties/cat_num"},
+      "lot_num": {"$ref": "assays/components/antibody.json#properties/lot_num"},
+
+      "channel_id": {
+          "type": "string",
+          "description": "the ID as listed in channel_names files and used in the OME tiffs"
+      },
+      "scicrunch_rrid": {
+          "type": "string",
+          "description": "the antibody's Research Resource Identifier from SciCrunch"
+      },
+      "uniprot_accession_number": {
+          "type": "string",
+          "description": "the UniProt accession number of the target protein"
+      },
+      "dilution": {
+          "type": "string",
+          "description": "the final working dilution of the stock antibody"
+      },
+      "concentration_value": {
+          "type": "number",
+          "description": "the numeric value of the antibody concentration"
+      },
+      "concentration_units": {
+          "type": "string",
+          "description": "the units of the concentration value"
+      },
+      "conjugated_tag": {
+          "type": "string",
+          "description": "the tag to which the antibody is conjugated and used for detection"
+      }
+  },
+  "mergeStrategy": "objectMerge",
+  "required": [
+    "antibody",
+    "channel_id"
+  ]
+}

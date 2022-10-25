@@ -14,24 +14,53 @@
             "additionalProperties": false,
             "properties": {
                 "cimac_id": {
-                    "$comment": "Id of an sample within this clinical trial, that this assay record is based upon.",
+                    "description": "Id of an sample within this clinical trial, that this assay record is based upon.",
                     "$ref": "sample.json#properties/cimac_id"
                 },
+                "regions_of_interest": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "assays/mibi_assay.json#definitions/region_of_interest"
+                    },
+                    "mergeStrategy": "arrayMergeById",
+                    "mergeOptions": {
+                        "idRef": "roi_id"
+                    }
+                }
+            },
+            "required": [
+                "cimac_id",
+                "regions_of_interest"
+            ]
+        },
+        "region_of_interest": {
+            "type": "object",
+            "description": "A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.",
+            "additionalProperties": false,
+            "properties": {
+                "roi_id": {
+                    "description": "Identifier of a region of interest within one mIF slide, e.g. 1, 2, 3 or [123x321]",
+                    "type": "string"
+                },
                 "multichannel_image": {
-                    "description": "analysis-ready multichannel image in OME TIFF format",
+                    "description": "Analysis-ready multichannel image in OME TIFF format",
                     "$ref": "artifacts/artifact_image.json"
                 },
                 "cluster_labels": {
-                    "description": "cluster-labelled image in TIFF format",
+                    "description": "Cluster-labelled image in TIFF format",
                     "$ref": "artifacts/artifact_image.json"
                 },
                 "channel_names": {
-                    "description": "channel names table in CSV format",
+                    "description": "Channel names table in CSV format",
                     "$ref": "artifacts/artifact_csv.json"
                 },
                 "single_cell_table": {
-                    "description": "single cell data table in CSV format",
+                    "description": "Single cell data table in CSV format",
                     "$ref": "artifacts/artifact_csv.json"
+                },
+                "description": {
+                    "description": "A text description of this slide. Eg: decidua",
+                    "type": "string"
                 },
                 "comment": {
                     "description": "A text comment regarding this slide.",
@@ -39,13 +68,32 @@
                 }
             },
             "required": [
-                "cimac_id"
+                "roi_id"
             ]
         }
     },
     "properties": {
         "assay_creator": {
             "$ref": "assays/components/assay_core.json#properties/assay_creator"
+        },
+        "batch_id": {
+            "type": "string",
+            "description": "Batch identification number. Unique to every batch."
+        },
+        "metadata_tsv": {
+            "description": "Deidentified metadata as a TSV file",
+            "$ref": "artifacts/artifact_tsv.json"
+        },
+
+        "antibodies": {
+            "type": "array",
+            "items": {
+                "$ref": "assays/components/mibi_antibody.json"
+            },
+            "mergeStrategy": "arrayMergeById",
+            "mergeOptions": {
+                "idRef": "antibody"
+            }
         },
         "records": {
             "type": "array",
@@ -60,6 +108,7 @@
         }
     },
     "required": [
+        "batch_id",
         "records",
         "assay_creator"
     ]

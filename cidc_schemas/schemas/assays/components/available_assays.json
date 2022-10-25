@@ -114,7 +114,10 @@
       "items": {
         "$ref": "assays/mibi_assay.json"
       },
-      "mergeStrategy": "append"
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "batch_id"
+      }
     },
     "nanostring": {
       "type": "array",

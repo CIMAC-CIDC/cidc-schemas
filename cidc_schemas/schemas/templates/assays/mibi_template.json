@@ -42,15 +42,15 @@
                 },
                 "data_columns": {
                     "Samples": {
-                        "cimac id": {
+                        "Cimac id": {
                             "merge_pointer": "2/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "roi id": {
+                        "Roi id": {
                             "merge_pointer": "0/roi_id",
                             "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/roi_id"
                         },
-                        "dataset": {
+                        "Dataset": {
                             "do_not_merge": true,
                             "type": "string",
                             "process_as": [
@@ -88,12 +88,12 @@
                                 }
                             ]
                         },
-                        "description": {
-                            "merge_pointer": "0/description",
-                            "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/description",
+                        "Roi description": {
+                            "merge_pointer": "0/roi_description",
+                            "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/roi_description",
                             "allow_empty": true
                         },
-                        "comment": {
+                        "Comment": {
                             "merge_pointer": "0/comment",
                             "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/comment",
                             "allow_empty": true

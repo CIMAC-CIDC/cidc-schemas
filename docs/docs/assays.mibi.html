@@ -132,6 +132,50 @@
                     <tr>
     <td>
         
+            <span id="batch_id">
+                batch_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Batch identification number. Unique to every batch.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
             <span id="protocol_identifier">
                 protocol_identifier
             </span>
@@ -172,6 +216,41 @@
                 
             
         
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="metadata_tsv">
+                metadata_tsv
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Deidentified metadata as a TSV file
+        
+    </td>
+    <td>
+        
+            <a href="files.tsv.html">
+                tsv
+            </a>
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+        
+            
+        
+            
         
             
         
@@ -215,9 +294,508 @@
             
             
         
+            
+            
+            
+        
         
             
         
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="antibodies_accordion">
+            <div class="card">
+                <div class="card-header" id="antibodies">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#antibodies_card" aria-expanded="false" aria-controls="antibodies_card">
+                        antibodies
+                    </button>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="antibodies_card" class="collapse" aria-labelledby="antibodies">
+                    <div class="card-body">
+                        
+                            Data specific to antibody preparation for the MIBI assay.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="antibody">
+                antibody
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody type collected for this study.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="channel_id">
+                channel_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the ID as listed in channel_names files and used in the OME tiffs
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+                
+            
+        
+        
+            
+                
+            
+        
+            
+        
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="cat_num">
+                cat_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Antibody registry catalog number assigned to antibody sample.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="concentration_units">
+                concentration_units
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the units of the concentration value
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="concentration_value">
+                concentration_value
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the numeric value of the antibody concentration
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        number
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="conjugated_tag">
+                conjugated_tag
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the tag to which the antibody is conjugated and used for detection
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="dilution">
+                dilution
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the final working dilution of the stock antibody
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="lot_num">
+                lot_num
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identification number assigned to the particular quantity or lot of material from manufacturer.
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="scicrunch_rrid">
+                scicrunch_rrid
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the antibody's Research Resource Identifier from SciCrunch
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="uniprot_accession_number">
+                uniprot_accession_number
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            the UniProt accession number of the target protein
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+            
         
             
                 <tr>
@@ -266,8 +844,6 @@
             
             
             
-                
-            
         
             
             
@@ -294,7 +870,7 @@
     </td>
     <td width=55%>
         
-            Specimen identifier assigned by the CIMAC-CIDC Network. Formatted as CTTTPPPSS.AA for trial code TTT, participant PPP, sample SS, and aliquot AA.
+            Id of an sample within this clinical trial, that this assay record is based upon.
         
     </td>
     <td>
@@ -317,6 +893,82 @@
                 
             
         
+        
+            
+        
+            
+        
+            
+        
+            
+                
+            
+        
+        
+            
+                <tr>
+    <td colspan=3 class="container">
+        <div class="accordion" id="regions_of_interest_accordion">
+            <div class="card">
+                <div class="card-header" id="regions_of_interest">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#regions_of_interest_card" aria-expanded="false" aria-controls="regions_of_interest_card">
+                        regions_of_interest
+                    </button>
+                    
+                        <sup><mark>required</mark></sup>
+                    
+                        <div style="float: right;">
+                            &lt; 
+                                
+                                    array
+                                
+                            &gt;
+                        </div>
+                </div>
+                <div id="regions_of_interest_card" class="collapse" aria-labelledby="regions_of_interest">
+                    <div class="card-body">
+                        
+                            A region of interest (ROI) is a portion of an image which has been analyzed using image processing software.
+                        
+                        <br>
+                        
+    
+
+    
+
+    
+        
+    
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Property</th>
+            <th>Description</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        
+            
+            
+            
+                
+            
+        
+            
+            
+            
+        
+            
+            
+            
+        
+            
+            
+            
+                
+            
+        
             
             
             
@@ -332,6 +984,44 @@
             
             
             
+                
+            
+        
+            
+            
+            
+                
+                    <tr>
+    <td>
+        
+            <span id="roi_id">
+                roi_id
+            </span>
+            
+                <br><sup><mark>required</mark></sup>
+            
+        
+    </td>
+    <td width=55%>
+        
+            Identifier of a region of interest within one mIF slide, e.g. 1, 2, 3 or [123x321]
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
                 
             
         
@@ -355,7 +1045,7 @@
     </td>
     <td width=55%>
         
-            channel names table in CSV format
+            Channel names table in CSV format
         
     </td>
     <td>
@@ -375,10 +1065,6 @@
         
             
                 
-            
-        
-            
-                
                     <tr>
     <td>
         
@@ -390,7 +1076,7 @@
     </td>
     <td width=55%>
         
-            cluster-labelled image in TIFF format
+            Cluster-labelled image in TIFF format
         
     </td>
     <td>
@@ -451,7 +1137,7 @@
     </td>
     <td width=55%>
         
-            analysis-ready multichannel image in OME TIFF format
+            Analysis-ready multichannel image in OME TIFF format
         
     </td>
     <td>
@@ -470,6 +1156,44 @@
                     <tr>
     <td>
         
+            <span id="roi_description">
+                roi_description
+            </span>
+            
+        
+    </td>
+    <td width=55%>
+        
+            A text description of this ROI. Eg: decidua
+        
+    </td>
+    <td>
+        
+            &lt; 
+                
+        string
+    
+
+    
+            &gt;
+            
+            
+            
+        
+    </td>
+</tr>
+                
+            
+        
+            
+                
+            
+        
+            
+                
+                    <tr>
+    <td>
+        
             <span id="single_cell_table">
                 single_cell_table
             </span>
@@ -478,7 +1202,7 @@
     </td>
     <td width=55%>
         
-            single cell data table in CSV format
+            Single cell data table in CSV format
         
     </td>
     <td>
@@ -501,6 +1225,23 @@
         
             
         
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
             
         
             

@@ -58,8 +58,8 @@
                     "description": "Single cell data table in CSV format",
                     "$ref": "artifacts/artifact_csv.json"
                 },
-                "description": {
-                    "description": "A text description of this slide. Eg: decidua",
+                "roi_description": {
+                    "description": "A text description of this ROI. Eg: decidua",
                     "type": "string"
                 },
                 "comment": {

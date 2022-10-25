@@ -456,7 +456,7 @@ def mibi() -> PrismTestData:
                             "regions_of_interest": [
                                 {
                                     "roi_id": "1",
-                                    "description": "decidua",
+                                    "roi_description": "decidua",
                                     "comment": "some comments",
                                     "multichannel_image": {
                                         "upload_placeholder": "eeeeeeee-047f-4df6-b614-871289a1a2a8"

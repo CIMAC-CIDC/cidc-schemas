@@ -586,16 +586,33 @@ def test_mibi():
     csv["data_format"] = "CSV"
 
     # create the record
-    record = {
-        "cimac_id": "CTTTPPPSA.00",
+    roi = {
+        "roi_id": "id",
         "multichannel_image": tif,
         "cluster_labels": tif,
         "channel_names": csv,
         "single_cell_table": csv,
+        "roi_description": "foo",
+        "comment": "bar",
+    }
+    record = {"cimac_id": "CTTTPPPSA.00", "regions_of_interest": [roi]}
+    ab = {
+        "channel_id": "foobar",
+        "antibody": "foobar-999",
+        "scicrunch_rrid": "rrid",
+        "uniprot_accession_number": "uniprot",
+        "lot_num": "abc",
+        "dilution": "10",
+        "concentration_value": 35,
+        "concentration_units": "c",
+        "cat_num": "999",
+        "conjugated_tag": "999",
     }
 
     # add a demo record.
     obj = ASSAY_CORE.copy()
+    obj["antibodies"] = [ab]
+    obj["batch_id"] = "foobar"
     obj["records"] = [record]
 
     # create validator assert schemas are valid.

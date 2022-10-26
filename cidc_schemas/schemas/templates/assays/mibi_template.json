@@ -1,16 +1,20 @@
 {
     "title": "MIBI assay template",
     "description": "Multiplexed Ion Beam Imaging (MIBI) submission.",
+    "prism_template_root_object_schema": "assays/mibi_assay.json",
+    "prism_template_root_object_pointer": "/assays/mibi/0",
     "properties": {
         "worksheets": {
             "MIBI": {
-                "prism_preamble_object_schema": "assays/mibi_assay.json",
-                "prism_preamble_object_pointer": "/assays/mibi/0",
-                "prism_data_object_pointer": "/records/-",
+                "prism_data_object_pointer": "/records/0/regions_of_interest/-",
                 "preamble_rows": {
                     "protocol identifier": {
                         "merge_pointer": "3/protocol_identifier",
                         "type_ref": "clinical_trial.json#properties/protocol_identifier"
+                    },
+                    "batch id": {
+                        "merge_pointer": "0/batch_id",
+                        "type_ref": "assays/mibi_assay.json#properties/batch_id"
                     },
                     "assay creator": {
                         "merge_pointer": "0/assay_creator",
@@ -20,22 +24,40 @@
                         "do_not_merge": true,
                         "type": "string",
                         "allow_empty": true
+                    },
+                    "metadata tsv": {
+                        "type_ref": "assays/components/local_file.json#properties/file_path",
+                        "do_not_merge": true,
+                        "allow_empty": true,
+                        "process_as": [
+                            {
+                                "parse_through": "lambda metadata_tsv: f'{folder or \"\"}{metadata_tsv}'",
+                                "gcs_uri_format": "{protocol identifier}/mibi/{batch id}/metadata.tsv",
+                                "type_ref": "assays/components/local_file.json#properties/file_path",
+                                "merge_pointer": "0/metadata_tsv",
+                                "is_artifact": 1
+                            }
+                        ]
                     }
                 },
                 "data_columns": {
                     "Samples": {
-                        "cimac id": {
-                            "merge_pointer": "0/cimac_id",
+                        "Cimac id": {
+                            "merge_pointer": "2/cimac_id",
                             "type_ref": "sample.json#properties/cimac_id"
                         },
-                        "dataset": {
+                        "Roi id": {
+                            "merge_pointer": "0/roi_id",
+                            "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/roi_id"
+                        },
+                        "Dataset": {
                             "do_not_merge": true,
                             "type": "string",
                             "process_as": [
                                 {
                                     "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/3D_image_stack.ome.tiff'",
                                     "merge_pointer": "/multichannel_image",
-                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/multichannel_image.ome.tiff",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{batch id}/{cimac id}/{roi id}/multichannel_image.ome.tiff",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1,
                                     "allow_empty": true
@@ -43,7 +65,7 @@
                                 {
                                     "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/Mapping/cluster_labels_image.tif'",
                                     "merge_pointer": "/cluster_labels",
-                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/cluster_labels.tif",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{batch id}/{cimac id}/{roi id}/cluster_labels.tif",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1,
                                     "allow_empty": true
@@ -51,7 +73,7 @@
                                 {
                                     "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/mcd/channelnames_report.csv'",
                                     "merge_pointer": "/channel_names",
-                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/channel_names.csv",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{batch id}/{cimac id}/{roi id}/channel_names.csv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1,
                                     "allow_empty": true
@@ -59,16 +81,78 @@
                                 {
                                     "parse_through": "lambda dataset: f'{folder or \"\"}{dataset}/SingleCellData/cells.csv'",
                                     "merge_pointer": "/single_cell_table",
-                                    "gcs_uri_format": "{protocol identifier}/mibi/{cimac id}/single_cell_table.csv",
+                                    "gcs_uri_format": "{protocol identifier}/mibi/{batch id}/{cimac id}/{roi id}/single_cell_table.csv",
                                     "type_ref": "assays/components/local_file.json#properties/file_path",
                                     "is_artifact": 1,
                                     "allow_empty": true
                                 }
                             ]
                         },
-                        "comment": {
+                        "Roi description": {
+                            "merge_pointer": "0/roi_description",
+                            "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/roi_description",
+                            "allow_empty": true
+                        },
+                        "Comment": {
                             "merge_pointer": "0/comment",
-                            "type_ref": "assays/mibi_assay.json#definitions/record/properties/comment",
+                            "type_ref": "assays/mibi_assay.json#definitions/region_of_interest/properties/comment",
+                            "allow_empty": true
+                        }
+                    }
+                }
+            },
+            "Antibodies": {
+                "prism_data_object_pointer": "/antibodies/-",
+                "data_columns":
+                {
+                    "Antibodies":
+                    {
+                        "Channel id": {
+                            "merge_pointer": "0/channel_id",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/channel_id"
+                        },
+                        "Antibody name": {
+                            "merge_pointer": "0/antibody",
+                            "type_ref": "assays/components/antibody.json#properties/antibody"
+                        },
+                        "Scicrunch rrid": {
+                            "merge_pointer": "0/scicrunch_rrid",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/scicrunch_rrid",
+                            "allow_empty": true
+                        },
+                        "Uniprot accession number": {
+                            "merge_pointer": "0/uniprot_accession_number",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/uniprot_accession_number",
+                            "allow_empty": true
+                        },
+                        "Lot number": {
+                            "merge_pointer": "0/lot_num",
+                            "type_ref": "assays/components/antibody.json#properties/lot_num",
+                            "allow_empty": true
+                        },
+                        "Dilution": {
+                            "merge_pointer": "0/dilution",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/dilution",
+                            "allow_empty": true
+                        },
+                        "Concentration value": {
+                            "merge_pointer": "0/concentration_value",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/concentration_value",
+                            "allow_empty": true
+                        },
+                        "Concentration units": {
+                            "merge_pointer": "0/concentration_units",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/concentration_units",
+                            "allow_empty": true
+                        },
+                        "Conjugated catalog number": {
+                            "merge_pointer": "0/cat_num",
+                            "type_ref": "assays/components/antibody.json#properties/cat_num",
+                            "allow_empty": true
+                        },
+                        "Conjugated tag": {
+                            "merge_pointer": "0/conjugated_tag",
+                            "type_ref": "assays/components/mibi_antibody.json#properties/conjugated_tag",
                             "allow_empty": true
                         }
                     }

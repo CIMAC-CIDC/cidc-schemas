@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.6` - 27 Oct 2022
+
+- `fixed` clinical data participant counting for versioned CSV files
+- `added` clinical data participant counting for versioned Excel files
+
 ## Version `0.26.5` - 26 Oct 2022
 
 - `changed` MIBI DM and template, for new metadata and understanding

@@ -171,13 +171,16 @@ def parse_clinical(file: BinaryIO) -> dict:
 
         # seek back to the beginning of the file
         file.seek(0)
+        
         # if it starts with a version, just skip it
+        # via API, pandas still reads it even if we don't seek back
+        # so instead pass as skiprows
         firstline = file.readline()
-        if not firstline.startswith(b"version,"):
-            file.seek(0)
+        skiprows: int = int(firstline.startswith(b"version,"))
+        file.seek(0)
 
         try:
-            csv = pd.read_csv(file)
+            csv = pd.read_csv(file, skiprows=skiprows)
         except Exception as e:
             logger.error("Error parsing clinical file: could not read as Excel or CSV")
             if hasattr(file, "name"):

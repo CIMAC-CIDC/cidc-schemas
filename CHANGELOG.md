@@ -11,6 +11,7 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 ## Version `0.26.5` - 26 Oct 2022
 
+- `changed` olink extra-metadata parser to be more accepting of variable field
 - `changed` upload folder used for making WES pipeline templates
 
 ## Version `0.26.4` - 24 Oct 2022

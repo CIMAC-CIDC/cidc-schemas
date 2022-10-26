@@ -105,23 +105,27 @@ def parse_npx(xlsx: BinaryIO) -> dict:
             if len(vals) == 0 or first_cell is None:
                 continue
 
+            # find OlinkID to locate the first data row
             if not seen_onlinkid:
                 # check that this is actually an NPX file
                 if i == 1 and first_cell != "NPX data":
                     raise ValueError("parse_npx got a file that is not in NPX format")
 
                 # check if we are starting ids
-                elif first_cell == "OlinkID":
+                # use this to capture cases where the column name changes in spacing / capitalization
+                ## needed because some data has 'OlinkID' while the standard seems to call for 'Olink ID'
+                if str(first_cell).lower().replace(" ", "") == "olinkid":
                     seen_onlinkid = True
                     continue
 
+            # once it's found keep getting ids until we're done
             else:
                 # check if we are done.
                 if first_cell == "LOD":
                     break
 
-                # get the identifier
-                # check that it is a CIMAC ID
+                # otherwise get the identifier
+                # and check that it is a CIMAC ID
                 if cimac_id_regex.match(first_cell):
                     ids.append(first_cell)
 

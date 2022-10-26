@@ -1,5 +1,4 @@
 from os import mkdir
-from tempfile import TemporaryDirectory
 
 from cidc_schemas.utils.template_generator import (
     write_wes_analysis_batch,
@@ -7,7 +6,7 @@ from cidc_schemas.utils.template_generator import (
     wes_analysis_template,
 )
 from cidc_schemas.template_reader import XlTemplateReader
-from cidc_schemas.prism import prismify, set_prism_encrypt_key
+from cidc_schemas.prism import prismify
 from cidc_schemas.prism.constants import PROTOCOL_ID_FIELD_NAME
 
 

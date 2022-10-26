@@ -303,7 +303,6 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     ), f"Attached xlsx doesn't have right worksheets: {wb.sheetnames}"
 
                 assert sht["C2"].value == "test_prism_trial_id"
-                assert sht["C3"].value == pipelines.BIOFX_WES_ANALYSIS_FOLDER
                 assert sht["B7"].value  # run name
                 assert sht["C7"].value  # first id
 
@@ -312,6 +311,12 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                     assert sht["B7"].value == sht["D7"].value  # run name is tumor id
                 else:
                     assert sht["B7"].value == sht["C7"].value  # run name is tumor id
+
+                # loading folder is based on the trial and tumor cimac (ie run) ids
+                assert (
+                    sht["C3"].value
+                    == f"gs://repro_test_prism_trial_id/WES_v3/{sht['B7'].value}/analysis"
+                )
 
             # check the config template excels
             else:  # if "wes_ingestion" in fname

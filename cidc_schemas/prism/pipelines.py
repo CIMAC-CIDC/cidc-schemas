@@ -13,9 +13,7 @@ from .constants import PROTOCOL_ID_FIELD_NAME, SUPPORTED_SHIPPING_MANIFESTS
 from ..template import Template
 from ..util import load_pipeline_config_template, participant_id_from_cimac
 
-BIOFX_WES_ANALYSIS_FOLDER: str = "/mnt/ssd/wes/analysis"
 logger = logging.getLogger(__file__)
-
 
 # Note, bucket names must be all lowercase, dash, and underscore
 # https://cloud.google.com/storage/docs/naming-buckets#requirements
@@ -25,6 +23,10 @@ def RNA_GOOGLE_BUCKET_PATH_FN(trial_id: str, batch_num: int) -> str:
 
 def RNA_INSTANCE_NAME_FN(trial_id: str, batch_num: int) -> str:
     return f"rima_{trial_id}_set{batch_num+1}"
+
+
+def BIOFX_WES_ANALYSIS_FOLDER(trial_id: str, cimac_id: str) -> str:
+    return f"gs://repro_{trial_id}/WES_v3/{cimac_id}/analysis"
 
 
 def WES_GOOGLE_BUCKET_PATH_FN(trial_id: str, run_id: str) -> str:
@@ -197,7 +199,9 @@ class _Wes_pipeline_config:
                 worksheet = workbook.get_worksheet_by_name("WES Analysis")
 
                 worksheet.write(1, 2, trial_id)
-                worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
+                worksheet.write(
+                    2, 2, BIOFX_WES_ANALYSIS_FOLDER(trial_id, run.tumor_cimac_id)
+                )
                 worksheet.write(6, 1, run.run_id)
                 worksheet.write(6, 2, run.normal_cimac_id)
                 worksheet.write(6, 3, run.tumor_cimac_id)
@@ -213,7 +217,9 @@ class _Wes_pipeline_config:
                 worksheet = workbook.get_worksheet_by_name("WES tumor-only Analysis")
 
                 worksheet.write(1, 2, trial_id)
-                worksheet.write(2, 2, BIOFX_WES_ANALYSIS_FOLDER)
+                worksheet.write(
+                    2, 2, BIOFX_WES_ANALYSIS_FOLDER(trial_id, run.tumor_cimac_id)
+                )
                 worksheet.write(6, 1, run.run_id)
                 worksheet.write(6, 2, run.tumor_cimac_id)
 

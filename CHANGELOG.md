@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.5` - 26 Oct 2022
+
+- `changed` upload folder used for making WES pipeline templates
+
 ## Version `0.26.4` - 24 Oct 2022
 
 - `changed` pipeline configuration generated for RIMA and WES

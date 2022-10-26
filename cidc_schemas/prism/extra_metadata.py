@@ -1,4 +1,5 @@
 """Parsers for extracting extra metadata from files containing molecular data."""
+import logging
 import re
 from typing import BinaryIO
 
@@ -6,6 +7,8 @@ import openpyxl
 import pandas as pd
 
 from ..json_validation import load_and_validate_schema
+
+logger = logging.getLogger(__file__)
 
 # Build a regex from the CIMAC ID pattern in the schema
 cimac_id_regex = re.compile(
@@ -175,16 +178,22 @@ def parse_clinical(file: BinaryIO) -> dict:
 
         try:
             csv = pd.read_csv(file)
-        except:
+        except Exception as e:
+            logger.error("Error parsing clinical file: could not read as Excel or CSV")
+            if hasattr(file, "name"):
+                logger.error(f"filename: {file.name}")
+            logger.error(str(e), exc_info=True)
             return {}
         else:
             if "cimac_part_id" in csv.columns:
                 for possible_id in csv["cimac_part_id"].unique():
-                    try:
-                        if cimac_partid_regex.match(possible_id):
-                            ids.add(possible_id)
-                    except TypeError as e:
-                        continue
+                    if cimac_partid_regex.match(str(possible_id)):
+                        ids.add(possible_id)
+            else:
+                logger.error(
+                    "Error parsing clinical CSV file: no cimac_part_id column found"
+                )
+                logger.error(f"Only found: {', '.join(list(csv.columns))}")
 
     else:
         # extract data to python
@@ -193,10 +202,12 @@ def parse_clinical(file: BinaryIO) -> dict:
             # simplify.
             worksheet = workbook[worksheet_name]
 
-            for column in worksheet.iter_cols(
-                1, worksheet.max_column
-            ):  # iterate column cell
-                if column[0].value == "cimac_part_id":
+            # iterate through all possible columns to find all cimac_part_id's
+            # title must be in top 2 rows
+            for column in worksheet.iter_cols(1, worksheet.max_column):
+                # also check second row in case of version row
+                # if included, won't match the regex and title will be ignored
+                if "cimac_part_id" in (column[0].value, column[1].value):
                     for cell in column[1:]:
                         # some participant ID's might be blank for
                         # participants not in the system already (skip these for now)
@@ -205,11 +216,8 @@ def parse_clinical(file: BinaryIO) -> dict:
 
                         # get the identifier
                         # check that it is a CIMAC PART ID
-                        try:
-                            if cimac_partid_regex.match(cell.value):
-                                ids.add(cell.value)
-                        except TypeError as e:
-                            continue
+                        if cimac_partid_regex.match(str(cell.value)):
+                            ids.add(cell.value)
 
     part_count = len(ids)
 

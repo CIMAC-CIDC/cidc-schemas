@@ -592,7 +592,7 @@ def test_mibi():
         "cluster_labels": tif,
         "channel_names": csv,
         "single_cell_table": csv,
-        "description": "foo",
+        "roi_description": "foo",
         "comment": "bar",
     }
     record = {"cimac_id": "CTTTPPPSA.00", "regions_of_interest": [roi]}

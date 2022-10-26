@@ -171,7 +171,7 @@ def parse_clinical(file: BinaryIO) -> dict:
 
         # seek back to the beginning of the file
         file.seek(0)
-        
+
         # if it starts with a version, just skip it
         # via API, pandas still reads it even if we don't seek back
         # so instead pass as skiprows

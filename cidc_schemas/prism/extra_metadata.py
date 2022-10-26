@@ -206,9 +206,14 @@ def parse_clinical(file: BinaryIO) -> dict:
             # title must be in top 2 rows
             for column in worksheet.iter_cols(1, worksheet.max_column):
                 # also check second row in case of version row
-                # if included, won't match the regex and title will be ignored
-                if "cimac_part_id" in (column[0].value, column[1].value):
-                    for cell in column[1:]:
+                # won't match the regex and title will be ignored
+                possible_titles = (
+                    {column[0].value}
+                    if len(column) == 1
+                    else {cell.value for cell in column[:2]}
+                )
+                if "cimac_part_id" in possible_titles:
+                    for cell in column:
                         # some participant ID's might be blank for
                         # participants not in the system already (skip these for now)
                         if cell.value == "" or not cell.value:

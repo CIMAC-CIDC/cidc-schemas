@@ -4,18 +4,13 @@
 """Tests the entire trial core schemas"""
 
 import os
-import json
 
-import pytest
-import jsonschema
 
 from cidc_schemas.json_validation import (
-    _map_refs,
     load_and_validate_schema,
-    _resolve_refs,
 )
 from cidc_schemas.prism import PROTOCOL_ID_FIELD_NAME
-from .constants import SCHEMA_DIR, ROOT_DIR, TEST_SCHEMA_DIR
+from .constants import SCHEMA_DIR
 
 from .test_assays import ASSAY_CORE, ARTIFACT_OBJ, OLINK_RECORD
 

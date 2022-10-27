@@ -5,7 +5,6 @@
 
 import os
 import pytest
-import jsonschema
 from typing import List
 from openpyxl import Workbook
 

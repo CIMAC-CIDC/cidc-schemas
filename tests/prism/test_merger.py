@@ -4,7 +4,6 @@ from uuid import uuid4
 from unittest.mock import MagicMock
 
 import pytest
-import jsonschema
 from jsonmerge import Merger
 
 from cidc_schemas.prism import merger as prism_merger

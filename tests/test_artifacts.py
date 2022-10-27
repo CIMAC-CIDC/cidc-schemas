@@ -4,7 +4,6 @@
 """Tests for artifact schemas"""
 
 import os
-import json
 
 import pytest
 

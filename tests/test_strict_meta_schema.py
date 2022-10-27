@@ -3,10 +3,7 @@
 
 """Tests for strict meta schema."""
 
-import os
-import unittest
 import pytest
-import json
 import jsonschema
 
 from cidc_schemas.json_validation import _validator_instance

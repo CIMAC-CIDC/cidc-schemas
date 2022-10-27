@@ -7,13 +7,12 @@ import os
 import pytest
 import openpyxl
 
-from cidc_schemas.json_validation import load_and_validate_schema
 from cidc_schemas.template import Template, _TEMPLATE_PATH_MAP
 from cidc_schemas.template_writer import RowType
 from cidc_schemas.template_reader import XlTemplateReader, ValidationError
 from cidc_schemas.template_writer import XlTemplateWriter
 
-from .constants import ROOT_DIR, TEMPLATE_EXAMPLES_DIR
+from .constants import TEMPLATE_EXAMPLES_DIR
 
 
 def template_set():

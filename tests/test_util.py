@@ -1,9 +1,6 @@
-import os
 import pytest
 
 import cidc_schemas.util as util
-
-from .constants import TEST_DATA_DIR
 
 
 def test_split_python_style_path():

@@ -136,7 +136,7 @@ def test_parse_clinical():
     # this tests versioned csv parsing
     clinical_file_path_2_csv = os.path.join(TEST_DATA_DIR, "clinical_test_file.2.csv")
     with open(clinical_file_path_2_csv, "rb") as f:
-        assert f.read().startswith(b'"version",')
+        assert f.read().startswith(b"version,")
         f.seek(0)
         data = parse_clinical(f)
         _check_clin_eq(data, clinical_metadata_1)

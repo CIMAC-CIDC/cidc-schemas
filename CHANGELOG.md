@@ -11,7 +11,7 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 ## Version `0.26.7` - 27 Oct 2022
 
-- `fixed` clinical data participant counting for csv files with unqouted strings
+- `fixed` clinical data participant counting for csv files with unquoted strings
 
 ## Version `0.26.6` - 27 Oct 2022
 

@@ -176,7 +176,9 @@ def parse_clinical(file: BinaryIO) -> dict:
         # via API, pandas still reads it even if we don't seek back
         # so instead pass as skiprows
         firstline = file.readline()
-        skiprows: int = int(firstline.startswith(b'"version",'))
+        skiprows: int = int(
+            firstline.startswith(b'"version",') or firstline.startswith(b"version,")
+        )
         file.seek(0)
 
         try:

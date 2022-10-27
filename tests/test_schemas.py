@@ -4,10 +4,7 @@
 """Tests for data model schemas."""
 
 import os
-import unittest
 import pytest
-import json
-import jsonschema
 
 from cidc_schemas.json_validation import load_and_validate_schema
 from .constants import SCHEMA_DIR

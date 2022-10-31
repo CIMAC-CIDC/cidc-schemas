@@ -9,7 +9,7 @@
     "file_path": {
       "$id": "local_file_path",
       "type": "string",
-      "description": "Path to a file on a user's computer."
+      "description": "Path to file, relative to the intake bucket."
     }
   },
   "required": []

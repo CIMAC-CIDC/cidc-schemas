@@ -304,6 +304,7 @@
             "type": "string",
             "enum": [
                 "Microliters",
+                "Milligrams",
                 "Milliliters",
                 "Nanogram per Microliter",
                 "Milligram per Milliliter",
@@ -323,6 +324,7 @@
             "type": "string",
             "enum": [
                 "Microliters",
+                "Milligrams",
                 "Milliliters",
                 "Nanogram per Microliter",
                 "Milligram per Milliliter",

@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.9` - 3 Nov 2022
+
+- `added` Meta.csv file to TCR pipeline conifguration file
+
 ## Version `0.26.8` - 31 Oct 2022
 
 - `added` milligrams to "Materials used/remaining units"

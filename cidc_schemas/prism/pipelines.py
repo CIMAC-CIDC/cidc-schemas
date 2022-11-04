@@ -554,7 +554,7 @@ def _generate_rna_template_excel(
     rnaseq_analysis_template: Template,
 ) -> bytes:
     """
-    Generates the Excel upload template for the given WES analysis run
+    Generates the Excel upload template for the given RNA analysis run
     """
     worksheet_name: str = [
         wk
@@ -583,7 +583,7 @@ def _rna_level1_pipeline_config(
     full_ct: dict, patch: dict, data_bucket: str
 ) -> Dict[str, Union[bytes, str]]:
     """
-    Generates .yaml configs for RNAseq pipeline and a metasheet.csv with sample metadata.
+    Generates .yaml configs for RNAseq pipeline.
     Returns a filename to file content map.
 
     Patch is expected to be already merged into full_ct.
@@ -641,6 +641,31 @@ def _rna_level1_pipeline_config(
     return res
 
 
+def _tcr_pipeline_config(
+    full_ct: dict, patch: dict, data_bucket: str
+) -> Dict[str, str]:
+    """
+    Generates meta.csv with sample metadata config for TCRseq pipeline.
+    Returns a filename to file content map.
+
+    Patch is expected to be already merged into full_ct.
+    """
+
+    trial_id: str = full_ct[PROTOCOL_ID_FIELD_NAME]
+
+    # as we know that `patch` is a prism result of a tcr_[adaptive/fastq] upload
+    # we are sure these getitem calls should be fine
+    # and that there should be just one tcr assay
+    assay: dict = patch["assays"]["tcr"][0]
+    batch_id = assay["batch_id"]
+
+    file_content: str = "sample\n"
+    file_content += "\n".join([record["cimac_id"] for record in assay["records"]])
+
+    # add a meta sheet for new runs
+    return {f"{trial_id}_{batch_id}_meta.csv": file_content}
+
+
 def _shipping_manifest_new_participants(
     full_ct: dict, patch: dict, data_bucket: str
 ) -> Dict[str, str]:
@@ -675,6 +700,8 @@ def _shipping_manifest_new_participants(
 _ANALYSIS_CONF_GENERATORS = {
     "wes_fastq": _Wes_pipeline_config("assay"),
     "wes_bam": _Wes_pipeline_config("assay"),
+    "tcr_adaptive": _tcr_pipeline_config,
+    "tcr_fastq": _tcr_pipeline_config,
     "tumor_normal_pairing": _Wes_pipeline_config("pairing"),
     "rna_fastq": _rna_level1_pipeline_config,
     "rna_bam": _rna_level1_pipeline_config,

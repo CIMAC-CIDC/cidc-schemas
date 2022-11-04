@@ -394,7 +394,6 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
         # to make sure all are caught across configs
         assert sorted(all_tumor_cimac_ids) == [
             "CTTTPP111.00",
-            # CTTTPP121.00 is a normal paired to CTTTPP111.00
             "CTTTPP122.00",
             "CTTTPP123.00",
             "CTTTPP124.00",
@@ -555,6 +554,47 @@ def test_RNAseq_pipeline_config_generation_after_prismify(prismify_result, templ
         assert total_samples == 2  # two samples in example .xlsx
     else:  # if template.type == "rna_bam"
         assert total_samples == 5  # five samples in example .xlsx
+
+
+def test_TCRseq_pipeline_config_generation_after_prismify(prismify_result, template):
+
+    if not template.type.startswith("tcr_"):
+        return
+
+    full_ct = get_test_trial(
+        [
+            "CTTTPP111.00",
+            "CTTTPP121.00",
+            "CTTTPP122.00",
+        ],
+        assays={"tcr": []},
+    )
+    patch_with_artifacts = prism_patch_stage_artifacts(prismify_result, template.type)
+
+    # if it's an analysis - we need to merge corresponding preliminary assay first
+    full_ct = stage_assay_for_analysis(template.type, full_ct)
+
+    full_ct, errs = merger.merge_clinical_trial_metadata(patch_with_artifacts, full_ct)
+
+    print(prismify_result)
+    assert 0 == len(errs), "\n".join(errs)
+
+    res = pipelines.generate_analysis_configs_from_upload_patch(
+        full_ct, patch_with_artifacts, template.type, "my-biofx-bucket"
+    )
+
+    # where we don't expect to have configs
+    if not template.type in pipelines._ANALYSIS_CONF_GENERATORS:
+        assert res == {}
+        return
+
+    # one meta csv batch
+    assert len(res) == 1
+
+    for fname, fcontent in res.items():
+        assert fname.endswith(".csv")
+
+        assert fcontent == "sample" "\nCTTTPP111.00" "\nCTTTPP121.00"
 
 
 def test_shipping_manifest_new_participants_after_prismify(prismify_result, template):

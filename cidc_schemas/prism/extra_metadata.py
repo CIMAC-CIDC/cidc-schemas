@@ -1,6 +1,7 @@
 """Parsers for extracting extra metadata from files containing molecular data."""
 import logging
 import re
+from codecs import BOM_UTF8
 from typing import BinaryIO
 
 import openpyxl
@@ -176,6 +177,8 @@ def parse_clinical(file: BinaryIO) -> dict:
         # via API, pandas still reads it even if we don't seek back
         # so instead pass as skiprows
         firstline = file.readline()
+        # handle an edge case where the file starts with a Byte Order Mark
+        firstline = firstline.removeprefix(BOM_UTF8)
         skiprows: int = int(
             firstline.startswith(b'"version",') or firstline.startswith(b"version,")
         )

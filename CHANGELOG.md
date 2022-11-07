@@ -15,7 +15,8 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `changed` tumor-normal attempted pairing
   - do not return tumor samples already used in paired analysis
   - flag tumor samples if already used in tumor-only analysis
-  - flag normal samples if aleady used in paired analysis and so already in biofx's Panel of Normals
+  - flag normal samples if already used in paired analysis and so already in biofx's Panel of Normals
+  - flag previously excluded tumor samples
 
 ## Version `0.26.9` - 3 Nov 2022
 

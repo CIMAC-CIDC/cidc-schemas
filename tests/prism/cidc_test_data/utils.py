@@ -32,6 +32,7 @@ def get_prismify_args(upload_type) -> Tuple[XlTemplateReader, Template]:
 def get_test_trial(
     cimac_ids: Optional[List[str]] = None,
     assays: Optional[dict] = None,
+    analysis: Optional[dict] = None,
     allowed_collection_event_names=["Not_reported"],
     allowed_cohort_names=["Not_reported"],
 ):
@@ -68,6 +69,8 @@ def get_test_trial(
 
     if assays:
         trial["assays"] = assays
+    if analysis:
+        trial["analysis"] = analysis
 
     # Ensure we're producing a valid trial
     validator = load_and_validate_schema("clinical_trial.json", return_validator=True)

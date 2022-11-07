@@ -4,7 +4,7 @@ from datetime import datetime
 from io import BytesIO
 import logging
 from tempfile import NamedTemporaryFile
-from typing import Dict, List, NamedTuple, Tuple, Union
+from typing import Dict, List, NamedTuple, Union
 
 import jinja2
 import pandas as pd
@@ -70,6 +70,18 @@ class _AnalysisRun(NamedTuple):
     run_id: str
     tumor_cimac_id: str
     normal_cimac_id: str = None
+
+
+class _PairingEntry(NamedTuple):
+    """container class for entries to the pairing.csv"""
+
+    tumor_cimac_id: str = ""
+    tumor_collection_event: str = ""
+    legacy_tumor_only: bool = False
+    previously_excluded: bool = False
+    normal_cimac_id: str = ""
+    normal_collection_event: str = ""
+    legacy_normal: bool = False
 
 
 class _Wes_pipeline_config:
@@ -231,7 +243,7 @@ class _Wes_pipeline_config:
 
     def _pair_all_samples(
         self, partic_map: Dict[str, Dict[str, Dict[str, str]]]
-    ) -> List[Tuple[str, str, str, str]]:
+    ) -> List[_PairingEntry]:
         """
         (Semi)automated pairing of tumor and normal samples
 
@@ -263,46 +275,86 @@ class _Wes_pipeline_config:
             matched_normals = []
             for collection_event in tumors:
                 for sample in tumors[collection_event]:
-                    if len(normals) == 1:
+                    # if the sample has already been analyzed in a pair,
+                    # don't include it in the pairing.csv
+                    if sample in self.wes_analysis_tumor_samples:
+                        continue
+                    elif len(normals) == 1:
                         tumor_pair_list.append(
-                            (
-                                sample,
-                                collection_event,
-                                list(normals.values())[0],
-                                list(normals.keys())[0],
+                            _PairingEntry(
+                                tumor_cimac_id=sample,
+                                tumor_collection_event=collection_event,
+                                legacy_tumor_only=sample
+                                in self.wes_tumor_only_analysis_samples,
+                                previously_excluded=sample in self.excluded_samples,
+                                normal_cimac_id=list(normals.values())[0],
+                                normal_collection_event=list(normals.keys())[0],
+                                legacy_normal=list(normals.values())[0]
+                                in self.wes_analysis_normal_samples,
                             )
                         )
                         matched_normals.append(list(normals.values())[0])
                     elif len(normals) > 1:
                         if collection_event in normals.keys():
                             tumor_pair_list.append(
-                                (
-                                    sample,
-                                    collection_event,
-                                    normals[collection_event],
-                                    collection_event,
+                                _PairingEntry(
+                                    tumor_cimac_id=sample,
+                                    tumor_collection_event=collection_event,
+                                    legacy_tumor_only=sample
+                                    in self.wes_tumor_only_analysis_samples,
+                                    previously_excluded=sample in self.excluded_samples,
+                                    normal_cimac_id=normals[collection_event],
+                                    normal_collection_event=collection_event,
+                                    legacy_normal=normals[collection_event]
+                                    in self.wes_analysis_normal_samples,
                                 )
                             )
                             matched_normals.append(normals[collection_event])
                         elif "Baseline" in normals.keys():
                             tumor_pair_list.append(
-                                (
-                                    sample,
-                                    collection_event,
-                                    normals["Baseline"],
-                                    "Baseline",
+                                _PairingEntry(
+                                    tumor_cimac_id=sample,
+                                    tumor_collection_event=collection_event,
+                                    legacy_tumor_only=sample
+                                    in self.wes_tumor_only_analysis_samples,
+                                    previously_excluded=sample in self.excluded_samples,
+                                    normal_cimac_id=normals["Baseline"],
+                                    normal_collection_event="Baseline",
+                                    legacy_normal=normals["Baseline"]
+                                    in self.wes_analysis_normal_samples,
                                 )
                             )
                             matched_normals.append(normals["Baseline"])
                         else:
-                            tumor_pair_list.append((sample, collection_event, "", ""))
+                            tumor_pair_list.append(
+                                _PairingEntry(
+                                    tumor_cimac_id=sample,
+                                    tumor_collection_event=collection_event,
+                                    legacy_tumor_only=sample
+                                    in self.wes_tumor_only_analysis_samples,
+                                    previously_excluded=sample in self.excluded_samples,
+                                )
+                            )
                     else:
-                        tumor_pair_list.append((sample, collection_event, "", ""))
+                        tumor_pair_list.append(
+                            _PairingEntry(
+                                tumor_cimac_id=sample,
+                                tumor_collection_event=collection_event,
+                                legacy_tumor_only=sample
+                                in self.wes_tumor_only_analysis_samples,
+                                previously_excluded=sample in self.excluded_samples,
+                            )
+                        )
 
             for collection_event in normals:
                 if normals[collection_event] not in matched_normals:
                     tumor_pair_list.append(
-                        ("", "", normals[collection_event], collection_event)
+                        _PairingEntry(
+                            normal_cimac_id=normals[collection_event],
+                            normal_collection_event=collection_event,
+                            legacy_normal=normals[collection_event]
+                            in self.wes_analysis_normal_samples,
+                        )
                     )
 
         return tumor_pair_list
@@ -395,11 +447,21 @@ class _Wes_pipeline_config:
         return ret.read()
 
     def _generate_pairing_csv(
-        self, trial_id: str, tumor_pair_list: List[Tuple[str, str, str, str]]
+        self, trial_id: str, tumor_pair_list: List[_PairingEntry]
     ) -> str:
         file_content: str = f"{PROTOCOL_ID_FIELD_NAME},{trial_id}\n"
-        file_content += "tumor,tumor_collection_event,normal,normal_collection_event\n"
-        file_content += "\n".join([",".join(entry) for entry in tumor_pair_list])
+        file_content += "tumor,tumor_collection_event,legacy_tumor_only,previously_excluded,normal,normal_collection_event,legacy_normal\n"
+        file_content += "\n".join(
+            [
+                ",".join(
+                    [
+                        (str(e).upper() if e else "") if isinstance(e, bool) else e
+                        for e in entry
+                    ]
+                )
+                for entry in tumor_pair_list
+            ]
+        )
         return file_content
 
     def _handle_batch_config_and_sheets(
@@ -489,13 +551,18 @@ class _Wes_pipeline_config:
         Generates a mapping from filename to the files to attach.
         Attachments differ depending on whether the upload is wes_[bam/fastq] vs tumor_normal_pairing
         For wes_[bam/faq]:
-            generates a pairing.csv file attempting to pair ALL WES samples
+            generates a pairing.csv file attempting to pair WES samples
         For tumor_normal_pairing:
-            generates a pairing.csv file attempting to pair ALL WES samples
+            generates a pairing.csv file attempting to pair WES samples
             generates WES Monitor .yaml configs for each batch of 20 affected samples
             generates ingestion .xlsx templates for each affected sample
                 for paired samples, for wes_analysis
                 for unpaired samples, for wes_tumor_only_analysis
+
+        For the pairing.csv
+            - tumor samples already in a paired analysis are ignored
+            - flag for tumor samples already in a tumor-only analysis
+            - flag for normal samples already in a paired analysis
 
         Patch is expected to be already merged into full_ct.
         """
@@ -511,6 +578,53 @@ class _Wes_pipeline_config:
             if "files" in r
         }
 
+        # unlike wes assay, we can't be sure there's any analysis already loaded
+        # so all of the below use .get() everywhere except for required values
+
+        self.excluded_samples: List[str] = []
+        for infix in ["", "_tumor_only"]:
+            for suffix in ["", "_old"]:
+                key: str = f"wes{infix}_analysis{suffix}"
+                self.excluded_samples.extend(
+                    excluded["cimac_id"]
+                    for excluded in full_ct.get("analysis", {})
+                    .get(key, {})
+                    .get("excluded_samples", [])
+                )
+
+        self.wes_analysis_tumor_samples: List[str] = [
+            pair["tumor"]["cimac_id"]
+            for pair in (
+                full_ct.get("analysis", {}).get("wes_analysis", {}).get("pair_runs", [])
+                + full_ct.get("analysis", {})
+                .get("wes_analysis_old", {})
+                .get("pair_runs", [])
+            )
+            if "report" in pair
+        ]
+        self.wes_analysis_normal_samples: List[str] = [
+            pair["normal"]["cimac_id"]
+            for pair in (
+                full_ct.get("analysis", {}).get("wes_analysis", {}).get("pair_runs", [])
+                + full_ct.get("analysis", {})
+                .get("wes_analysis_old", {})
+                .get("pair_runs", [])
+            )
+            if "report" in pair
+        ]
+        self.wes_tumor_only_analysis_samples: List[str] = [
+            run["tumor"]["cimac_id"]
+            for run in (
+                full_ct.get("analysis", {})
+                .get("wes_tumor_only_analysis", {})
+                .get("runs", [])
+                + full_ct.get("analysis", {})
+                .get("wes_tumor_only_analysis_old", {})
+                .get("runs", [])
+            )
+            if "report" in run
+        ]
+
         # classify all of the WES records as tumor or normal and get collection event name
         # in preparation for (semi)automated pairing
         # partic_map = {
@@ -524,7 +638,7 @@ class _Wes_pipeline_config:
         # (semi)automated pairing of tumor and normal samples
         # as partic_map is generated using only the WES samples,
         # it's the same as pairing all samples
-        tumor_pair_list = self._pair_all_samples(partic_map)
+        tumor_pair_list: List[_PairingEntry] = self._pair_all_samples(partic_map)
 
         # Begin preparing response
         # {filename: contents}

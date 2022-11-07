@@ -178,7 +178,8 @@ def parse_clinical(file: BinaryIO) -> dict:
         # so instead pass as skiprows
         firstline = file.readline()
         # handle an edge case where the file starts with a Byte Order Mark
-        firstline = firstline.removeprefix(BOM_UTF8)
+        if firstline.startswith(BOM_UTF8):
+            firstline = firstline[len(BOM_UTF8) :]
         skiprows: int = int(
             firstline.startswith(b'"version",') or firstline.startswith(b"version,")
         )

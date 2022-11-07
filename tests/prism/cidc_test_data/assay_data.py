@@ -767,6 +767,7 @@ def wes_bam() -> PrismTestData:
             "CTTTPP515.00",
             "CTTTPP516.00",
             "CTTTPP517.00",
+            "CTTTPP518.00",
         ]
     )
 
@@ -1146,6 +1147,23 @@ def wes_fastq() -> PrismTestData:
                             "sequencing_date": "2010-01-01 00:00:00",
                             "quality_flag": 1.0,
                         },
+                        {
+                            "cimac_id": "CTTTPP518.00",
+                            "files": {
+                                "r1": [
+                                    {
+                                        "upload_placeholder": "9e57fa58-5dd4-4379-878d-935d79d2507c"
+                                    },
+                                ],
+                                "r2": [
+                                    {
+                                        "upload_placeholder": "2db4b639-c2a4-48f8-85f8-e9a04f5233c3"
+                                    },
+                                ],
+                            },
+                            "sequencing_date": "2010-01-01 00:00:00",
+                            "quality_flag": 1.0,
+                        },
                     ],
                     "assay_creator": "MD Anderson",
                     "sequencing_protocol": "Express Somatic Human WES (Deep Coverage) v1.1",
@@ -1464,6 +1482,20 @@ def wes_fastq() -> PrismTestData:
             local_path="/local/path/to/rev.5.1.7.fastq.gz",
             gs_key="test_prism_trial_id/wes/CTTTPP517.00/r2_L1.fastq.gz",
             upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c2",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/fwd.5.1.8.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP518.00/r1_L1.fastq.gz",
+            upload_placeholder="9e57fa58-5dd4-4379-878d-935d79d2507c",
+            metadata_availability=False,
+            allow_empty=False,
+        ),
+        LocalFileUploadEntry(
+            local_path="/local/path/to/rev.5.1.8.fastq.gz",
+            gs_key="test_prism_trial_id/wes/CTTTPP518.00/r2_L1.fastq.gz",
+            upload_placeholder="2db4b639-c2a4-48f8-85f8-e9a04f5233c3",
             metadata_availability=False,
             allow_empty=False,
         ),

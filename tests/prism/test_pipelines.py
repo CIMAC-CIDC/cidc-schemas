@@ -145,6 +145,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "CTTTPP515.00",
             "CTTTPP516.00",
             "CTTTPP517.00",
+            "CTTTPP518.00",
         ],
         allowed_collection_event_names=[
             "Not_reported",
@@ -152,7 +153,56 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
             "On_Treatment",
             "Week_1",
         ],
-        assays={"wes": []},
+        assays={
+            "wes": [],
+        },
+        analysis={
+            "wes_analysis_old": {
+                "pair_runs": [
+                    # no report so ignored
+                    {
+                        "run_id": "CTTTPP111.00",
+                        "tumor": {"cimac_id": "CTTTPP111.00"},
+                        "normal": {"cimac_id": "CTTTPP121.00"},
+                    },
+                    # triggers CTTTPP123.00 legacy_normal
+                    # causes tumor CTTTPP518.00 to be ignored
+                    {
+                        "run_id": "CTTTPP518.00",
+                        "tumor": {"cimac_id": "CTTTPP518.00"},
+                        "normal": {"cimac_id": "CTTTPP123.00"},
+                        "report": {
+                            "report": {"upload_placeholder": "foo"},
+                            "config": {"upload_placeholder": "foo"},
+                            "metasheet": {"upload_placeholder": "foo"},
+                            "report": {"upload_placeholder": "foo"},
+                            "wes_run_version": {"upload_placeholder": "foo"},
+                            "wes_sample_json": {"upload_placeholder": "foo"},
+                        },
+                    },
+                ]
+            },
+            # triggers CTTTPP211.00 legacy_tumor_only
+            "wes_tumor_only_analysis": {
+                "excluded_samples": [
+                    {"cimac_id": "CTTTPP517.00", "reason_excluded": "test"}
+                ],
+                "runs": [
+                    {
+                        "run_id": "CTTTPP211.00",
+                        "tumor": {"cimac_id": "CTTTPP211.00"},
+                        "report": {
+                            "report": {"upload_placeholder": "foo"},
+                            "config": {"upload_placeholder": "foo"},
+                            "metasheet": {"upload_placeholder": "foo"},
+                            "report": {"upload_placeholder": "foo"},
+                            "wes_run_version": {"upload_placeholder": "foo"},
+                            "wes_sample_json": {"upload_placeholder": "foo"},
+                        },
+                    }
+                ],
+            },
+        },
     )
     # manually modify json's to add tumor / normal definitions for WES
     # these are normally loaded from the shipping manifests
@@ -232,51 +282,51 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
     if template.type == "wes_bam":
         assert (
             res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
-            "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported"
+            "tumor,tumor_collection_event,legacy_tumor_only,previously_excluded,normal,normal_collection_event,legacy_normal\n"
+            "CTTTPP111.00,Not_reported,,,CTTTPP121.00,Not_reported,"
         )
     elif template.type == "wes_fastq":
         assert (
             res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
-            "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
-            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            ",,CTTTPP214.00,Baseline\n"
-            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
-            ",,CTTTPP312.00,On_Treatment\n"
-            "CTTTPP411.00,Not_reported,,\n"
-            ",,CTTTPP412.00,On_Treatment\n"
-            ",,CTTTPP413.00,Week_1\n"
-            "CTTTPP511.00,On_Treatment,,\n"
-            "CTTTPP512.00,On_Treatment,,\n"
-            "CTTTPP513.00,On_Treatment,,\n"
-            "CTTTPP514.00,On_Treatment,,\n"
-            "CTTTPP515.00,On_Treatment,,\n"
-            "CTTTPP516.00,On_Treatment,,\n"
-            "CTTTPP517.00,On_Treatment,,"
+            "tumor,tumor_collection_event,legacy_tumor_only,previously_excluded,normal,normal_collection_event,legacy_normal\n"
+            "CTTTPP122.00,Baseline,,,CTTTPP123.00,Baseline,TRUE\n"
+            "CTTTPP211.00,On_Treatment,TRUE,,CTTTPP213.00,On_Treatment,\n"
+            "CTTTPP212.00,On_Treatment,,,CTTTPP213.00,On_Treatment,\n"
+            ",,,,CTTTPP214.00,Baseline,\n"
+            "CTTTPP311.00,Not_reported,,,CTTTPP313.00,Baseline,\n"
+            ",,,,CTTTPP312.00,On_Treatment,\n"
+            "CTTTPP411.00,Not_reported,,,,,\n"
+            ",,,,CTTTPP412.00,On_Treatment,\n"
+            ",,,,CTTTPP413.00,Week_1,\n"
+            "CTTTPP511.00,On_Treatment,,,,,\n"
+            "CTTTPP512.00,On_Treatment,,,,,\n"
+            "CTTTPP513.00,On_Treatment,,,,,\n"
+            "CTTTPP514.00,On_Treatment,,,,,\n"
+            "CTTTPP515.00,On_Treatment,,,,,\n"
+            "CTTTPP516.00,On_Treatment,,,,,\n"
+            "CTTTPP517.00,On_Treatment,,TRUE,,,"
         )
     else:  # if template.type == "tumor_normal_pairing"
         assert (
             res.pop(pairing_filename) == "protocol_identifier,test_prism_trial_id\n"
-            "tumor,tumor_collection_event,normal,normal_collection_event\n"
-            "CTTTPP111.00,Not_reported,CTTTPP121.00,Not_reported\n"
-            "CTTTPP122.00,Baseline,CTTTPP123.00,Baseline\n"
-            "CTTTPP211.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            "CTTTPP212.00,On_Treatment,CTTTPP213.00,On_Treatment\n"
-            ",,CTTTPP214.00,Baseline\n"
-            "CTTTPP311.00,Not_reported,CTTTPP313.00,Baseline\n"
-            ",,CTTTPP312.00,On_Treatment\n"
-            "CTTTPP411.00,Not_reported,,\n"
-            ",,CTTTPP412.00,On_Treatment\n"
-            ",,CTTTPP413.00,Week_1\n"
-            "CTTTPP511.00,On_Treatment,,\n"
-            "CTTTPP512.00,On_Treatment,,\n"
-            "CTTTPP513.00,On_Treatment,,\n"
-            "CTTTPP514.00,On_Treatment,,\n"
-            "CTTTPP515.00,On_Treatment,,\n"
-            "CTTTPP516.00,On_Treatment,,\n"
-            "CTTTPP517.00,On_Treatment,,"
+            "tumor,tumor_collection_event,legacy_tumor_only,previously_excluded,normal,normal_collection_event,legacy_normal\n"
+            "CTTTPP111.00,Not_reported,,,CTTTPP121.00,Not_reported,\n"
+            "CTTTPP122.00,Baseline,,,CTTTPP123.00,Baseline,TRUE\n"
+            "CTTTPP211.00,On_Treatment,TRUE,,CTTTPP213.00,On_Treatment,\n"
+            "CTTTPP212.00,On_Treatment,,,CTTTPP213.00,On_Treatment,\n"
+            ",,,,CTTTPP214.00,Baseline,\n"
+            "CTTTPP311.00,Not_reported,,,CTTTPP313.00,Baseline,\n"
+            ",,,,CTTTPP312.00,On_Treatment,\n"
+            "CTTTPP411.00,Not_reported,,,,,\n"
+            ",,,,CTTTPP412.00,On_Treatment,\n"
+            ",,,,CTTTPP413.00,Week_1,\n"
+            "CTTTPP511.00,On_Treatment,,,,,\n"
+            "CTTTPP512.00,On_Treatment,,,,,\n"
+            "CTTTPP513.00,On_Treatment,,,,,\n"
+            "CTTTPP514.00,On_Treatment,,,,,\n"
+            "CTTTPP515.00,On_Treatment,,,,,\n"
+            "CTTTPP516.00,On_Treatment,,,,,\n"
+            "CTTTPP517.00,On_Treatment,,TRUE,,,"
         )
 
     # only generated for pairing manifest

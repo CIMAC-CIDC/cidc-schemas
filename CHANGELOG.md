@@ -9,6 +9,14 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.10` - 7 Nov 2022
+
+- `changed` handling of clinical CSV files to strip any initial BOM
+- `changed` tumor-normal attempted pairing
+  - do not return tumor samples already used in paired analysis
+  - flag tumor samples if already used in tumor-only analysis
+  - flag normal samples if aleady used in paired analysis and so already in biofx's Panel of Normals
+
 ## Version `0.26.9` - 3 Nov 2022
 
 - `added` Meta.csv file to TCR pipeline conifguration file

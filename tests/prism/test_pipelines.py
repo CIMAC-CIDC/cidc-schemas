@@ -644,7 +644,7 @@ def test_TCRseq_pipeline_config_generation_after_prismify(prismify_result, templ
     for fname, fcontent in res.items():
         assert fname.endswith(".csv")
 
-        assert fcontent == "sample" "\nCTTTPP111.00" "\nCTTTPP121.00"
+        assert fcontent == "sample,batch" "\nCTTTPP111.00,XYZ" "\nCTTTPP121.00,XYZ"
 
 
 def test_shipping_manifest_new_participants_after_prismify(prismify_result, template):

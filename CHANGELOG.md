@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.11` - 8 Nov 2022
+
+- `changed` derive files to return None instead of erroring when no derivation is defined
+
 ## Version `0.26.10` - 7 Nov 2022
 
 - `changed` handling of clinical CSV files to strip any initial BOM

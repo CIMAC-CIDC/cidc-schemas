@@ -773,8 +773,10 @@ def _tcr_pipeline_config(
     assay: dict = patch["assays"]["tcr"][0]
     batch_id = assay["batch_id"]
 
-    file_content: str = "sample\n"
-    file_content += "\n".join([record["cimac_id"] for record in assay["records"]])
+    file_content: str = "sample,batch\n"
+    file_content += "\n".join(
+        [",".join([record["cimac_id"], batch_id]) for record in assay["records"]]
+    )
 
     # add a meta sheet for new runs
     return {f"{trial_id}_{batch_id}_meta.csv": file_content}

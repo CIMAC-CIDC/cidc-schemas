@@ -9,9 +9,13 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
-## Version `0.26.11` - 8 Nov 2022
+## Version `0.26.12` - 10 Nov 2022
 
 - `changed` derive files to return None instead of erroring when no derivation is defined
+
+## Version `0.26.11` - 7 Nov 2022
+
+- `changed` added batch column to TCR meta.csv generation
 
 ## Version `0.26.10` - 7 Nov 2022
 

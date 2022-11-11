@@ -47,17 +47,37 @@ def _register_derivation(upload_type: str):
     return decorator
 
 
-def derive_files(context: DeriveFilesContext) -> DeriveFilesResult:
-    """Derive files from a trial_metadata blob given an `upload_type`"""
+def derive_files(context: DeriveFilesContext) -> Optional[DeriveFilesResult]:
+    """
+    Derive files from a trial_metadata blob given an `upload_type`
+
+    Parameters
+    ----------
+    context: DeriveFilesContext(NamedTuple)
+        with attributes:
+            trial_metadata: dict
+            upload_type: str
+            fetch_artifact: Callable[[str, bool], Optional[Union[StringIO, BytesIO]]]
+              * should return None if no artifact is found.
+              * arg1 (str): object_url
+              * arg2 (bool): if True, return artifact as StringIO, otherwise BytesIO.
+
+    Returns
+    -------
+    Optional[DeriveFilesResult(NamedTuple)]
+        if not None, with attributes:
+            artifacts: List[Artifact]
+            trial_metadata: dict
+
+        None if context.upload_type does not have a defined file derivation
+        all prism.SUPPORTED_SHIPPING_MANIFESTS are supported via _shipping_manifest_derivation()
+        otherwise use wrapper @_register_derivation(upload_type: str)
+    """
     if context.upload_type in prism.SUPPORTED_SHIPPING_MANIFESTS:
         return _shipping_manifest_derivation(context)
 
     if context.upload_type in _upload_type_derivations:
         return _upload_type_derivations[context.upload_type](context)
-
-    raise NotImplementedError(
-        f"No file derivations for upload type {context.upload_type}"
-    )
 
 
 def _build_artifact(

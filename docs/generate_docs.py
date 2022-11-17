@@ -662,7 +662,7 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
     )
     # `wes[_tumor_only]_analysis` to put wes analysis in separate from assay
     assay_names.update({"wes_tumor_only_analysis", "wes_analysis"})
-    #assay_names.update({"rna_level1_analysis", "rna_analysis"})
+    # assay_names.update({"rna_level1_analysis", "rna_analysis"})
 
     # split templates by generic assay
     assay_template_schemas: Dict[str, Dict[str, dict]] = {

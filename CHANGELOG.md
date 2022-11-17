@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.13` - 17 Nov 2022
+
+- `removed` 'Agilent SS Human All Exon V4' bait set for wes
+- `added` 'TWIST Clin Research Exome PN 104033' bait set for wes
+
 ## Version `0.26.12` - 10 Nov 2022
 
 - `changed` derive files to return None instead of erroring when no derivation is defined

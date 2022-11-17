@@ -646,6 +646,7 @@ def load_assay_schemas() -> Dict[str, AssaySchema]:
         "bam",
         "fastq",
         "template",
+        "level1",
     ]
 
     def strip(s: str) -> str:

@@ -26,7 +26,7 @@ def RNA_INSTANCE_NAME_FN(trial_id: str, batch_num: int) -> str:
 
 
 def BIOFX_WES_ANALYSIS_FOLDER(trial_id: str, cimac_id: str) -> str:
-    return f"gs://repro_{trial_id}/WES_v3/{cimac_id}/analysis"
+    return f"gs://repro_{trial_id}/WES_v3/{cimac_id}/"
 
 
 def WES_GOOGLE_BUCKET_PATH_FN(trial_id: str, run_id: str) -> str:

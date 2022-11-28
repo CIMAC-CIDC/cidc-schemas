@@ -365,7 +365,7 @@ def test_WES_pipeline_config_generation_after_prismify(prismify_result, template
                 # loading folder is based on the trial and tumor cimac (ie run) ids
                 assert (
                     sht["C3"].value
-                    == f"gs://repro_test_prism_trial_id/WES_v3/{sht['B7'].value}/analysis"
+                    == f"gs://repro_test_prism_trial_id/WES_v3/{sht['B7'].value}/"
                 )
 
             # check the config template excels

@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.16` - 02 Dec 2022
+
+- `added` assertion that non-identical file-path prefixes for upload_type must not overlap
+
 ## Version `0.26.15` - 01 Dec 2022
 
 - `changed` update dateparser version in order to fix PEP 495 compliance error

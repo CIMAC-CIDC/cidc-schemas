@@ -58,25 +58,25 @@ SUPPORTED_TEMPLATES = SUPPORTED_ASSAYS + SUPPORTED_MANIFESTS + SUPPORTED_ANALYSE
 # provide a way to get file-path prefix for each upload_type
 ASSAY_TO_FILEPATH: Dict[str, str] = {
     # analysis is removed on some
-    "atacseq_analysis": "atacseq",
-    "rna_level1_analysis": "rna",
-    "wes_analysis": "wes",
-    "wes_tumor_only_analysis": "wes_tumor_only",
+    "atacseq_analysis": "atacseq/",
+    "rna_level1_analysis": "rna/",
+    "wes_analysis": "wes/",
+    "wes_tumor_only_analysis": "wes_tumor_only/",
     # assay specifics removed
-    "atacseq_fastq": "atacseq",
-    "rna_bam": "rna",
-    "rna_fastq": "rna",
-    "tcr_adaptive": "tcr",
-    "tcr_fastq": "tcr",
-    "wes_bam": "wes",
-    "wes_fastq": "wes",
+    "atacseq_fastq": "atacseq/",
+    "rna_bam": "rna/",
+    "rna_fastq": "rna/",
+    "tcr_adaptive": "tcr/",
+    "tcr_fastq": "tcr/",
+    "wes_bam": "wes/",
+    "wes_fastq": "wes/",
     # special cases
-    "clinical_data": "clinical",
-    "participants info": "participants",
-    "samples info": "samples",
+    "clinical_data": "clinical/",
+    "participants info": "participants/",
+    "samples info": "samples/",
     # invariant
     **{
-        k: k
+        k: f"{k}/"
         for k in [
             "cytof_analysis",
             "tcr_analysis",
@@ -94,3 +94,9 @@ ASSAY_TO_FILEPATH: Dict[str, str] = {
         ]
     },
 }
+assert all(
+    not prefix1.startswith(prefix2)
+    for prefix1 in ASSAY_TO_FILEPATH.values()
+    for prefix2 in ASSAY_TO_FILEPATH.values()
+    if prefix1 != prefix2
+), "Prefix codes may not be overlapping"

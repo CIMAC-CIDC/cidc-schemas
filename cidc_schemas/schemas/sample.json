@@ -343,7 +343,7 @@
         "quality_of_sample": {
             "description": "Final status of sample after QC and pathology review.",
             "type": "string",
-            "enum": ["Pass", "Fail", "Not Reported", "Other"]
+            "enum": ["Pass", "Pass at Risk", "Fail", "Not Reported", "Other"]
         },
         "sample_replacement": {
             "description": "Indication if sample replacement is/was requested.",

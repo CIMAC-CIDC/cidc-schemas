@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.17` - 09 Dec 2022
+
+- `fixed` WES pipeline error with no tumor-only samples
+- `added` Pass at Risk option to quality of sample enum
+
 ## Version `0.26.16` - 02 Dec 2022
 
 - `added` assertion that non-identical file-path prefixes for upload_type must not overlap

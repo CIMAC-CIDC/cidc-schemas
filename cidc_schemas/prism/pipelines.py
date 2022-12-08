@@ -512,10 +512,12 @@ class _Wes_pipeline_config:
         # AND tumor-only samples
         self.potential_new_runs: List[_AnalysisRun] = [
             _AnalysisRun(r["run_id"], r["tumor"]["cimac_id"], r["normal"]["cimac_id"])
-            for r in patch["analysis"].get("wes_analysis", {}).get("pair_runs")
+            for r in patch["analysis"].get("wes_analysis", {}).get("pair_runs", [])
         ] + [
             _AnalysisRun(r["run_id"], r["tumor"]["cimac_id"])
-            for r in patch["analysis"].get("wes_tumor_only_analysis", {}).get("runs")
+            for r in patch["analysis"]
+            .get("wes_tumor_only_analysis", {})
+            .get("runs", [])
         ]
 
         # chunk into batches for config generation

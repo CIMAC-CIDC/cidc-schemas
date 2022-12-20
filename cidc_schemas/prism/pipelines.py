@@ -22,11 +22,11 @@ def RNA_GOOGLE_BUCKET_PATH_FN(trial_id: str, batch_num: int) -> str:
 
 
 def RNA_INSTANCE_NAME_FN(trial_id: str, batch_num: int) -> str:
-    return f"rima_{trial_id}_set{batch_num+1}"
+    return f"rima_{trial_id.lower()}_set{batch_num+1}"
 
 
 def BIOFX_WES_ANALYSIS_FOLDER(trial_id: str, cimac_id: str) -> str:
-    return f"gs://repro_{trial_id}/WES_v3/{cimac_id}/"
+    return f"gs://repro_{trial_id.lower()}/WES_v3/{cimac_id}/"
 
 
 def WES_GOOGLE_BUCKET_PATH_FN(trial_id: str, run_id: str) -> str:

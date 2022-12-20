@@ -9,6 +9,11 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.18` - 20 Dec 2022
+
+- `changed` biofx pipeline configs for lowercase buckets and instance names
+- `removed` ATACseq analysis batch report
+
 ## Version `0.26.17` - 09 Dec 2022
 
 - `fixed` WES pipeline error with no tumor-only samples

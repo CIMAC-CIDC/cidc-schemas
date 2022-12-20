@@ -63,9 +63,6 @@
                 "$ref": "assays/components/ngs/atacseq/atacseq_analysis.json#definitions/entry"
             }
         },
-        "report": {
-            "$ref": "artifacts/artifact_zip.json"
-        },
         "excluded_samples": {
             "$ref": "assays/components/excluded_samples.json"
         }

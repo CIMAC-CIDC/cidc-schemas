@@ -2238,9 +2238,6 @@ def atacseq_analysis() -> PrismTestData:
                             },
                         },
                     ],
-                    "report": {
-                        "upload_placeholder": "22222222-2222-2222-2222-41ebcc0a07d9"
-                    },
                     "batch_id": "XYZ",
                     "excluded_samples": [
                         {"cimac_id": "CTTTPP111.00", "reason_excluded": "low coverage"},
@@ -2301,15 +2298,7 @@ def atacseq_analysis() -> PrismTestData:
             ]
             for cimac_id in cimac_ids
         ],
-        [
-            LocalFileUploadEntry(
-                local_path="test_prism_trial_id/atacseq/analysis/XYZ/report.zip",
-                gs_key="test_prism_trial_id/atacseq/analysis/XYZ/report.zip",
-                upload_placeholder="22222222-2222-2222-2222-41ebcc0a07d9",
-                metadata_availability=False,
-                allow_empty=False,
-            ),
-        ],
+        [],
     )
 
     cimac_ids += [

@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.19` - 27 Dec 2022
+
+- `added` urine to type of sample in manifests
+
 ## Version `0.26.18` - 20 Dec 2022
 
 - `changed` biofx pipeline configs for lowercase buckets and instance names

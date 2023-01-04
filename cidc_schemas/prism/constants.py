@@ -72,8 +72,8 @@ ASSAY_TO_FILEPATH: Dict[str, str] = {
     "wes_fastq": "wes/",
     # special cases
     "clinical_data": "clinical/",
-    "participants info": "participants/",
-    "samples info": "samples/",
+    "participants info": "participants.",
+    "samples info": "samples.",
     # invariant
     **{
         k: f"{k}/"

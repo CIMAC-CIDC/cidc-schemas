@@ -9,6 +9,14 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.20` - 04 Jan 2023
+
+- `fixed` samples/participants prefix for file permissioning
+  - trailing "." means all and only direct files are used
+    - regardless of file extension, in case of future conversion from csv to eg xlsx
+    - but not any file in the "samples" or "participants" subdirectories of the trial, just in case
+      - use "samples/" and "participants/" for these specifically
+
 ## Version `0.26.19` - 27 Dec 2022
 
 - `added` urine to type of sample in manifests

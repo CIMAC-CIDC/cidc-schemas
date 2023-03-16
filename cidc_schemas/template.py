@@ -265,14 +265,6 @@ def _initialize_template_schema(name: str, title: str, pointer: str):
             "merge_pointer": "0/batch_id",
             "type_ref": "assays/atacseq_assay.json#properties/batch_id",
         }
-        template["properties"]["worksheets"][f"{title} Analysis"]["preamble_rows"][
-            "report"
-        ] = {
-            "merge_pointer": "0/report",
-            "type_ref": "assays/components/local_file.json#properties/file_path",
-            "gcs_uri_format": "{protocol identifier}/atacseq/analysis/{batch id}/report.zip",
-            "is_artifact": 1,
-        }
 
     return template
 

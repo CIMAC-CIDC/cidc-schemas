@@ -15,8 +15,7 @@
     "batch_id",
     "forward_fastq",
     "forward_index",
-    "reverse_fastq",
-    "reverse_index"
+    "reverse_fastq"
   ],
 
   "allOf": [

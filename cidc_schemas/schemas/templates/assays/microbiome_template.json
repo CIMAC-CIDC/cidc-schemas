@@ -47,7 +47,8 @@
               "merge_pointer": "0/reverse_index",
               "type_ref": "assays/components/local_file.json#properties/file_path",
               "is_artifact": 1,
-              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/reverse_index.fastq.gz"
+              "gcs_uri_format": "{protocol identifier}/microbiome/{batch id}/reverse_index.fastq.gz",
+              "allow_empty": true
             },
             "otu table": {
               "merge_pointer": "0/otu_table",

@@ -187,18 +187,15 @@
                     "DNA quality": {
                         "din value": {
                             "merge_pointer": "/din",
-                            "type_ref": "sample.json#properties/din",
-                            "allow_empty": true
+                            "type_ref": "sample.json#properties/din"
                         },
                         "a260/a280 value": {
                             "merge_pointer": "/a260_a280",
-                            "type_ref": "sample.json#properties/a260_a280",
-                            "allow_empty": true
+                            "type_ref": "sample.json#properties/a260_a280"
                         },
                         "a260/a230 value": {
                             "merge_pointer": "/a260_a230",
-                            "type_ref": "sample.json#properties/a260_a230",
-                            "allow_empty": true
+                            "type_ref": "sample.json#properties/a260_a230"
                         }
                     },
                     "Filled by CIMAC Lab": {

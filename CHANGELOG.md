@@ -11,7 +11,7 @@ This Changelog tracks changes to this project. The notes below include a summary
 
 ## Version `0.26.22` - 27 Apr 2023
 
-- `changed` allow string for DNA QC markers in normal blood and tumor tissue DNA manifests
+- `changed` allow string for DNA QC markers in normal blood/tissue and tumor tissue DNA manifests
 - `added` "Serum" as valid processed sample type
 
 ## Version `0.26.21` - 19 Apr 2023

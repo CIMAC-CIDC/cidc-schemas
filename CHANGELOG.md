@@ -9,10 +9,15 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.22` - 27 Apr 2023
+
+- `changed` remove requirement for DNA QC markers in normal blood and tumor tissue DNA manifests
+- `added` "Serum" as valid processed sample type
+
 ## Version `0.26.21` - 19 Apr 2023
 
-- `changed` requirement for reverse index in microbiome to allow for combined indices
-- 
+- `changed` remove requirement for reverse index in microbiome to allow for combined indices
+
 ## Version `0.26.20` - 04 Jan 2023
 
 - `fixed` samples/participants prefix for file permissioning

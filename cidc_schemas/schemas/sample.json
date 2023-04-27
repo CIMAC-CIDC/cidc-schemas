@@ -163,6 +163,7 @@
             "enum": [
                 "Whole Blood",
                 "Plasma",
+                "Serum",
                 "PBMC",
                 "Buffy Coat",
                 "Bone Marrow Mononuclear Cell",

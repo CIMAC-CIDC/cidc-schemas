@@ -163,6 +163,7 @@
             "enum": [
                 "Whole Blood",
                 "Plasma",
+                "Serum",
                 "PBMC",
                 "Buffy Coat",
                 "Bone Marrow Mononuclear Cell",
@@ -272,15 +273,15 @@
             "description": "Score the percentage area of Fibrosis"
         },
         "din": {
-            "type": "number",
+            "type": ["number", "string"],
             "description": "Provides a DNA Integrity Number as an indication of extraction quality (values of 1-10)"
         },
         "a260_a280": {
-            "type": "number",
+            "type": ["number", "string"],
             "description": "Provides an absorbance percentage ratio indicating purity of DNA (values of 0 to 2)"
         },
         "a260_a230": {
-            "type": "number",
+            "type": ["number", "string"],
             "description": "Provides an absorbance percentage ratio indicating presence of contaminants (values of 0 to 3)"
         },
         "pbmc_viability": {

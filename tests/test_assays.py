@@ -152,6 +152,9 @@ def test_rna_fastq():
     validator = _fetch_validator("rna")
     validator.validate(obj)
 
+    obj["enrichment_method"] = "Transcriptome capture v6"
+    validator.validate(obj)
+
 
 def test_rna_bam():
 
@@ -184,6 +187,9 @@ def test_rna_bam():
 
     # create validator assert schemas are valid.
     validator = _fetch_validator("rna")
+    validator.validate(obj)
+
+    obj["enrichment_method"] = "Transcriptome capture v6"
     validator.validate(obj)
 
 

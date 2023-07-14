@@ -9,6 +9,10 @@ This Changelog tracks changes to this project. The notes below include a summary
 - `fixed` for any bug fixes.
 - `security` in case of vulnerabilities.
 
+## Version `0.26.23` - 14 July 2023
+
+- `added` "Transcriptome capture v6" to rna assay templates `enrichment_method`
+
 ## Version `0.26.22` - 27 Apr 2023
 
 - `changed` allow string for DNA QC markers in normal blood/tissue and tumor tissue DNA manifests
